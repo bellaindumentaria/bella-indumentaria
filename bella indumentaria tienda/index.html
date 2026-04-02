@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Vella Indumentaria</title>
+  <style>
+    body { font-family: Arial; margin: 0; background: #fdecef; }
+    header { background: #f8c8dc; color: #333; padding: 15px; text-align: center; }
+    header img { width: 120px; display: block; margin: 0 auto 10px; }
+
+    .productos { display: flex; flex-wrap: wrap; justify-content: center; padding: 10px; }
+
+    .producto {
+      background: white;
+      margin: 10px;
+      padding: 10px;
+      width: 220px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .producto img { width: 100%; border-radius: 10px; }
+
+    button {
+      background: #f8c8dc;
+      color: #333;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      margin-top: 5px;
+      border-radius: 10px;
+    }
+
+    .carrito {
+      position: fixed;
+      right: 0;
+      top: 0;
+      width: 300px;
+      height: 100%;
+      background: white;
+      border-left: 2px solid #f8c8dc;
+      padding: 10px;
+      overflow-y: auto;
+    }
+
+    input { width: 90%; padding: 5px; margin: 5px 0; }
+
+    .whatsapp {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: #25D366;
+      color: white;
+      padding: 12px;
+      border-radius: 50%;
+      text-decoration: none;
+      font-size: 20px;
+    }
+
+    .cantidad {
+      width: 50px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="logo.png" alt="Logo">
+  <h1>Vella Indumentaria</h1>
+</header>
+
+<div class="productos" id="productos"></div>
+
+<div class="carrito">
+  <h2>Carrito</h2>
+  <ul id="listaCarrito"></ul>
+  <h3 id="total">Total: $0</h3>
+
+  <h3>Datos del cliente</h3>
+  <input type="text" id="nombre" placeholder="Nombre">
+  <input type="text" id="telefono" placeholder="Teléfono">
+
+  <button onclick="enviarPedido()">Enviar por WhatsApp</button>
+</div>
+
+<a class="whatsapp" href="https://wa.me/5491125748687" target="_blank">💬</a>
+
+<script>
+  let productos = [
+    { nombre: "Remera Negra", precio: 5000, imagen: "remera.jpg" },
+    { nombre: "Pantalón Jeans", precio: 12000, imagen: "jeans.jpg" },
+    { nombre: "Buzo Oversize", precio: 15000, imagen: "buzo.jpg" }
+  ];
+
+  let carrito = [];
+
+  function mostrarProductos() {
+    let contenedor = document.getElementById("productos");
+    contenedor.innerHTML = "";
+
+    productos.forEach((prod, index) => {
+      contenedor.innerHTML += `
+        <div class="producto">
+          <img src="${prod.imagen}">
+          <h3>${prod.nombre}</h3>
+          <p>$${prod.precio}</p>
+          <input type="number" min="1" value="1" id="cant${index}" class="cantidad">
+          <button onclick="agregarAlCarrito(${index})">Agregar</button>
+        </div>
+      `;
+    });
+  }
+
+  function agregarAlCarrito(index) {
+    let cantidad = document.getElementById("cant" + index).value;
+
+    carrito.push({
+      ...productos[index],
+      cantidad: parseInt(cantidad)
+    });
+
+    actualizarCarrito();
+  }
+
+  function actualizarCarrito() {
+    let lista = document.getElementById("listaCarrito");
+    let total = 0;
+
+    lista.innerHTML = "";
+
+    carrito.forEach((item, i) => {
+      let subtotal = item.precio * item.cantidad;
+      total += subtotal;
+
+      lista.innerHTML += `
+        <li>
+          ${item.nombre} x${item.cantidad} - $${subtotal}
+          <button onclick="eliminar(${i})">❌</button>
+        </li>
+      `;
+    });
+
+    document.getElementById("total").innerText = "Total: $" + total;
+  }
+
+  function eliminar(index) {
+    carrito.splice(index, 1);
+    actualizarCarrito();
+  }
+
+  function enviarPedido() {
+    let nombre = document.getElementById("nombre").value;
+    let telefono = document.getElementById("telefono").value;
+
+    if (!nombre || !telefono || carrito.length === 0) {
+      alert("Completa los datos y agrega productos");
+      return;
+    }
+
+    let mensaje = "Hola! Quiero hacer un pedido:%0A";
+
+    carrito.forEach(item => {
+      mensaje += `${item.nombre} x${item.cantidad} - $${item.precio * item.cantidad}%0A`;
+    });
+
+    mensaje += `%0ATotal: $${carrito.reduce((t, i) => t + i.precio * i.cantidad, 0)}`;
+    mensaje += `%0A%0ANombre: ${nombre}`;
+    mensaje += `%0ATeléfono: ${telefono}`;
+
+    window.open(`https://wa.me/5491125748687?text=${mensaje}`, '_blank');
+  }
+
+  mostrarProductos();
+</script>
+
+</body>
+</html>
