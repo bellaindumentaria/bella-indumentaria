@@ -8,12 +8,6 @@
   <style>
     :root {
       color-scheme: light only;
-      --rosa-pastel: #F8BBD0;
-      --rosa-fondo: #FCE4EC;
-      --fucsia: #E91E63;
-      --fucsia-oscuro: #C2185B;
-      --negro: #1A1A1A;
-      --blanco: #FFFFFF;
     }
 
     * {
@@ -26,10 +20,9 @@
     body {
       background-color: #FCE4EC !important;
       color: #1A1A1A !important;
-      padding-bottom: 85px; /* Espacio para la barra inferior en celular */
+      padding-bottom: 85px;
     }
 
-    /* Encabezado */
     header {
       background-color: #F8BBD0 !important;
       border-bottom: 5px solid #E91E63;
@@ -59,7 +52,6 @@
       margin-top: 3px;
     }
 
-    /* Contenedor Principal */
     .layout-principal {
       display: flex;
       align-items: flex-start;
@@ -69,7 +61,6 @@
       gap: 22px;
     }
 
-    /* Izquierda: 3 Columnas en PC */
     .seccion-productos {
       flex: 1;
       display: grid;
@@ -158,15 +149,12 @@
       margin-top: 8px;
       width: 100%;
       font-size: 0.95rem;
-      transition: background 0.2s, transform 0.1s;
     }
 
     .btn-agregar:active {
-      transform: scale(0.98);
       background-color: #E91E63 !important;
     }
 
-    /* Notificación rápida al agregar producto */
     .toast-aviso {
       position: fixed;
       top: 20px;
@@ -184,7 +172,6 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.25);
     }
 
-    /* Mini Columna Derecha (En PC se ve fija a la derecha) */
     .columna-carrito {
       width: 350px;
       flex-shrink: 0;
@@ -310,7 +297,7 @@
       color: #1A1A1A !important;
     }
 
-    #grupo-transporte-otro {
+    .caja-transporte-otro {
       display: none;
       background-color: #FFF0F5;
       padding: 8px;
@@ -319,8 +306,22 @@
       margin-bottom: 8px;
     }
 
-    #grupo-transporte-otro input {
+    .caja-transporte-otro label {
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: #C2185B;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .caja-transporte-otro input {
+      width: 100%;
+      padding: 8px;
       border: 1px solid #E91E63;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      background-color: #FFFFFF !important;
+      color: #1A1A1A !important;
     }
 
     .fila-doble {
@@ -346,7 +347,6 @@
       cursor: not-allowed;
     }
 
-    /* Barra flotante inferior solo para celular */
     .barra-flotante-movil {
       display: none;
     }
@@ -360,7 +360,6 @@
       font-size: 0.85rem;
     }
 
-    /* ADAPTACIÓN PARA CELULARES Y TABLETS */
     @media (max-width: 1050px) {
       .seccion-productos {
         grid-template-columns: repeat(2, 1fr);
@@ -379,7 +378,6 @@
         width: 100%;
       }
 
-      /* Ocultar carrito por defecto en celular hasta que toquen el botón */
       .columna-carrito {
         display: none;
         position: fixed;
@@ -402,7 +400,6 @@
         display: inline-block;
       }
 
-      /* Barra inferior fija en celular */
       .barra-flotante-movil {
         display: flex;
         justify-content: space-between;
@@ -446,3 +443,19 @@
       }
     }
   </style>
+</head>
+<body>
+
+  <div id="toast-aviso" class="toast-aviso">✓ Agregado al carrito</div>
+
+  <header>
+    <img src="logo.png" alt="Logo Bella Indumentaria" onerror="this.style.display='none'">
+    <h1>BELLA</h1>
+    <p>FABRICANTE DIRECTO • COMPRA MÍNIMA $70.000</p>
+  </header>
+
+  <main class="layout-principal">
+    
+    <section class="seccion-productos">
+
+      <div class="card-producto">
