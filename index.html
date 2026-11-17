@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="light only">
   <title>BELLA Indumentaria - Catálogo Mayorista</title>
   <style>
@@ -14,7 +14,6 @@
       --fucsia-oscuro: #C2185B;
       --negro: #1A1A1A;
       --blanco: #FFFFFF;
-      --gris-borde: #E0E0E0;
     }
 
     * {
@@ -24,34 +23,30 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    html, body {
-      width: 100%;
-      min-height: 100%;
-      overflow-x: hidden;
-      overflow-y: auto;
+    body {
       background-color: #FCE4EC !important;
       color: #1A1A1A !important;
+      padding-bottom: 85px; /* Espacio para la barra inferior en celular */
     }
 
     /* Encabezado */
     header {
       background-color: #F8BBD0 !important;
       border-bottom: 5px solid #E91E63;
-      padding: 16px 15px;
+      padding: 15px;
       text-align: center;
       box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-      width: 100%;
     }
 
     header img {
-      max-width: 130px;
+      max-width: 120px;
       border-radius: 10px;
       border: 2px solid #1A1A1A;
       margin-bottom: 6px;
     }
 
     header h1 {
-      font-size: 1.8rem;
+      font-size: 1.7rem;
       letter-spacing: 3px;
       color: #1A1A1A !important;
       text-transform: uppercase;
@@ -60,9 +55,8 @@
     header p {
       color: #C2185B !important;
       font-weight: bold;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
-      margin-top: 4px;
+      font-size: 0.88rem;
+      margin-top: 3px;
     }
 
     /* Contenedor Principal */
@@ -70,7 +64,6 @@
       display: flex;
       align-items: flex-start;
       max-width: 1340px;
-      width: 100%;
       margin: 20px auto;
       padding: 0 15px;
       gap: 22px;
@@ -98,7 +91,7 @@
 
     .card-producto img {
       width: 100%;
-      height: 230px;
+      height: 240px;
       object-fit: cover;
       border-radius: 10px;
       background-color: #F8BBD0;
@@ -121,7 +114,6 @@
 
     .campo-opcion {
       margin-bottom: 8px;
-      text-align: left;
     }
 
     .campo-opcion label {
@@ -159,22 +151,42 @@
       background-color: #1A1A1A !important;
       color: #FFFFFF !important;
       border: none;
-      padding: 11px;
+      padding: 12px;
       border-radius: 8px;
       font-weight: bold;
       cursor: pointer;
       margin-top: 8px;
       width: 100%;
       font-size: 0.95rem;
+      transition: background 0.2s, transform 0.1s;
     }
 
-    .btn-agregar:hover {
+    .btn-agregar:active {
+      transform: scale(0.98);
       background-color: #E91E63 !important;
     }
 
-    /* Mini Columna Derecha (Carrito) */
+    /* Notificación rápida al agregar producto */
+    .toast-aviso {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1A1A1A;
+      color: #FFFFFF;
+      padding: 10px 18px;
+      border-radius: 25px;
+      border: 2px solid #E91E63;
+      font-size: 0.9rem;
+      font-weight: bold;
+      z-index: 3000;
+      display: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+
+    /* Mini Columna Derecha (En PC se ve fija a la derecha) */
     .columna-carrito {
-      width: 340px;
+      width: 350px;
       flex-shrink: 0;
       background-color: #FFFFFF !important;
       border: 2px solid #1A1A1A;
@@ -185,12 +197,30 @@
       box-shadow: 0 6px 16px rgba(0,0,0,0.1);
     }
 
-    .columna-carrito h2 {
-      font-size: 1.2rem;
+    .header-carrito {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       border-bottom: 2px solid #F8BBD0;
       padding-bottom: 8px;
       margin-bottom: 10px;
+    }
+
+    .header-carrito h2 {
+      font-size: 1.2rem;
       color: #1A1A1A !important;
+    }
+
+    .btn-cerrar-movil {
+      display: none;
+      background-color: #E91E63;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-weight: bold;
+      font-size: 0.85rem;
+      cursor: pointer;
     }
 
     .aviso-minimo {
@@ -213,7 +243,7 @@
 
     #lista-carrito {
       list-style: none;
-      max-height: 200px;
+      max-height: 190px;
       overflow-y: auto;
       margin-bottom: 10px;
       border-bottom: 1px solid #E0E0E0;
@@ -280,7 +310,6 @@
       color: #1A1A1A !important;
     }
 
-    /* Cuadrito especial para transporte opcional */
     #grupo-transporte-otro {
       display: none;
       background-color: #FFF0F5;
@@ -317,6 +346,11 @@
       cursor: not-allowed;
     }
 
+    /* Barra flotante inferior solo para celular */
+    .barra-flotante-movil {
+      display: none;
+    }
+
     footer {
       background-color: #1A1A1A !important;
       color: #F8BBD0 !important;
@@ -324,7 +358,6 @@
       padding: 15px;
       margin-top: 30px;
       font-size: 0.85rem;
-      width: 100%;
     }
 
     /* ADAPTACIÓN PARA CELULARES Y TABLETS */
@@ -340,75 +373,76 @@
         padding: 0 12px;
         margin: 15px auto;
       }
+
       .seccion-productos {
         grid-template-columns: 1fr;
         width: 100%;
       }
+
+      /* Ocultar carrito por defecto en celular hasta que toquen el botón */
       .columna-carrito {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
         width: 100%;
-        position: static;
+        height: 100%;
+        z-index: 2000;
+        border-radius: 0;
+        border: none;
+        overflow-y: auto;
+        padding: 18px 15px 40px 15px;
       }
-      header h1 {
-        font-size: 1.5rem;
+
+      .columna-carrito.abierto {
+        display: block;
+      }
+
+      .btn-cerrar-movil {
+        display: inline-block;
+      }
+
+      /* Barra inferior fija en celular */
+      .barra-flotante-movil {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #1A1A1A;
+        color: #FFFFFF;
+        padding: 12px 16px;
+        border-top: 3px solid #E91E63;
+        z-index: 1500;
+        box-shadow: 0 -4px 12px rgba(0,0,0,0.2);
+      }
+
+      .info-barra-movil {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .info-barra-movil span:first-child {
+        font-size: 0.8rem;
+        color: #F8BBD0;
+      }
+
+      .info-barra-movil span:last-child {
+        font-size: 1.15rem;
+        font-weight: bold;
+      }
+
+      .btn-abrir-carrito {
+        background-color: #E91E63;
+        color: #FFFFFF;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 0.92rem;
+        cursor: pointer;
       }
     }
   </style>
-</head>
-<body>
-
-  <header>
-    <img src="logo.png" alt="Logo Bella Indumentaria" onerror="this.style.display='none'">
-    <h1>BELLA</h1>
-    <p>FABRICANTE DIRECTO • COMPRA MÍNIMA $70.000</p>
-  </header>
-
-  <main class="layout-principal">
-    
-    <!-- COLUMNA IZQUIERDA: TUS 3 PRODUCTOS -->
-    <section class="seccion-productos">
-
-      <!-- PRODUCTO 1: VESTIDO FRANCHESCA -->
-      <div class="card-producto">
-        <div>
-          <img src="franchesca.jpg" alt="Vestido Franchesca" onerror="this.src='https://placehold.co'">
-          <h3>Vestido Franchesca</h3>
-          <p class="precio">$15.000</p>
-        </div>
-        <div>
-          <div class="campo-opcion">
-            <label>Color:</label>
-            <select id="color-1">
-              <option value="Negro">Negro</option>
-              <option value="Choco">Choco</option>
-              <option value="Blanco">Blanco</option>
-              <option value="Uva">Uva</option>
-            </select>
-          </div>
-          <div class="fila-talle-cant">
-            <div class="campo-opcion">
-              <label>Talle:</label>
-              <select id="talle-1">
-                <option value="Talle Único">Talle Único</option>
-              </select>
-            </div>
-            <div class="campo-opcion">
-              <label>Cant.:</label>
-              <input type="number" id="cant-1" value="1" min="1">
-            </div>
-          </div>
-          <button class="btn-agregar" onclick="agregarProducto('Vestido Franchesca', 15000, 'color-1', 'talle-1', 'cant-1')">Agregar al carrito</button>
-        </div>
-      </div>
-
-      <!-- PRODUCTO 2: MARILYN LUNARES -->
-      <div class="card-producto">
-        <div>
-          <img src="marilyn.jpg" alt="Marilyn Lunares" onerror="this.src='https://placehold.co'">
-          <h3>Marilyn Lunares</h3>
-          <p class="precio">$15.000</p>
-        </div>
-        <div>
-          <div class="campo-opcion">
-            <label>Color:</label>
-            <select id="color-2">
-              <option value="Negro">Negro</option>
