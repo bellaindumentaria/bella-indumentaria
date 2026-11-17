@@ -51,15 +51,73 @@
       justify-content: space-between;
       box-shadow: 0 4px 10px rgba(233, 30, 99, 0.08);
     }
-    .producto img {
+
+    /* CARRUSEL DE FOTOS COMPLETA CON FLECHITAS */
+    .galeria-box {
+      position: relative;
       width: 100%;
-      height: 240px;
-      object-fit: cover;
+      height: 310px;
+      background-color: #FFF5F8;
       border-radius: 10px;
-      background-color: #F8BBD0;
       margin-bottom: 10px;
-      border: 1px solid #E0E0E0;
+      border: 1px solid #F8BBD0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
+    .galeria-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      cursor: zoom-in;
+      transition: transform 0.2s;
+    }
+    .btn-foto-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(26, 26, 26, 0.75);
+      color: #FFFFFF;
+      border: 1px solid #F8BBD0;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      font-size: 0.95rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+    .btn-foto-nav:hover { background-color: #E91E63; }
+    .btn-foto-izq { left: 6px; }
+    .btn-foto-der { right: 6px; }
+
+    .contador-fotos {
+      position: absolute;
+      bottom: 6px;
+      right: 8px;
+      background-color: rgba(26, 26, 26, 0.7);
+      color: #FFF;
+      font-size: 0.72rem;
+      padding: 2px 7px;
+      border-radius: 10px;
+    }
+    .tip-ampliar {
+      position: absolute;
+      top: 6px;
+      left: 8px;
+      background-color: rgba(255, 255, 255, 0.85);
+      color: #C2185B;
+      font-size: 0.7rem;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 6px;
+      pointer-events: none;
+    }
+
     .producto h3 { font-size: 1.15rem; color: #1A1A1A !important; margin-bottom: 4px; }
     .producto .precio { font-size: 1.3rem; font-weight: bold; color: #E91E63 !important; margin-bottom: 10px; }
 
@@ -90,6 +148,61 @@
     }
     .btn-agregar:active { background-color: #E91E63 !important; }
 
+    /* VISOR PANTALLA COMPLETA (ZOOM AL TOCAR LA FOTO) */
+    .visor-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 4000;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 15px;
+    }
+    .visor-modal.activo { display: flex; }
+    .visor-modal img {
+      max-width: 92%;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 10px;
+      border: 2px solid #F8BBD0;
+    }
+    .visor-cerrar {
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      background-color: #E91E63;
+      color: #FFF;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .visor-controles {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-top: 14px;
+      color: #FFF;
+      font-weight: bold;
+    }
+    .visor-btn {
+      background-color: #F8BBD0;
+      color: #1A1A1A;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
     /* PESTAÑA CON FLECHITA A LA DERECHA */
     .btn-flecha-carrito {
       position: fixed;
@@ -117,7 +230,7 @@
       color: #F8BBD0;
     }
 
-    /* COLUMNA DERECHA DESPLEGABLE (1/4 de pantalla en PC) */
+    /* COLUMNA DERECHA DESPLEGABLE */
     .panel-lateral {
       position: fixed;
       top: 0;
@@ -135,9 +248,7 @@
       transform: translateX(100%);
       transition: transform 0.3s ease;
     }
-    .panel-lateral.abierto {
-      transform: translateX(0);
-    }
+    .panel-lateral.abierto { transform: translateX(0); }
 
     .panel-header {
       display: flex;
@@ -273,6 +384,17 @@
 
   <div id="aviso-flotante" class="aviso-flotante">✓ Agregado al carrito</div>
 
+  <!-- VISOR DE FOTO EN GRANDE -->
+  <div id="visor-modal" class="visor-modal" onclick="cerrarVisorFondo(event)">
+    <button type="button" class="visor-cerrar" onclick="cerrarVisor()">✕ Cerrar</button>
+    <img id="visor-img" src="" alt="Vista ampliada">
+    <div class="visor-controles" id="visor-controles">
+      <button type="button" class="visor-btn" onclick="cambiarFotoVisor(-1)">◀ Anterior</button>
+      <span id="visor-contador">1 / 1</span>
+      <button type="button" class="visor-btn" onclick="cambiarFotoVisor(1)">Siguiente ▶</button>
+    </div>
+  </div>
+
   <header>
     <img src="logo.jpg" alt="Logo Bella" onerror="this.style.display='none'">
     <h1>BELLA</h1>
@@ -348,14 +470,14 @@
     const MINIMO = 70000;
 
     // =========================================================
-    // LISTA DE PRODUCTOS (ACÁ AGREGÁS O EDITÁS TUS PRENDAS)
+    // LISTA DE PRODUCTOS (PODÉS PONER VARIAS FOTOS ENTRE [ ])
     // =========================================================
     const PRODUCTOS = [
       {
         id: 1,
         nombre: "Vestido Franchesca",
         precio: 15000,
-        foto: "franchesca.png",
+        fotos: ["franchesca.png"], // Si agregás más fotos: ["franchesca.png", "franchesca2.jpg"]
         talles: ["Talle Único"],
         colores: ["Negro", "Choco", "Blanco", "Uva"]
       },
@@ -363,7 +485,7 @@
         id: 2,
         nombre: "Marilyn Lunares",
         precio: 15000,
-        foto: "marilyn.jpg",
+        fotos: ["marilyn.jpg"],
         talles: ["Talle 2", "Talle 4"],
         colores: ["Negro", "Bordó", "Choco"]
       },
@@ -371,20 +493,32 @@
         id: 3,
         nombre: "Pollera Lunares",
         precio: 15000,
-        foto: "pollera.png",
+        fotos: ["pollera.png"],
         talles: ["Talle Único"],
         colores: ["Negro", "Choco", "Uva"]
       }
     ];
 
     let carrito = [];
+    let indiceFotoActual = {};
+    let visorProdId = null;
+    let visorFotoIdx = 0;
 
     function cargarCatalogo() {
       const cont = document.getElementById("catalogo");
-      cont.innerHTML = PRODUCTOS.map(p => `
+      cont.innerHTML = PRODUCTOS.map(p => {
+        indiceFotoActual[p.id] = 0;
+        const tieneVarias = p.fotos.length > 1;
+        return `
         <div class="producto">
           <div>
-            <img src="${p.foto}" alt="${p.nombre}" onerror="this.src='https://placehold.co{encodeURIComponent(p.nombre)}'">
+            <div class="galeria-box">
+              <span class="tip-ampliar">🔍 Tocar para ampliar</span>
+              ${tieneVarias ? `<button type="button" class="btn-foto-nav btn-foto-izq" onclick="cambiarFotoTarjeta(${p.id}, -1)">❮</button>` : ''}
+              <img id="img-prod-${p.id}" src="${p.fotos[0]}" alt="${p.nombre}" onclick="abrirVisor(${p.id})" onerror="this.style.display='none'">
+              ${tieneVarias ? `<button type="button" class="btn-foto-nav btn-foto-der" onclick="cambiarFotoTarjeta(${p.id}, 1)">❯</button>` : ''}
+              ${tieneVarias ? `<span class="contador-fotos" id="cont-foto-${p.id}">1 / ${p.fotos.length}</span>` : ''}
+            </div>
             <h3>${p.nombre}</h3>
             <p class="precio">$${p.precio.toLocaleString('es-AR')}</p>
           </div>
@@ -406,7 +540,62 @@
             <button type="button" class="btn-agregar" onclick="agregar(${p.id})">Agregar al carrito</button>
           </div>
         </div>
-      `).join('');
+      `}).join('');
+    }
+
+    function cambiarFotoTarjeta(id, direccion) {
+      const prod = PRODUCTOS.find(p => p.id === id);
+      if (!prod || prod.fotos.length <= 1) return;
+
+      let nuevoIdx = indiceFotoActual[id] + direccion;
+      if (nuevoIdx < 0) nuevoIdx = prod.fotos.length - 1;
+      if (nuevoIdx >= prod.fotos.length) nuevoIdx = 0;
+
+      indiceFotoActual[id] = nuevoIdx;
+      const imgEl = document.getElementById("img-prod-" + id);
+      imgEl.style.display = "block";
+      imgEl.src = prod.fotos[nuevoIdx];
+
+      const contEl = document.getElementById("cont-foto-" + id);
+      if (contEl) contEl.textContent = (nuevoIdx + 1) + " / " + prod.fotos.length;
+    }
+
+    function abrirVisor(id) {
+      const prod = PRODUCTOS.find(p => p.id === id);
+      if (!prod) return;
+      visorProdId = id;
+      visorFotoIdx = indiceFotoActual[id] || 0;
+      actualizarVisor();
+      document.getElementById("visor-modal").classList.add("activo");
+    }
+
+    function actualizarVisor() {
+      const prod = PRODUCTOS.find(p => p.id === visorProdId);
+      document.getElementById("visor-img").src = prod.fotos[visorFotoIdx];
+      const controles = document.getElementById("visor-controles");
+      if (prod.fotos.length > 1) {
+        controles.style.display = "flex";
+        document.getElementById("visor-contador").textContent = (visorFotoIdx + 1) + " / " + prod.fotos.length;
+      } else {
+        controles.style.display = "none";
+      }
+    }
+
+    function cambiarFotoVisor(direccion) {
+      const prod = PRODUCTOS.find(p => p.id === visorProdId);
+      if (!prod) return;
+      visorFotoIdx += direccion;
+      if (visorFotoIdx < 0) visorFotoIdx = prod.fotos.length - 1;
+      if (visorFotoIdx >= prod.fotos.length) visorFotoIdx = 0;
+      actualizarVisor();
+    }
+
+    function cerrarVisor() {
+      document.getElementById("visor-modal").classList.remove("activo");
+    }
+
+    function cerrarVisorFondo(e) {
+      if (e.target.id === "visor-modal") cerrarVisor();
     }
 
     function togglePanel() {
