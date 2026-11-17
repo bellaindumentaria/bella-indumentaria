@@ -540,7 +540,7 @@
       msg += `• Provincia: ${document.getElementById("provincia").value.trim()}\n`;
       msg += `• Localidad: ${document.getElementById("localidad").value.trim()}\n`;
 
-      window.open("https://wa.me" + TELEFONO + "?text=" + encodeURIComponent(msg), "_blank");
+      window.open("https://wa.me/" + TELEFONO + "?text=" + encodeURIComponent(msg), "_blank");
     }
 
     cargarCatalogo();
