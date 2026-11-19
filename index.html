@@ -302,6 +302,13 @@
   </aside>
   <script>
     const TELEFONO = "5491125748687";
+    const URL_SCRIPT_PDF = [
+      "https:/",
+      "/script.",
+      "://google.com",
+      "AKfycbwJzFIluNLdr8vOHzwaYZkqeC81DPHQuNAgTHwUE6Q0RFxgocKrGXF-49Dm5tQcIzsD3Q",
+      "/exec"
+    ].join("");
     const MINIMO = 70000;
     const EMBALAJE = 4000;
 
@@ -565,34 +572,73 @@
       const horaStr = ahora.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
 
       let subtotal = 0;
+      let filasHtml = "";
       let detalleWsp = "";
 
       carrito.forEach(item => {
         const sub = item.precio * item.cant;
         subtotal += sub;
+        filasHtml += `<tr>
+          <td style="text-align:center;">${item.cant}</td>
+          <td>${item.nombre} (Color: ${item.color} - ${item.talle})</td>
+          <td style="text-align:right;">$${item.precio.toLocaleString('es-AR')}</td>
+          <td style="text-align:right;">$${sub.toLocaleString('es-AR')}</td>
+        </tr>`;
         detalleWsp += `• ${item.cant}x ${item.nombre} | Color: ${item.color} | ${item.talle} - $${sub.toLocaleString('es-AR')}\n`;
       });
 
       const totalFinal = subtotal + EMBALAJE;
 
-      let msg = "¡Hola *BELLA Indumentaria*! 👋 Quiero realizar el siguiente pedido:\n\n";
-      msg += "*ORDEN DE COMPRA (" + fechaStr + " " + horaStr + "):*\n";
-      msg += detalleWsp;
-      msg += "• Embalaje y traslado: $4.000\n";
-      msg += "\n*TOTAL FINAL A PAGAR: $" + totalFinal.toLocaleString('es-AR') + "*\n\n";
-      msg += "*FORMA DE ENVÍO:*\n";
-      msg += "• Transporte: " + transpFinal + "\n";
-      msg += "• Modalidad: " + modalidadSeleccionada + "\n\n";
-      msg += "*DATOS DEL CLIENTE:*\n";
-      msg += "• Nombre: " + nombre + " " + apellido + "\n";
-      msg += "• DNI: " + dni + "\n";
-      msg += "• Teléfono: " + celular + "\n";
-      msg += "• Dirección: " + direccion + "\n";
-      msg += "• Localidad: " + localidad + " (CP: " + cp + ")\n";
-      msg += "• Provincia: " + provincia + "\n";
+      const btn = document.getElementById("btn-enviar");
+      btn.disabled = true;
+      btn.textContent = "Enviando orden...";
 
-      const urlWsp = ["https:/", "/api.", "whatsapp", ".com/send?phone="].join("") + TELEFONO + "&text=" + encodeURIComponent(msg);
-      window.location.href = urlWsp;
+      const datosEnvio = {
+        fecha: fechaStr,
+        hora: horaStr,
+        nombre: nombre,
+        apellido: apellido,
+        dni: dni,
+        celular: celular,
+        direccion: direccion,
+        localidad: localidad,
+        provincia: provincia,
+        cp: cp,
+        transporte: transpFinal,
+        modalidad: modalidadSeleccionada,
+        filasHtml: filasHtml,
+        total: totalFinal.toLocaleString('es-AR')
+      };
+
+      // 1. ENVÍA EL PDF DE 2 HOJAS A TU GMAIL EN SEGUNDO PLANO
+      fetch(URL_SCRIPT_PDF, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(datosEnvio)
+      });
+
+      // 2. ESPERA 1.5 SEGUNDOS Y ABRE WHATSAPP DIRECTO
+      setTimeout(() => {
+        let msg = "¡Hola *BELLA Indumentaria*! 👋 Quiero realizar el siguiente pedido:\n\n";
+        msg += "*ORDEN DE COMPRA (" + fechaStr + " " + horaStr + "):*\n";
+        msg += detalleWsp;
+        msg += "• Embalaje y traslado: $4.000\n";
+        msg += "\n*TOTAL FINAL A PAGAR: $" + totalFinal.toLocaleString('es-AR') + "*\n\n";
+        msg += "*FORMA DE ENVÍO:*\n";
+        msg += "• Transporte: " + transpFinal + "\n";
+        msg += "• Modalidad: " + modalidadSeleccionada + "\n\n";
+        msg += "*DATOS DEL CLIENTE:*\n";
+        msg += "• Nombre: " + nombre + " " + apellido + "\n";
+        msg += "• DNI: " + dni + "\n";
+        msg += "• Teléfono: " + celular + "\n";
+        msg += "• Dirección: " + direccion + "\n";
+        msg += "• Localidad: " + localidad + " (CP: " + cp + ")\n";
+        msg += "• Provincia: " + provincia + "\n";
+
+        const urlWsp = ["https:/", "/api.", "whatsapp", ".com/send?phone="].join("") + TELEFONO + "&text=" + encodeURIComponent(msg);
+        window.location.href = urlWsp;
+      }, 1500);
     }
 
     cargarCatalogo();
