@@ -5,40 +5,79 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="light only">
   <title>BELLA Indumentaria</title>
+  <script src="https://cloudflare.com"></script>
+  <script src="https://cloudflare.com"></script>
   <style>
     :root { color-scheme: light only; }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
     
     body {
-      background-color: #FCE4EC !important;
+      background-color: #FFFFFF !important; /* Fondo blanco en la zona de productos */
       color: #1A1A1A !important;
       overflow-x: hidden;
       overflow-y: auto;
     }
 
+    /* ENCABEZADO CON PATRÓN ANIMAL PRINT ROSADO */
     header {
-      background-color: #F8BBD0 !important;
+      background-color: #F48FB1 !important;
+      background-image:
+        radial-gradient(ellipse 14px 10px at 20px 20px, #AD1457 55%, transparent 58%),
+        radial-gradient(ellipse 11px 8px at 22px 21px, #F8BBD0 45%, transparent 48%),
+        radial-gradient(ellipse 16px 12px at 65px 45px, #880E4F 55%, transparent 58%),
+        radial-gradient(ellipse 12px 9px at 63px 44px, #F48FB1 45%, transparent 48%),
+        radial-gradient(ellipse 13px 11px at 105px 18px, #C2185B 55%, transparent 58%),
+        radial-gradient(ellipse 9px 7px at 106px 19px, #FCE4EC 45%, transparent 48%),
+        radial-gradient(ellipse 15px 10px at 35px 72px, #C2185B 55%, transparent 58%),
+        radial-gradient(ellipse 10px 7px at 36px 71px, #F8BBD0 45%, transparent 48%),
+        radial-gradient(ellipse 14px 12px at 90px 78px, #AD1457 55%, transparent 58%),
+        radial-gradient(ellipse 10px 8px at 89px 77px, #FCE4EC 45%, transparent 48%);
+      background-size: 130px 100px;
       border-bottom: 5px solid #E91E63;
-      padding: 15px;
-      text-align: center;
+      padding: 24px 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    header img {
-      max-width: 110px;
-      border-radius: 10px;
-      border: 2px solid #1A1A1A;
-      margin-bottom: 5px;
-    }
-    header h1 { font-size: 1.7rem; letter-spacing: 3px; color: #1A1A1A !important; }
-    header p { color: #C2185B !important; font-weight: bold; font-size: 0.85rem; margin-top: 3px; }
 
-    /* Grilla de Productos: 3 Columnas en PC */
+    /* RECUADRO ROSA CENTRAL DEL TÍTULO */
+    .caja-titulo-header {
+      background-color: #F8BBD0 !important;
+      border: 3px solid #1A1A1A;
+      border-radius: 16px;
+      padding: 18px 34px;
+      text-align: center;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+      max-width: 720px;
+      width: 100%;
+    }
+
+    .caja-titulo-header h1 {
+      font-size: 2.1rem;
+      letter-spacing: 3px;
+      color: #1A1A1A !important;
+      text-transform: uppercase;
+      font-weight: 900;
+      line-height: 1.15;
+    }
+
+    .caja-titulo-header p {
+      color: #C2185B !important;
+      font-weight: bold;
+      font-size: 0.92rem;
+      margin-top: 8px;
+      letter-spacing: 0.8px;
+    }
+
+    /* CATÁLOGO SOBRE FONDO BLANCO */
     .contenedor-catalogo {
       max-width: 1280px;
-      margin: 20px auto;
+      margin: 25px auto;
       padding: 0 20px 60px 20px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 22px;
+      background-color: #FFFFFF !important;
     }
 
     .producto {
@@ -49,15 +88,14 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      box-shadow: 0 4px 10px rgba(233, 30, 99, 0.08);
+      box-shadow: 0 4px 14px rgba(233, 30, 99, 0.1);
     }
 
-    /* CARRUSEL DE FOTOS COMPLETA CON FLECHITAS */
     .galeria-box {
       position: relative;
       width: 100%;
       height: 310px;
-      background-color: #FFF5F8;
+      background-color: #FFF9FB;
       border-radius: 10px;
       margin-bottom: 10px;
       border: 1px solid #F8BBD0;
@@ -71,7 +109,6 @@
       height: 100%;
       object-fit: contain;
       cursor: zoom-in;
-      transition: transform 0.2s;
     }
     .btn-foto-nav {
       position: absolute;
@@ -109,7 +146,7 @@
       position: absolute;
       top: 6px;
       left: 8px;
-      background-color: rgba(255, 255, 255, 0.85);
+      background-color: rgba(255, 255, 255, 0.9);
       color: #C2185B;
       font-size: 0.7rem;
       font-weight: bold;
@@ -148,7 +185,7 @@
     }
     .btn-agregar:active { background-color: #E91E63 !important; }
 
-    /* VISOR PANTALLA COMPLETA (ZOOM AL TOCAR LA FOTO) */
+    /* VISOR PANTALLA COMPLETA */
     .visor-modal {
       display: none;
       position: fixed;
@@ -225,10 +262,7 @@
       align-items: center;
       gap: 4px;
     }
-    .btn-flecha-carrito span.icono-flecha {
-      font-size: 1.2rem;
-      color: #F8BBD0;
-    }
+    .btn-flecha-carrito span.icono-flecha { font-size: 1.2rem; color: #F8BBD0; }
 
     /* COLUMNA DERECHA DESPLEGABLE */
     .panel-lateral {
@@ -236,8 +270,8 @@
       top: 0;
       right: 0;
       width: 28%;
-      min-width: 330px;
-      max-width: 420px;
+      min-width: 340px;
+      max-width: 430px;
       height: 100vh;
       background-color: #FFFFFF !important;
       border-left: 3px solid #1A1A1A;
@@ -288,7 +322,7 @@
 
     #lista-carrito {
       list-style: none;
-      max-height: 180px;
+      max-height: 160px;
       overflow-y: auto;
       margin-bottom: 10px;
       border-bottom: 1px solid #E0E0E0;
@@ -320,14 +354,14 @@
       background-color: #FCE4EC !important;
       padding: 9px;
       border-radius: 8px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     .total-box span:last-child { color: #C2185B !important; }
 
     .titulo-seccion {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: bold;
-      margin: 10px 0 6px 0;
+      margin: 8px 0 6px 0;
       border-top: 1px solid #EEE;
       padding-top: 8px;
     }
@@ -341,6 +375,60 @@
       margin-bottom: 8px;
     }
 
+    /* DOS CUADRADITOS EXCLUSIVOS (A DOMICILIO / SUCURSAL) */
+    .grupo-cuadraditos {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .opcion-cuadradito {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #FFF5F8;
+      border: 1.5px solid #F8BBD0;
+      border-radius: 8px;
+      padding: 8px 10px;
+      cursor: pointer;
+      user-select: none;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+    .opcion-cuadradito.seleccionado {
+      border-color: #E91E63;
+      background-color: #FCE4EC;
+    }
+    .opcion-cuadradito span.texto-opcion {
+      font-size: 0.82rem;
+      font-weight: bold;
+      color: #1A1A1A;
+    }
+    .cajita-x {
+      width: 24px;
+      height: 24px;
+      border: 2px solid #1A1A1A;
+      background-color: #FFFFFF;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1rem;
+      color: #E91E63;
+      flex-shrink: 0;
+    }
+
+    .nota-pdf {
+      font-size: 0.76rem;
+      color: #555;
+      background-color: #F9F9F9;
+      padding: 7px;
+      border-radius: 6px;
+      border: 1px solid #E0E0E0;
+      margin-top: 8px;
+      text-align: center;
+    }
+
     .btn-wsp {
       background-color: #25D366 !important;
       color: #FFF !important;
@@ -348,7 +436,7 @@
       padding: 13px;
       width: 100%;
       border-radius: 8px;
-      font-size: 0.95rem;
+      font-size: 0.94rem;
       font-weight: bold;
       cursor: pointer;
       margin-top: 8px;
@@ -376,7 +464,10 @@
     }
     @media (max-width: 650px) {
       .contenedor-catalogo { grid-template-columns: 1fr; padding: 0 14px 60px 14px; }
-      .panel-lateral { width: 88%; min-width: 280px; }
+      .panel-lateral { width: 90%; min-width: 280px; }
+      .caja-titulo-header { padding: 14px 16px; }
+      .caja-titulo-header h1 { font-size: 1.5rem; letter-spacing: 2px; }
+      .caja-titulo-header p { font-size: 0.8rem; }
     }
   </style>
 </head>
@@ -384,7 +475,6 @@
 
   <div id="aviso-flotante" class="aviso-flotante">✓ Agregado al carrito</div>
 
-  <!-- VISOR DE FOTO EN GRANDE -->
   <div id="visor-modal" class="visor-modal" onclick="cerrarVisorFondo(event)">
     <button type="button" class="visor-cerrar" onclick="cerrarVisor()">✕ Cerrar</button>
     <img id="visor-img" src="" alt="Vista ampliada">
@@ -396,9 +486,10 @@
   </div>
 
   <header>
-    <img src="logo.jpg" alt="Logo Bella" onerror="this.style.display='none'">
-    <h1>BELLA</h1>
-    <p>FABRICANTE DIRECTO • COMPRA MÍNIMA $70.000</p>
+    <div class="caja-titulo-header">
+      <h1>BELLA INDUMENTARIA</h1>
+      <p>FABRICANTE DIRECTO • COMPRA MÍNIMA DE $70.000</p>
+    </div>
   </header>
 
   <button type="button" class="btn-flecha-carrito" onclick="togglePanel()">
@@ -444,13 +535,28 @@
       <input type="text" id="transporte-otro" placeholder="Ej: Andreani, Buspack, Expreso..." style="width:100%; padding:8px; border:1px solid #E91E63; border-radius:6px;">
     </div>
 
+    <div class="grupo-cuadraditos">
+      <div class="opcion-cuadradito" id="opt-domicilio" onclick="elegirModalidad('A Domicilio')">
+        <span class="texto-opcion">A Domicilio</span>
+        <div class="cajita-x" id="check-domicilio"></div>
+      </div>
+      <div class="opcion-cuadradito" id="opt-sucursal" onclick="elegirModalidad('Retira en Sucursal')">
+        <span class="texto-opcion">A Sucursal</span>
+        <div class="cajita-x" id="check-sucursal"></div>
+      </div>
+    </div>
+
     <div class="titulo-seccion">2. Tus Datos de Envío</div>
-    <div class="campo">
-      <input type="text" id="nombre" placeholder="Nombre y Apellido *">
+    <div class="fila-doble">
+      <div class="campo" style="flex:1;"><input type="text" id="nombre" placeholder="Nombre *"></div>
+      <div class="campo" style="flex:1;"><input type="text" id="apellido" placeholder="Apellido *"></div>
     </div>
     <div class="fila-doble">
-      <div class="campo" style="flex:1;"><input type="tel" id="celular" placeholder="Celular *"></div>
+      <div class="campo" style="flex:1;"><input type="tel" id="celular" placeholder="Teléfono / Cel *"></div>
       <div class="campo" style="flex:1;"><input type="text" id="dni" placeholder="DNI *"></div>
+    </div>
+    <div class="campo">
+      <input type="text" id="direccion" placeholder="Dirección (Calle y Altura) *">
     </div>
     <div class="fila-doble">
       <div class="campo" style="flex:1;"><input type="text" id="cp" placeholder="Código Postal *"></div>
@@ -460,31 +566,34 @@
       <input type="text" id="localidad" placeholder="Localidad *">
     </div>
 
-    <button type="button" id="btn-enviar" class="btn-wsp" onclick="enviarWhatsApp()" disabled>
+    <div class="nota-pdf">
+      📄 Al enviar, se descargará tu <strong>PDF de 2 hojas (Envío + Compra)</strong> y se abrirá WhatsApp para que lo adjuntes.
+    </div>
+
+    <button type="button" id="btn-enviar" class="btn-wsp" onclick="generarPDFyWhatsApp()" disabled>
       Faltan $70.000 para enviar
     </button>
   </aside>
-
   <script>
     const TELEFONO = "5491125748687";
     const MINIMO = 70000;
 
     // =========================================================
-    // LISTA DE PRODUCTOS (PODÉS PONER VARIAS FOTOS ENTRE [ ])
+    // LISTA DE PRODUCTOS
     // =========================================================
     const PRODUCTOS = [
       {
         id: 1,
         nombre: "Vestido Franchesca",
         precio: 15000,
-        fotos: ["franchesca.png"], // Si agregás más fotos: ["franchesca.png", "franchesca2.jpg"]
+        fotos: ["franchesca.png"],
         talles: ["Talle Único"],
         colores: ["Negro", "Choco", "Blanco", "Uva"]
       },
       {
         id: 2,
         nombre: "Marilyn Lunares",
-        precio: 6000,
+        precio: 15000,
         fotos: ["marilyn.jpg"],
         talles: ["Talle 2", "Talle 4"],
         colores: ["Negro", "Bordó", "Choco"]
@@ -492,7 +601,7 @@
       {
         id: 3,
         nombre: "Pollera Lunares",
-        precio: 5500,
+        precio: 15000,
         fotos: ["pollera.png"],
         talles: ["Talle Único"],
         colores: ["Negro", "Choco", "Uva"]
@@ -503,6 +612,27 @@
     let indiceFotoActual = {};
     let visorProdId = null;
     let visorFotoIdx = 0;
+    let modalidadSeleccionada = "";
+
+    function elegirModalidad(opcion) {
+      modalidadSeleccionada = opcion;
+      const boxDom = document.getElementById("opt-domicilio");
+      const boxSuc = document.getElementById("opt-sucursal");
+      const chkDom = document.getElementById("check-domicilio");
+      const chkSuc = document.getElementById("check-sucursal");
+
+      if (opcion === "A Domicilio") {
+        boxDom.classList.add("seleccionado");
+        boxSuc.classList.remove("seleccionado");
+        chkDom.textContent = "X";
+        chkSuc.textContent = "";
+      } else {
+        boxSuc.classList.add("seleccionado");
+        boxDom.classList.remove("seleccionado");
+        chkSuc.textContent = "X";
+        chkDom.textContent = "";
+      }
+    }
 
     function cargarCatalogo() {
       const cont = document.getElementById("catalogo");
@@ -546,16 +676,13 @@
     function cambiarFotoTarjeta(id, direccion) {
       const prod = PRODUCTOS.find(p => p.id === id);
       if (!prod || prod.fotos.length <= 1) return;
-
       let nuevoIdx = indiceFotoActual[id] + direccion;
       if (nuevoIdx < 0) nuevoIdx = prod.fotos.length - 1;
       if (nuevoIdx >= prod.fotos.length) nuevoIdx = 0;
-
       indiceFotoActual[id] = nuevoIdx;
       const imgEl = document.getElementById("img-prod-" + id);
       imgEl.style.display = "block";
       imgEl.src = prod.fotos[nuevoIdx];
-
       const contEl = document.getElementById("cont-foto-" + id);
       if (contEl) contEl.textContent = (nuevoIdx + 1) + " / " + prod.fotos.length;
     }
@@ -590,13 +717,8 @@
       actualizarVisor();
     }
 
-    function cerrarVisor() {
-      document.getElementById("visor-modal").classList.remove("activo");
-    }
-
-    function cerrarVisorFondo(e) {
-      if (e.target.id === "visor-modal") cerrarVisor();
-    }
+    function cerrarVisor() { document.getElementById("visor-modal").classList.remove("activo"); }
+    function cerrarVisorFondo(e) { if (e.target.id === "visor-modal") cerrarVisor(); }
 
     function togglePanel() {
       const panel = document.getElementById("panel-lateral");
@@ -668,10 +790,10 @@
       badgeTotal.textContent = "$" + total.toLocaleString('es-AR');
 
       if (total >= MINIMO) {
-        avisoMin.textContent = "¡Mínimo alcanzado! Ya podés enviar.";
+        avisoMin.textContent = "¡Mínimo alcanzado! Ya podés descargar y enviar.";
         avisoMin.classList.add("ok");
         btnEnviar.disabled = false;
-        btnEnviar.textContent = "Enviar Pedido por WhatsApp";
+        btnEnviar.textContent = "Descargar PDF y Enviar por WhatsApp";
       } else {
         const falta = MINIMO - total;
         avisoMin.textContent = "Compra mínima: $70.000 (Faltan $" + falta.toLocaleString('es-AR') + ")";
@@ -681,12 +803,31 @@
       }
     }
 
-    function enviarWhatsApp() {
+    function generarPDFyWhatsApp() {
+      const transpSel = document.getElementById("transporte").value;
+      const transpOtro = document.getElementById("transporte-otro").value.trim();
+
+      if (!transpSel) {
+        alert("Falta rellenar el casillero: Forma de Envío / Transporte");
+        document.getElementById("transporte").focus();
+        return;
+      }
+      if (transpSel === "Otro" && !transpOtro) {
+        alert("Falta rellenar el casillero: Escribí el transporte");
+        document.getElementById("transporte-otro").focus();
+        return;
+      }
+      if (!modalidadSeleccionada) {
+        alert("Por favor marcá uno de los cuadraditos: A Domicilio o A Sucursal.");
+        return;
+      }
+
       const campos = [
-        { id: "transporte", nombre: "Forma de Envío / Transporte" },
-        { id: "nombre", nombre: "Nombre y Apellido" },
-        { id: "celular", nombre: "Celular" },
+        { id: "nombre", nombre: "Nombre" },
+        { id: "apellido", nombre: "Apellido" },
+        { id: "celular", nombre: "Teléfono / Celular" },
         { id: "dni", nombre: "DNI" },
+        { id: "direccion", nombre: "Dirección" },
         { id: "cp", nombre: "Código Postal" },
         { id: "provincia", nombre: "Provincia" },
         { id: "localidad", nombre: "Localidad" }
@@ -701,35 +842,245 @@
         }
       }
 
-      const transpSel = document.getElementById("transporte").value;
-      const transpOtro = document.getElementById("transporte-otro").value.trim();
-      if (transpSel === "Otro" && !transpOtro) {
-        alert("Falta rellenar el casillero: Escribí el transporte");
-        document.getElementById("transporte-otro").focus();
-        return;
-      }
+      const transpFinal = transpSel === "Otro" ? transpOtro : transpSel;
+      const nombre = document.getElementById("nombre").value.trim();
+      const apellido = document.getElementById("apellido").value.trim();
+      const celular = document.getElementById("celular").value.trim();
+      const dni = document.getElementById("dni").value.trim();
+      const direccion = document.getElementById("direccion").value.trim();
+      const cp = document.getElementById("cp").value.trim();
+      const provincia = document.getElementById("provincia").value.trim();
+      const localidad = document.getElementById("localidad").value.trim();
 
-      const transpFinal = transpSel === "Otro" ? "Otro (" + transpOtro + ")" : transpSel;
-      let total = 0;
-      let msg = "¡Hola *BELLA Indumentaria*! Quiero hacer este pedido:\n\n*PRODUCTOS:*\n";
+      const ahora = new Date();
+      const fechaStr = ahora.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      const horaStr = ahora.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
 
-      carrito.forEach(i => {
-        const sub = i.precio * i.cant;
-        total += sub;
-        msg += `• ${i.cant}x ${i.nombre} | Color: ${i.color} | ${i.talle} - $${sub.toLocaleString('es-AR')}\n`;
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+      // HOJA 1: TALÓN DE ENVÍOS
+      doc.setDrawColor(26, 26, 26);
+      doc.setLineWidth(0.6);
+
+      doc.rect(12, 12, 186, 36);
+      doc.setFont("times", "bold");
+      doc.setFontSize(34);
+      doc.text("BELLA", 18, 30);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(9.5);
+      doc.text("FABRICANTE DIRECTO", 18, 36);
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(8.5);
+      doc.text("Campana 378 - Local A6", 18, 41);
+      doc.text("Galería Smart Campana - Flores", 18, 45);
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(10.5);
+      doc.text("Venta por Mayor y Menor", 105, 22, { align: "center" });
+      doc.text("Envíos al Interior", 105, 28, { align: "center" });
+      doc.setFontSize(9);
+      doc.text("Fecha: " + fechaStr + "  |  Hora: " + horaStr, 105, 38, { align: "center" });
+
+      doc.setFontSize(8.5);
+      doc.setFont("helvetica", "bold");
+      doc.text("Dany: 11-2574-8687", 145, 19);
+      doc.text("Isa: 11-6735-3960", 145, 24);
+      doc.setFont("helvetica", "normal");
+      doc.text("FB: BELLA Indumentaria", 145, 30);
+      doc.text("TK: bella.indumentaria", 145, 35);
+      doc.text("IG: bella.indumentariadama", 145, 40);
+
+      doc.rect(12, 52, 22, 130);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(22);
+      const letrasEnvio = ["E", "N", "V", "Í", "O", "S"];
+      letrasEnvio.forEach((letra, i) => {
+        doc.text(letra, 23, 72 + (i * 19), { align: "center" });
       });
 
-      msg += `\n*TOTAL: $${total.toLocaleString('es-AR')}*\n\n`;
-      msg += `*TRANSPORTE:* ${transpFinal}\n\n`;
-      msg += `*DATOS DE ENVÍO:*\n`;
-      msg += `• Nombre: ${document.getElementById("nombre").value.trim()}\n`;
-      msg += `• Celular: ${document.getElementById("celular").value.trim()}\n`;
-      msg += `• DNI: ${document.getElementById("dni").value.trim()}\n`;
-      msg += `• CP: ${document.getElementById("cp").value.trim()}\n`;
-      msg += `• Provincia: ${document.getElementById("provincia").value.trim()}\n`;
-      msg += `• Localidad: ${document.getElementById("localidad").value.trim()}\n`;
+      doc.rect(38, 52, 160, 130);
+      doc.setFontSize(11);
 
-      window.open("https://wa.me/" + TELEFONO + "?text=" + encodeURIComponent(msg), "_blank");
+      doc.setFont("helvetica", "bold");
+      doc.text("Nombre:", 43, 66);
+      doc.setFont("helvetica", "normal");
+      doc.text(nombre, 62, 66);
+      doc.line(60, 67, 115, 67);
+
+      doc.setFont("helvetica", "bold");
+      doc.text("Apellido:", 120, 66);
+      doc.setFont("helvetica", "normal");
+      doc.text(apellido, 139, 66);
+      doc.line(137, 67, 192, 67);
+
+      doc.setFont("helvetica", "bold");
+      doc.text("DNI:", 43, 84);
+      doc.setFont("helvetica", "normal");
+      doc.text(dni, 55, 84);
+      doc.line(53, 85, 115, 85);
+
+      doc.setFont("helvetica", "bold");
+      doc.text("Teléfono:", 120, 84);
+      doc.setFont("helvetica", "normal");
+      doc.text(celular, 140, 84);
+      doc.line(138, 85, 192, 85);
+
+      doc.setFont("helvetica", "bold");
+      doc.text("Dirección:", 43, 102);
+      doc.setFont("helvetica", "normal");
+      doc.text(direccion, 65, 102);
+      doc.line(63, 103, 192, 103);
+
+      doc.setFont("helvetica", "bold");
+      doc.text("Localidad:", 43, 120);
+      doc.setFont("helvetica", "normal");
+      doc.text(localidad, 65, 120);
+      doc.line(63, 121, 115, 121);
+
+      doc.setFont("helvetica", "bold");
+      doc.text("Provincia:", 120, 120);
+      doc.setFont("helvetica", "normal");
+      doc.text(provincia, 141, 120);
+      doc.line(139, 121, 192, 121);
+
+      doc.setFont("helvetica", "bold");
+      doc.text("Código Postal:", 43, 138);
+      doc.setFont("helvetica", "normal");
+      doc.text(cp, 73, 138);
+      doc.line(71, 139, 115, 139);
+
+      doc.setFont("helvetica", "bold");
+      doc.text("Transporte:", 120, 138);
+      doc.setFont("helvetica", "normal");
+      doc.text(transpFinal, 144, 138);
+      doc.line(142, 139, 192, 139);
+
+      doc.setFont("helvetica", "bold");
+      doc.text("A Domicilio", 95, 162);
+      doc.rect(120, 155, 12, 10);
+      if (modalidadSeleccionada === "A Domicilio") {
+        doc.setFontSize(14);
+        doc.text("X", 126, 162.5, { align: "center" });
+        doc.setFontSize(11);
+      }
+
+      doc.text("Retira en Sucursal", 140, 162);
+      doc.rect(178, 155, 12, 10);
+      if (modalidadSeleccionada === "Retira en Sucursal") {
+        doc.setFontSize(14);
+        doc.text("X", 184, 162.5, { align: "center" });
+        doc.setFontSize(11);
+      }
+
+      doc.setFontSize(8);
+      doc.setFont("helvetica", "normal");
+      doc.text("Documento no válido como factura", 43, 174);
+      // HOJA 2: ORDEN DE COMPRA / PRESUPUESTO
+      doc.addPage();
+
+      doc.rect(12, 12, 186, 42);
+      doc.setFont("times", "bold");
+      doc.setFontSize(32);
+      doc.text("BELLA", 18, 28);
+      doc.setFont("times", "italic");
+      doc.setFontSize(16);
+      doc.text("Indumentaria", 19, 35);
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(9.5);
+      doc.text("FABRICANTE DIRECTO", 105, 20, { align: "center" });
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(8.5);
+      doc.text("Venta por Mayor y Menor - Envíos al Interior", 105, 26, { align: "center" });
+      doc.setFont("helvetica", "bold");
+      doc.text("Campana 378 - Local A6", 105, 33, { align: "center" });
+      doc.text("Galería Smart Campana - Flores", 105, 38, { align: "center" });
+
+      doc.setFontSize(8);
+      doc.text("Dany: 11-2574-8687", 150, 18);
+      doc.text("Isa: 11-6735-3960", 150, 23);
+      doc.setFont("helvetica", "normal");
+      doc.text("FB: BELLA Indumentaria", 150, 29);
+      doc.text("TK: bella.indumentaria", 150, 34);
+      doc.text("IG: bella.indumentariadama", 150, 39);
+
+      doc.rect(12, 56, 186, 22);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(9.5);
+      doc.text("Señor/es: " + nombre + " " + apellido, 16, 63);
+      doc.text("Domicilio: " + direccion + " (" + localidad + ", " + provincia + ")", 16, 71);
+
+      doc.rect(142, 56, 56, 22);
+      doc.setFontSize(9);
+      doc.text("ORDEN DE COMPRA", 170, 62, { align: "center" });
+      doc.setFont("helvetica", "normal");
+      doc.text("Fecha: " + fechaStr, 146, 68);
+      doc.text("Hora: " + horaStr, 146, 74);
+
+      let total = 0;
+      const filasTabla = carrito.map(item => {
+        const sub = item.precio * item.cant;
+        total += sub;
+        return [
+          item.cant,
+          item.nombre + " (Color: " + item.color + " - " + item.talle + ")",
+          "$" + item.precio.toLocaleString('es-AR'),
+          "$" + sub.toLocaleString('es-AR')
+        ];
+      });
+
+      doc.autoTable({
+        startY: 82,
+        margin: { left: 12, right: 12 },
+        head: [['CANT.', 'DETALLE', 'P. UNIT.', 'IMPORTE']],
+        body: filasTabla,
+        theme: 'grid',
+        headStyles: {
+          fillColor:,
+          textColor:,
+          fontStyle: 'bold',
+          halign: 'center',
+          lineColor:,
+          lineWidth: 0.3
+        },
+        bodyStyles: {
+          textColor:,
+          lineColor:,
+          lineWidth: 0.3,
+          fontSize: 9.5
+        },
+        columnStyles: {
+          0: { halign: 'center', cellWidth: 20 },
+          1: { halign: 'left' },
+          2: { halign: 'right', cellWidth: 32 },
+          3: { halign: 'right', cellWidth: 35 }
+        }
+      });
+
+      const finalY = doc.lastAutoTable.finalY + 6;
+
+      doc.setFillColor(252, 228, 236);
+      doc.rect(130, finalY, 68, 12, 'FD');
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(11.5);
+      doc.text("TOTAL $", 135, finalY + 8);
+      doc.text(total.toLocaleString('es-AR'), 194, finalY + 8, { align: "right" });
+
+      doc.setFontSize(8);
+      doc.setFont("helvetica", "normal");
+      doc.text("Documento no válido como factura - BELLA Indumentaria", 14, finalY + 8);
+
+      const nombreArchivo = "Orden-Bella-" + nombre.replace(/\s+/g, '') + "-" + apellido.replace(/\s+/g, '') + ".pdf";
+      doc.save(nombreArchivo);
+
+      let msg = "¡Hola *BELLA Indumentaria*! 👋\n";
+      msg += "Acabo de generar mi orden de compra desde la web por un total de *$" + total.toLocaleString('es-AR') + "*.\n\n";
+      msg += "📎 *Te adjunto el archivo PDF (" + nombreArchivo + ")* con la hoja de envío y el detalle de mi pedido.";
+
+      setTimeout(() => {
+        window.open("https://wa.me/" + TELEFONO + "?text=" + encodeURIComponent(msg), "_blank");
+      }, 600);
     }
 
     cargarCatalogo();
