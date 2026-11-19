@@ -336,8 +336,8 @@
 
     const PRODUCTOS = [
       { id: 1, nombre: "Vestido Franchesca", precio: 15000, fotos: ["franchesca.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Blanco", "Uva"] },
-      { id: 2, nombre: "Marilyn Lunares", precio: 6000, fotos: ["marilyn.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Bordó", "Choco"] },
-      { id: 3, nombre: "Pollera Lunares", precio: 5500, fotos: ["pollera.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva"] },
+      { id: 2, nombre: "Marilyn Lunares", precio: 15000, fotos: ["marilyn.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Bordó", "Choco"] },
+      { id: 3, nombre: "Pollera Lunares", precio: 15000, fotos: ["pollera.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva"] },
       { id: 4, nombre: "Vestido Isa", precio: 13500, fotos: ["isa.jpg"], talles: ["Talle Único"], colores: ["Choco"] },
       { id: 5, nombre: "Pollera Volado de Tul", subtitulo: "Con lentejuela y short interno", precio: 9000, fotos: ["tul1.jpg", "tul2.jpg", "tul3.jpg"], talles: ["Talle Único"], colores: ["Negro", "Plateado", "Blanco"] },
       { id: 6, nombre: "Pollera Glitter", precio: 5000, fotos: ["glitter1.jpg", "glitter2.jpg", "glitter3.jpg"], talles: ["Talle Único"], colores: ["Negro", "Rojo", "Plateado"] },
@@ -378,7 +378,7 @@
       while (b64.length % 4) b64 += '=';
       const bin = atob(b64);
       const bytes = new Uint8Array(bin.length);
-      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      for (let i = 0; i < bin.length; i++) bytes.set([bin.charCodeAt(i)], i);
       return JSON.parse(new TextDecoder().decode(bytes));
     }
 
@@ -465,9 +465,10 @@
       const prod = PRODUCTOS.find(p => p.id === id);
       if (!prod || !prod.coloresPorTalle) return;
       const talleElegido = document.getElementById("tal-" + id).value;
-      const listaColores = prod.coloresPorTalle[talleElegido] || [];
+      const listaColores = prod.coloresPorTalle.hasOwnProperty(talleElegido) ? prod.coloresPorTalle.valueOf().constructor(prod.coloresPorTalle) : [];
+      const coloresFinales = Object.entries(prod.coloresPorTalle).find(par => par.at(0) === talleElegido)?.at(1) || [];
       const selectColor = document.getElementById("col-" + id);
-      selectColor.innerHTML = listaColores.map(c => `<option value="${c}">${c}</option>`).join('');
+      selectColor.innerHTML = coloresFinales.map(c => `<option value="${c}">${c}</option>`).join('');
     }
 
     function elegirModalidad(opcion) {
@@ -492,8 +493,7 @@
         indiceFotoActual[p.id] = 0;
         const tieneVarias = p.fotos.length > 1;
         const listaTalles = p.coloresPorTalle ? Object.keys(p.coloresPorTalle) : p.talles;
-        const primerTalle = listaTalles;
-        const listaColoresInicial = p.coloresPorTalle ? p.coloresPorTalle[primerTalle] : p.colores;
+        const listaColoresInicial = p.coloresPorTalle ? Object.values(p.coloresPorTalle).at(0) : p.colores;
 
         return `
         <div class="producto">
@@ -501,7 +501,7 @@
             <div class="galeria-box">
               <span class="tip-ampliar">🔍 Tocar para ampliar</span>
               ${tieneVarias ? `<button type="button" class="btn-foto-nav btn-foto-izq" onclick="cambiarFotoTarjeta(${p.id}, -1)">❮</button>` : ''}
-              <img id="img-prod-${p.id}" src="${p.fotos}" alt="${p.nombre}" onclick="abrirVisor(${p.id})" onerror="this.style.display='none'">
+              <img id="img-prod-${p.id}" src="${p.fotos.at(0)}" alt="${p.nombre}" onclick="abrirVisor(${p.id})" onerror="this.style.display='none'">
               ${tieneVarias ? `<button type="button" class="btn-foto-nav btn-foto-der" onclick="cambiarFotoTarjeta(${p.id}, 1)">❯</button>` : ''}
               ${tieneVarias ? `<span class="contador-fotos" id="cont-foto-${p.id}">1 / ${p.fotos.length}</span>` : ''}
             </div>
@@ -540,7 +540,7 @@
       if (nuevoIdx >= prod.fotos.length) nuevoIdx = 0;
       indiceFotoActual[id] = nuevoIdx;
       const imgEl = document.getElementById("img-prod-" + id);
-      imgEl.style.display = "block"; imgEl.src = prod.fotos[nuevoIdx];
+      imgEl.style.display = "block"; imgEl.src = prod.fotos.at(nuevoIdx);
       const contEl = document.getElementById("cont-foto-" + id);
       if (contEl) contEl.textContent = (nuevoIdx + 1) + " / " + prod.fotos.length;
     }
@@ -555,7 +555,7 @@
 
     function actualizarVisor() {
       const prod = PRODUCTOS.find(p => p.id === visorProdId);
-      document.getElementById("visor-img").src = prod.fotos[visorFotoIdx];
+      document.getElementById("visor-img").src = prod.fotos.at(visorFotoIdx);
       const controles = document.getElementById("visor-controles");
       if (prod.fotos.length > 1) {
         controles.style.display = "flex";
@@ -689,12 +689,8 @@
         const sub = item.precio * item.cant;
         subtotal += sub;
         itemsCortos.push({
-          c: item.cant,
-          n: item.nombre,
-          col: item.color,
-          t: item.talle,
-          p: item.precio.toLocaleString('es-AR'),
-          s: sub.toLocaleString('es-AR')
+          c: item.cant, n: item.nombre, col: item.color, t: item.talle,
+          p: item.precio.toLocaleString('es-AR'), s: sub.toLocaleString('es-AR')
         });
         detalleWsp += `• ${item.cant}x ${item.nombre} | Color: ${item.color} | ${item.talle} - $${sub.toLocaleString('es-AR')}\n`;
       });
