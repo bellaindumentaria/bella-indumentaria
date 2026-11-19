@@ -610,14 +610,8 @@
         total: totalFinal.toLocaleString('es-AR')
       };
 
-      // 1. ENVÍA EL PDF DE 2 HOJAS A TU GMAIL EN SEGUNDO PLANO
-      fetch(URL_SCRIPT_PDF, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(datosEnvio)
-      });
-
+           const imgEnvio = new Image();
+      imgEnvio.src = URL_SCRIPT_PDF + "?datos=" + encodeURIComponent(JSON.stringify(datosEnvio));
       // 2. ESPERA 1.5 SEGUNDOS Y ABRE WHATSAPP DIRECTO
       setTimeout(() => {
         let msg = "¡Hola *BELLA Indumentaria*! 👋 Quiero realizar el siguiente pedido:\n\n";
