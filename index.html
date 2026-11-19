@@ -200,6 +200,32 @@
 
     .aviso-flotante { position: fixed; top: 15px; left: 50%; transform: translateX(-50%); background-color: #1A1A1A; color: #FFF; border: 2px solid #E91E63; padding: 9px 18px; border-radius: 20px; font-size: 0.88rem; font-weight: bold; z-index: 3000; display: none; }
 
+    /* ESTILOS DE LA VISTA DE COMPROBANTE DE 2 HOJAS (CUANDO SE ABRE EL LINK) */
+    #vista-comprobante { max-width: 800px; margin: 20px auto; padding: 20px; background: #FFF; }
+    .barra-imprimir { display: flex; justify-content: space-between; align-items: center; background: #FCE4EC; border: 2px solid #E91E63; padding: 12px 16px; border-radius: 10px; margin-bottom: 20px; }
+    .btn-imprimir-pdf { background: #E91E63; color: #FFF; border: none; padding: 10px 18px; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; }
+    .btn-volver-tienda { background: #1A1A1A; color: #FFF; border: none; padding: 10px 14px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; cursor: pointer; }
+    .hoja-pdf { border: 2px solid #1A1A1A; padding: 18px; margin-bottom: 25px; background: #FFF; }
+    .pdf-header { width: 100%; border-collapse: collapse; border: 2px solid #1A1A1A; margin-bottom: 14px; }
+    .pdf-header td { padding: 8px; vertical-align: middle; }
+    .pdf-logo { font-family: Georgia, serif; font-size: 30px; font-weight: bold; }
+    .pdf-envios { width: 100%; border-collapse: collapse; }
+    .pdf-vertical { width: 45px; border: 2px solid #1A1A1A; text-align: center; font-size: 20px; font-weight: bold; line-height: 1.5; }
+    .pdf-datos { border: 2px solid #1A1A1A; padding: 16px; }
+    .pdf-linea { margin-bottom: 14px; font-size: 13px; border-bottom: 1px solid #1A1A1A; padding-bottom: 3px; }
+    .pdf-casilla { display: inline-block; width: 24px; height: 20px; border: 2px solid #1A1A1A; text-align: center; font-weight: bold; font-size: 15px; margin-left: 6px; vertical-align: middle; }
+    .pdf-tabla { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    .pdf-tabla th { background: #F8BBD0; border: 1.5px solid #1A1A1A; padding: 8px; font-size: 12px; }
+    .pdf-tabla td { border: 1.5px solid #1A1A1A; padding: 8px; font-size: 12px; }
+    .pdf-total { margin-top: 14px; float: right; border: 2px solid #1A1A1A; background: #FCE4EC; padding: 8px 18px; font-size: 15px; font-weight: bold; }
+
+    @media print {
+      .no-imprimir { display: none !important; }
+      #vista-comprobante { margin: 0; padding: 0; max-width: 100%; }
+      .hoja-pdf { border: none; padding: 0; margin: 0; }
+      .salto-pagina { page-break-before: always; }
+    }
+
     @media (max-width: 950px) { .contenedor-catalogo { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 650px) {
       .contenedor-catalogo { grid-template-columns: 1fr; padding: 0 14px 60px 14px; }
@@ -212,97 +238,102 @@
 </head>
 <body>
 
-  <div id="aviso-flotante" class="aviso-flotante">✓ Agregado al carrito</div>
+  <!-- VISTA OCULTA QUE SE ACTIVA SOLO CUANDO ABRÍS EL LINK DESDE TU WHATSAPP -->
+  <div id="vista-comprobante" style="display:none;"></div>
 
-  <div id="visor-modal" class="visor-modal" onclick="cerrarVisorFondo(event)">
-    <button type="button" class="visor-cerrar" onclick="cerrarVisor()">✕ Cerrar</button>
-    <img id="visor-img" src="" alt="Vista ampliada">
-    <div class="visor-controles" id="visor-controles">
-      <button type="button" class="visor-btn" onclick="cambiarFotoVisor(-1)">◀ Anterior</button>
-      <span id="visor-contador">1 / 1</span>
-      <button type="button" class="visor-btn" onclick="cambiarFotoVisor(1)">Siguiente ▶</button>
+  <!-- VISTA NORMAL DE LA TIENDA PARA CLIENTAS -->
+  <div id="vista-tienda">
+    <div id="aviso-flotante" class="aviso-flotante">✓ Agregado al carrito</div>
+
+    <div id="visor-modal" class="visor-modal" onclick="cerrarVisorFondo(event)">
+      <button type="button" class="visor-cerrar" onclick="cerrarVisor()">✕ Cerrar</button>
+      <img id="visor-img" src="" alt="Vista ampliada">
+      <div class="visor-controles" id="visor-controles">
+        <button type="button" class="visor-btn" onclick="cambiarFotoVisor(-1)">◀ Anterior</button>
+        <span id="visor-contador">1 / 1</span>
+        <button type="button" class="visor-btn" onclick="cambiarFotoVisor(1)">Siguiente ▶</button>
+      </div>
     </div>
+
+    <header>
+      <div class="caja-titulo-header">
+        <h1>BELLA INDUMENTARIA</h1>
+        <p>FABRICANTE DIRECTO • COMPRA MÍNIMA DE $70.000</p>
+      </div>
+    </header>
+
+    <button type="button" class="btn-flecha-carrito" onclick="togglePanel()">
+      <span class="icono-flecha" id="flecha-icono">◀</span>
+      <span>Pedido</span>
+      <span id="badge-total" style="font-size:0.78rem; color:#F8BBD0;">$0</span>
+    </button>
+
+    <main class="contenedor-catalogo" id="catalogo"></main>
+
+    <aside class="panel-lateral" id="panel-lateral">
+      <div class="panel-header">
+        <h2>Tu Pedido 🛒</h2>
+        <button type="button" class="btn-cerrar-panel" onclick="togglePanel()">Cerrar ▶</button>
+      </div>
+
+      <div id="aviso-minimo" class="aviso-minimo">Compra mínima: $70.000 (Faltan $70.000)</div>
+
+      <ul id="lista-carrito"><li style="color:#777; justify-content:center;">Tu carrito está vacío</li></ul>
+
+      <div class="resumen-costos">
+        <div class="fila-costo"><span>Prendas:</span><span id="subtotal-texto">$0</span></div>
+        <div class="fila-costo"><span>Embalaje y traslado:</span><span>$4.000</span></div>
+        <div class="fila-costo total-final"><span>Total Final:</span><span id="total-texto">$4.000</span></div>
+      </div>
+
+      <div class="titulo-seccion">1. Forma de Envío / Transporte</div>
+      <div class="campo">
+        <select id="transporte" onchange="verOtroTransporte()">
+          <option value="">-- Seleccioná transporte --</option>
+          <option value="Vía Cargo">Vía Cargo</option>
+          <option value="Correo Argentino">Correo Argentino</option>
+          <option value="Micro">Micro</option>
+          <option value="Otro">Opcional (Escribir transporte)</option>
+        </select>
+      </div>
+
+      <div class="caja-otro" id="caja-otro">
+        <label style="font-size:0.8rem; font-weight:bold; color:#C2185B; display:block; margin-bottom:4px;">Escribí el transporte:</label>
+        <input type="text" id="transporte-otro" placeholder="Ej: Andreani, Buspack, Expreso..." style="width:100%; padding:8px; border:1px solid #E91E63; border-radius:6px;">
+      </div>
+
+      <div class="grupo-cuadraditos">
+        <div class="opcion-cuadradito" id="opt-domicilio" onclick="elegirModalidad('A Domicilio')">
+          <span class="texto-opcion">A Domicilio</span>
+          <div class="cajita-x" id="check-domicilio"></div>
+        </div>
+        <div class="opcion-cuadradito" id="opt-sucursal" onclick="elegirModalidad('Retira en Sucursal')">
+          <span class="texto-opcion">A Sucursal</span>
+          <div class="cajita-x" id="check-sucursal"></div>
+        </div>
+      </div>
+
+      <div class="titulo-seccion">2. Tus Datos de Envío</div>
+      <div class="fila-doble">
+        <div class="campo" style="flex:1;"><input type="text" id="nombre" placeholder="Nombre *"></div>
+        <div class="campo" style="flex:1;"><input type="text" id="apellido" placeholder="Apellido *"></div>
+      </div>
+      <div class="fila-doble">
+        <div class="campo" style="flex:1;"><input type="tel" id="celular" placeholder="Teléfono / Cel *"></div>
+        <div class="campo" style="flex:1;"><input type="text" id="dni" placeholder="DNI *"></div>
+      </div>
+      <div class="campo"><input type="text" id="direccion" placeholder="Dirección (Calle y Altura) *"></div>
+      <div class="fila-doble">
+        <div class="campo" style="flex:1;"><input type="text" id="cp" placeholder="Código Postal *"></div>
+        <div class="campo" style="flex:1.5;"><input type="text" id="provincia" placeholder="Provincia *"></div>
+      </div>
+      <div class="campo"><input type="text" id="localidad" placeholder="Localidad *"></div>
+
+      <button type="button" id="btn-enviar" class="btn-wsp" onclick="enviarPedido()" disabled>Faltan $70.000 para enviar</button>
+    </aside>
   </div>
-
-  <header>
-    <div class="caja-titulo-header">
-      <h1>BELLA INDUMENTARIA</h1>
-      <p>FABRICANTE DIRECTO • COMPRA MÍNIMA DE $70.000</p>
-    </div>
-  </header>
-
-  <button type="button" class="btn-flecha-carrito" onclick="togglePanel()">
-    <span class="icono-flecha" id="flecha-icono">◀</span>
-    <span>Pedido</span>
-    <span id="badge-total" style="font-size:0.78rem; color:#F8BBD0;">$0</span>
-  </button>
-
-  <main class="contenedor-catalogo" id="catalogo"></main>
-
-  <aside class="panel-lateral" id="panel-lateral">
-    <div class="panel-header">
-      <h2>Tu Pedido 🛒</h2>
-      <button type="button" class="btn-cerrar-panel" onclick="togglePanel()">Cerrar ▶</button>
-    </div>
-
-    <div id="aviso-minimo" class="aviso-minimo">Compra mínima: $70.000 (Faltan $70.000)</div>
-
-    <ul id="lista-carrito"><li style="color:#777; justify-content:center;">Tu carrito está vacío</li></ul>
-
-    <div class="resumen-costos">
-      <div class="fila-costo"><span>Prendas:</span><span id="subtotal-texto">$0</span></div>
-      <div class="fila-costo"><span>Embalaje y traslado:</span><span>$4.000</span></div>
-      <div class="fila-costo total-final"><span>Total Final:</span><span id="total-texto">$4.000</span></div>
-    </div>
-
-    <div class="titulo-seccion">1. Forma de Envío / Transporte</div>
-    <div class="campo">
-      <select id="transporte" onchange="verOtroTransporte()">
-        <option value="">-- Seleccioná transporte --</option>
-        <option value="Vía Cargo">Vía Cargo</option>
-        <option value="Correo Argentino">Correo Argentino</option>
-        <option value="Micro">Micro</option>
-        <option value="Otro">Opcional (Escribir transporte)</option>
-      </select>
-    </div>
-
-    <div class="caja-otro" id="caja-otro">
-      <label style="font-size:0.8rem; font-weight:bold; color:#C2185B; display:block; margin-bottom:4px;">Escribí el transporte:</label>
-      <input type="text" id="transporte-otro" placeholder="Ej: Andreani, Buspack, Expreso..." style="width:100%; padding:8px; border:1px solid #E91E63; border-radius:6px;">
-    </div>
-
-    <div class="grupo-cuadraditos">
-      <div class="opcion-cuadradito" id="opt-domicilio" onclick="elegirModalidad('A Domicilio')">
-        <span class="texto-opcion">A Domicilio</span>
-        <div class="cajita-x" id="check-domicilio"></div>
-      </div>
-      <div class="opcion-cuadradito" id="opt-sucursal" onclick="elegirModalidad('Retira en Sucursal')">
-        <span class="texto-opcion">A Sucursal</span>
-        <div class="cajita-x" id="check-sucursal"></div>
-      </div>
-    </div>
-
-    <div class="titulo-seccion">2. Tus Datos de Envío</div>
-    <div class="fila-doble">
-      <div class="campo" style="flex:1;"><input type="text" id="nombre" placeholder="Nombre *"></div>
-      <div class="campo" style="flex:1;"><input type="text" id="apellido" placeholder="Apellido *"></div>
-    </div>
-    <div class="fila-doble">
-      <div class="campo" style="flex:1;"><input type="tel" id="celular" placeholder="Teléfono / Cel *"></div>
-      <div class="campo" style="flex:1;"><input type="text" id="dni" placeholder="DNI *"></div>
-    </div>
-    <div class="campo"><input type="text" id="direccion" placeholder="Dirección (Calle y Altura) *"></div>
-    <div class="fila-doble">
-      <div class="campo" style="flex:1;"><input type="text" id="cp" placeholder="Código Postal *"></div>
-      <div class="campo" style="flex:1.5;"><input type="text" id="provincia" placeholder="Provincia *"></div>
-    </div>
-    <div class="campo"><input type="text" id="localidad" placeholder="Localidad *"></div>
-
-    <button type="button" id="btn-enviar" class="btn-wsp" onclick="enviarPedido()" disabled>Faltan $70.000 para enviar</button>
-  </aside>
   <script>
     const TELEFONO = "5491125748687";
-    const URL_SCRIPT_PDF = "https://script.google.com/macros/s/AKfycbwJzFIIuNLdr8vOHzwaYZkqeC81DPHQuNAgTHwUE6Q0RFxgocKrGXF-49Dm5tQclzsD3Q/exec";
     const MINIMO = 70000;
     const EMBALAJE = 4000;
 
@@ -341,6 +372,147 @@
     let visorProdId = null;
     let visorFotoIdx = 0;
     let modalidadSeleccionada = "";
+
+    function codificarDatos(obj) {
+      const jsonStr = JSON.stringify(obj);
+      const bytes = new TextEncoder().encode(jsonStr);
+      let bin = "";
+      bytes.forEach(b => bin += String.fromCharCode(b));
+      return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
+
+    function decodificarDatos(str) {
+      let b64 = str.replace(/-/g, '+').replace(/_/g, '/');
+      while (b64.length % 4) b64 += '=';
+      const bin = atob(b64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      return JSON.parse(new TextDecoder().decode(bytes));
+    }
+
+    function verificarModoComprobante() {
+      const params = new URLSearchParams(window.location.search);
+      const codigoOrden = params.get("orden");
+      if (!codigoOrden) {
+        cargarCatalogo();
+        return;
+      }
+
+      try {
+        const d = decodificarDatos(codigoOrden);
+        document.getElementById("vista-tienda").style.display = "none";
+        const cont = document.getElementById("vista-comprobante");
+        cont.style.display = "block";
+
+        let filasHtml = d.items.map(it => `
+          <tr>
+            <td style="text-align:center;">${it.c}</td>
+            <td>${it.n} (Color: ${it.col} - ${it.t})</td>
+            <td style="text-align:right;">$${it.p}</td>
+            <td style="text-align:right;">$${it.s}</td>
+          </tr>
+        `).join("");
+
+        cont.innerHTML = `
+          <div class="barra-imprimir no-imprimir">
+            <button type="button" class="btn-imprimir-pdf" onclick="window.print()">🖨️ Imprimir / Guardar PDF (2 Hojas)</button>
+            <button type="button" class="btn-volver-tienda" onclick="window.location.href=window.location.pathname">Ir a la Tienda</button>
+          </div>
+
+          <!-- HOJA 1: TALÓN DE ENVÍOS -->
+          <div class="hoja-pdf">
+            <table class="pdf-header">
+              <tr>
+                <td style="width: 38%;">
+                  <div class="pdf-logo">BELLA</div>
+                  <div style="font-size:11px; font-weight:bold;">FABRICANTE DIRECTO</div>
+                  <div style="font-size:10px;">Campana 378 - Local A6<br>Galería Smart Campana - Flores</div>
+                </td>
+                <td style="width: 34%; text-align: center;">
+                  <div style="font-weight:bold; font-size:13px;">Venta por Mayor y Menor<br>Envíos al Interior</div>
+                  <div style="font-size:11px; margin-top:6px;">Fecha: ${d.f}<br>Hora: ${d.h}</div>
+                </td>
+                <td style="width: 28%; font-size: 10px;">
+                  <b>Dany: 11-2574-8687<br>Isa: 11-6735-3960</b><br>
+                  FB: BELLA Indumentaria<br>TK: bella.indumentaria<br>IG: bella.indumentariadama
+                </td>
+              </tr>
+            </table>
+
+            <table class="pdf-envios">
+              <tr>
+                <td class="pdf-vertical">E<br>N<br>V<br>Í<br>O<br>S</td>
+                <td style="width: 12px;"></td>
+                <td class="pdf-datos">
+                  <div class="pdf-linea"><b>Nombre:</b> ${d.nom} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Apellido:</b> ${d.ape}</div>
+                  <div class="pdf-linea"><b>DNI:</b> ${d.dni} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Teléfono:</b> ${d.cel}</div>
+                  <div class="pdf-linea"><b>Dirección:</b> ${d.dir}</div>
+                  <div class="pdf-linea"><b>Localidad:</b> ${d.loc} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Provincia:</b> ${d.prov}</div>
+                  <div class="pdf-linea"><b>Código Postal:</b> ${d.cp} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Transporte:</b> ${d.tr}</div>
+                  <div style="margin-top: 22px; text-align: right; font-size: 13px; font-weight: bold;">
+                    A Domicilio <span class="pdf-casilla">${d.mod === 'A Domicilio' ? 'X' : '&nbsp;'}</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    Retira en Sucursal <span class="pdf-casilla">${d.mod === 'Retira en Sucursal' ? 'X' : '&nbsp;'}</span>
+                  </div>
+                  <div style="margin-top: 18px; font-size: 10px; color: #555;">Documento no válido como factura</div>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- HOJA 2: ORDEN DE COMPRA -->
+          <div class="hoja-pdf salto-pagina">
+            <table class="pdf-header">
+              <tr>
+                <td style="width: 35%;">
+                  <div class="pdf-logo">BELLA</div>
+                  <div style="font-family: Georgia, serif; font-style: italic; font-size: 17px;">Indumentaria</div>
+                </td>
+                <td style="width: 37%; text-align: center;">
+                  <div style="font-size:11px; font-weight:bold;">FABRICANTE DIRECTO</div>
+                  <div style="font-size:10px;">Venta por Mayor y Menor - Envíos al Interior<br><b>Campana 378 - Local A6<br>Galería Smart Campana - Flores</b></div>
+                </td>
+                <td style="width: 28%; font-size: 10px;">
+                  <b>Dany: 11-2574-8687<br>Isa: 11-6735-3960</b><br>
+                  FB: BELLA Indumentaria<br>TK: bella.indumentaria<br>IG: bella.indumentariadama
+                </td>
+              </tr>
+            </table>
+
+            <div style="border: 2px solid #1A1A1A; padding: 12px; margin-bottom: 12px; font-size: 12px;">
+              <b>ORDEN DE COMPRA</b> &nbsp;|&nbsp; <b>Fecha:</b> ${d.f} &nbsp;|&nbsp; <b>Hora:</b> ${d.h}<br><br>
+              <b>Señor/es:</b> ${d.nom} ${d.ape}<br>
+              <b>Domicilio:</b> ${d.dir} (${d.loc}, ${d.prov})
+            </div>
+
+            <table class="pdf-tabla">
+              <thead>
+                <tr>
+                  <th style="width: 12%;">CANT.</th>
+                  <th style="width: 52%;">DETALLE</th>
+                  <th style="width: 18%;">P. UNIT.</th>
+                  <th style="width: 18%;">IMPORTE</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${filasHtml}
+                <tr>
+                  <td style="text-align:center;">1</td>
+                  <td><b>Embalaje y Traslado</b></td>
+                  <td style="text-align:right;">$4.000</td>
+                  <td style="text-align:right;">$4.000</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="pdf-total">TOTAL FINAL: $${d.tot}</div>
+            <div style="clear: both; padding-top: 18px; font-size: 10px; color: #555;">Documento no válido como factura - BELLA Indumentaria</div>
+          </div>
+        `;
+      } catch (err) {
+        cargarCatalogo();
+      }
+    }
 
     function elegirModalidad(opcion) {
       modalidadSeleccionada = opcion;
@@ -485,7 +657,6 @@
       carrito.splice(idx, 1);
       actualizarCarrito();
     }
-
     function actualizarCarrito() {
       const lista = document.getElementById("lista-carrito");
       const subtotalTxt = document.getElementById("subtotal-texto");
@@ -565,7 +736,7 @@
       const fechaStr = ahora.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
       const horaStr = ahora.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
 
-            let subtotal = 0;
+      let subtotal = 0;
       let itemsCortos = [];
       let detalleWsp = "";
 
@@ -585,54 +756,49 @@
 
       const totalFinal = subtotal + EMBALAJE;
 
-      const btn = document.getElementById("btn-enviar");
-      btn.disabled = true;
-      btn.textContent = "Enviando orden...";
-
-      const datosEnvio = {
-        fecha: fechaStr,
-        hora: horaStr,
-        nombre: nombre,
-        apellido: apellido,
+      const paqueteOrden = {
+        f: fechaStr,
+        h: horaStr,
+        nom: nombre,
+        ape: apellido,
         dni: dni,
-        celular: celular,
-        direccion: direccion,
-        localidad: localidad,
-        provincia: provincia,
+        cel: celular,
+        dir: direccion,
+        loc: localidad,
+        prov: provincia,
         cp: cp,
-        transporte: transpFinal,
-        modalidad: modalidadSeleccionada,
+        tr: transpFinal,
+        mod: modalidadSeleccionada,
         items: itemsCortos,
-        total: totalFinal.toLocaleString('es-AR')
+        tot: totalFinal.toLocaleString('es-AR')
       };
 
-      const imgEnvio = new Image();
-      imgEnvio.src = URL_SCRIPT_PDF + "?datos=" + encodeURIComponent(JSON.stringify(datosEnvio));
+      const urlBase = window.location.origin + window.location.pathname;
+      const linkPdfComprobante = urlBase + "?orden=" + codificarDatos(paqueteOrden);
 
-      // 2. ESPERA 1.5 SEGUNDOS Y ABRE WHATSAPP DIRECTO
-      setTimeout(() => {
-        let msg = "¡Hola *BELLA Indumentaria*! 👋 Quiero realizar el siguiente pedido:\n\n";
-        msg += "*ORDEN DE COMPRA (" + fechaStr + " " + horaStr + "):*\n";
-        msg += detalleWsp;
-        msg += "• Embalaje y traslado: $4.000\n";
-        msg += "\n*TOTAL FINAL A PAGAR: $" + totalFinal.toLocaleString('es-AR') + "*\n\n";
-        msg += "*FORMA DE ENVÍO:*\n";
-        msg += "• Transporte: " + transpFinal + "\n";
-        msg += "• Modalidad: " + modalidadSeleccionada + "\n\n";
-        msg += "*DATOS DEL CLIENTE:*\n";
-        msg += "• Nombre: " + nombre + " " + apellido + "\n";
-        msg += "• DNI: " + dni + "\n";
-        msg += "• Teléfono: " + celular + "\n";
-        msg += "• Dirección: " + direccion + "\n";
-        msg += "• Localidad: " + localidad + " (CP: " + cp + ")\n";
-        msg += "• Provincia: " + provincia + "\n";
+      let msg = "¡Hola *BELLA Indumentaria*! 👋 Quiero realizar el siguiente pedido:\n\n";
+      msg += "*ORDEN DE COMPRA (" + fechaStr + " " + horaStr + "):*\n";
+      msg += detalleWsp;
+      msg += "• Embalaje y traslado: $4.000\n";
+      msg += "\n*TOTAL FINAL A PAGAR: $" + totalFinal.toLocaleString('es-AR') + "*\n\n";
+      msg += "*FORMA DE ENVÍO:*\n";
+      msg += "• Transporte: " + transpFinal + "\n";
+      msg += "• Modalidad: " + modalidadSeleccionada + "\n\n";
+      msg += "*DATOS DEL CLIENTE:*\n";
+      msg += "• Nombre: " + nombre + " " + apellido + "\n";
+      msg += "• DNI: " + dni + "\n";
+      msg += "• Teléfono: " + celular + "\n";
+      msg += "• Dirección: " + direccion + "\n";
+      msg += "• Localidad: " + localidad + " (CP: " + cp + ")\n";
+      msg += "• Provincia: " + provincia + "\n\n";
+      msg += "📄 *ABRIR TALÓN DE ENVÍO Y ORDEN (PDF 2 HOJAS):*\n";
+      msg += linkPdfComprobante;
 
-        const urlWsp = ["https:/", "/api.", "whatsapp", ".com/send?phone="].join("") + TELEFONO + "&text=" + encodeURIComponent(msg);
-        window.location.href = urlWsp;
-      }, 1500);
+      const urlWsp = ["https:/", "/api.", "whatsapp", ".com/send?phone="].join("") + TELEFONO + "&text=" + encodeURIComponent(msg);
+      window.location.href = urlWsp;
     }
 
-    cargarCatalogo();
+    verificarModoComprobante();
   </script>
 </body>
 </html>
