@@ -547,11 +547,9 @@
         total: total.toLocaleString('es-AR')
       };
 
-      fetch(URL_SCRIPT_PDF, {
-        method: "POST",
-        mode: "no-cors",
-        body: JSON.stringify(datosEnvio)
-           });
+           const paquete = new Blob([JSON.stringify(datosEnvio)], { type: "text/plain;charset=utf-8" });
+      navigator.sendBeacon(URL_SCRIPT_PDF, paquete);
+ 
 
       setTimeout(() => {
 
