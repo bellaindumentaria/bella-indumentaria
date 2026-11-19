@@ -178,12 +178,14 @@
     .aviso-minimo { background-color: #FFF0F5 !important; border: 1px dashed #E91E63; color: #C2185B !important; padding: 8px; border-radius: 8px; font-size: 0.82rem; font-weight: bold; text-align: center; margin-bottom: 10px; }
     .aviso-minimo.ok { background-color: #E8F5E9 !important; border: 1px solid #4CAF50; color: #2E7D32 !important; }
 
-    #lista-carrito { list-style: none; max-height: 160px; overflow-y: auto; margin-bottom: 10px; border-bottom: 1px solid #E0E0E0; padding-bottom: 6px; }
+    #lista-carrito { list-style: none; max-height: 150px; overflow-y: auto; margin-bottom: 10px; border-bottom: 1px solid #E0E0E0; padding-bottom: 6px; }
     #lista-carrito li { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #F2F2F2; font-size: 0.84rem; }
     .btn-x { background-color: #FF4D4D; color: #FFF; border: none; border-radius: 4px; padding: 3px 7px; cursor: pointer; font-weight: bold; }
 
-    .total-box { display: flex; justify-content: space-between; font-size: 1.15rem; font-weight: bold; background-color: #FCE4EC !important; padding: 9px; border-radius: 8px; margin-bottom: 10px; }
-    .total-box span:last-child { color: #C2185B !important; }
+    .resumen-costos { background-color: #FCE4EC !important; padding: 9px; border-radius: 8px; margin-bottom: 10px; font-size: 0.88rem; }
+    .fila-costo { display: flex; justify-content: space-between; margin-bottom: 4px; }
+    .fila-costo.total-final { font-size: 1.1rem; font-weight: bold; border-top: 1px solid #F48FB1; padding-top: 5px; margin-top: 4px; margin-bottom: 0; }
+    .fila-costo.total-final span:last-child { color: #C2185B !important; }
 
     .titulo-seccion { font-size: 0.88rem; font-weight: bold; margin: 8px 0 6px 0; border-top: 1px solid #EEE; padding-top: 8px; }
     .caja-otro { display: none; background-color: #FFF0F5; padding: 8px; border-radius: 8px; border: 1px solid #E91E63; margin-bottom: 8px; }
@@ -247,7 +249,11 @@
 
     <ul id="lista-carrito"><li style="color:#777; justify-content:center;">Tu carrito está vacío</li></ul>
 
-    <div class="total-box"><span>Total:</span><span id="total-texto">$0</span></div>
+    <div class="resumen-costos">
+      <div class="fila-costo"><span>Prendas:</span><span id="subtotal-texto">$0</span></div>
+      <div class="fila-costo"><span>Embalaje y traslado:</span><span>$4.000</span></div>
+      <div class="fila-costo total-final"><span>Total Final:</span><span id="total-texto">$4.000</span></div>
+    </div>
 
     <div class="titulo-seccion">1. Forma de Envío / Transporte</div>
     <div class="campo">
@@ -294,11 +300,14 @@
 
     <button type="button" id="btn-enviar" class="btn-wsp" onclick="enviarPedidoCompleto()" disabled>Faltan $70.000 para enviar</button>
   </aside>
+
+  <iframe name="iframe-pdf-bella" id="iframe-pdf-bella" style="display:none;"></iframe>
   <script>
     const TELEFONO = "5491125748687";
-        const URL_SCRIPT_PDF = "https://script.google.com/macros/s/" +
+    const URL_SCRIPT_PDF = "https://google.com" +
       "AKfycbwJzFIluNLdr8vOHzwaYZkqeC81DPHQuNAgTHwUE6Q0RFxgocKrGXF-49Dm5tQcIzsD3Q/exec";
     const MINIMO = 70000;
+    const EMBALAJE = 4000;
 
     const PRODUCTOS = [
       { id: 1, nombre: "Vestido Franchesca", precio: 15000, fotos: ["franchesca.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Blanco", "Uva"] },
@@ -339,7 +348,7 @@
             <div class="galeria-box">
               <span class="tip-ampliar">🔍 Tocar para ampliar</span>
               ${tieneVarias ? `<button type="button" class="btn-foto-nav btn-foto-izq" onclick="cambiarFotoTarjeta(${p.id}, -1)">❮</button>` : ''}
-              <img id="img-prod-${p.id}" src="${p.fotos[0]}" alt="${p.nombre}" onclick="abrirVisor(${p.id})" onerror="this.style.display='none'">
+              <img id="img-prod-${p.id}" src="${p.fotos}" alt="${p.nombre}" onclick="abrirVisor(${p.id})" onerror="this.style.display='none'">
               ${tieneVarias ? `<button type="button" class="btn-foto-nav btn-foto-der" onclick="cambiarFotoTarjeta(${p.id}, 1)">❯</button>` : ''}
               ${tieneVarias ? `<span class="contador-fotos" id="cont-foto-${p.id}">1 / ${p.fotos.length}</span>` : ''}
             </div>
@@ -444,32 +453,35 @@
 
     function actualizarCarrito() {
       const lista = document.getElementById("lista-carrito");
+      const subtotalTxt = document.getElementById("subtotal-texto");
       const totalTxt = document.getElementById("total-texto");
       const badgeTotal = document.getElementById("badge-total");
       const avisoMin = document.getElementById("aviso-minimo");
       const btnEnviar = document.getElementById("btn-enviar");
 
-      let total = 0;
+      let subtotal = 0;
       if (carrito.length === 0) {
         lista.innerHTML = '<li style="color:#777; justify-content:center;">Tu carrito está vacío</li>';
       } else {
         lista.innerHTML = carrito.map((item, idx) => {
           const sub = item.precio * item.cant;
-          total += sub;
+          subtotal += sub;
           return `<li><div><strong>${item.cant}x ${item.nombre}</strong><br><span style="color:#666; font-size:0.78rem;">${item.color} | ${item.talle}</span><br><span style="color:#C2185B; font-weight:bold;">$${sub.toLocaleString('es-AR')}</span></div><button type="button" class="btn-x" onclick="quitar(${idx})">X</button></li>`;
         }).join('');
       }
 
-      totalTxt.textContent = "$" + total.toLocaleString('es-AR');
-      badgeTotal.textContent = "$" + total.toLocaleString('es-AR');
+      const totalFinal = subtotal + EMBALAJE;
+      subtotalTxt.textContent = "$" + subtotal.toLocaleString('es-AR');
+      totalTxt.textContent = "$" + totalFinal.toLocaleString('es-AR');
+      badgeTotal.textContent = "$" + (subtotal > 0 ? totalFinal.toLocaleString('es-AR') : "0");
 
-      if (total >= MINIMO) {
+      if (subtotal >= MINIMO) {
         avisoMin.textContent = "¡Mínimo alcanzado! Ya podés enviar tu pedido.";
         avisoMin.classList.add("ok");
         btnEnviar.disabled = false;
         btnEnviar.textContent = "Enviar Pedido por WhatsApp";
       } else {
-        const falta = MINIMO - total;
+        const falta = MINIMO - subtotal;
         avisoMin.textContent = "Compra mínima: $70.000 (Faltan $" + falta.toLocaleString('es-AR') + ")";
         avisoMin.classList.remove("ok");
         btnEnviar.disabled = true;
@@ -510,13 +522,13 @@
       const fechaStr = ahora.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
       const horaStr = ahora.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
 
-      let total = 0;
+      let subtotal = 0;
       let filasHtml = "";
       let detalleWsp = "";
 
       carrito.forEach(item => {
         const sub = item.precio * item.cant;
-        total += sub;
+        subtotal += sub;
         filasHtml += `<tr>
           <td style="text-align:center;">${item.cant}</td>
           <td>${item.nombre} (Color: ${item.color} - ${item.talle})</td>
@@ -526,9 +538,11 @@
         detalleWsp += `• ${item.cant}x ${item.nombre} | Color: ${item.color} | ${item.talle} - $${sub.toLocaleString('es-AR')}\n`;
       });
 
+      const totalFinal = subtotal + EMBALAJE;
+
       const btn = document.getElementById("btn-enviar");
       btn.disabled = true;
-      btn.textContent = "Generando orden...";
+      btn.textContent = "Enviando orden...";
 
       const datosEnvio = {
         fecha: fechaStr,
@@ -544,18 +558,8 @@
         transporte: transpFinal,
         modalidad: modalidadSeleccionada,
         filasHtml: filasHtml,
-        total: total.toLocaleString('es-AR')
+        total: totalFinal.toLocaleString('es-AR')
       };
-
-           // 1. ENVÍO INFALIBLE MEDIANTE FORMULARIO OCULTO A GOOGLE APPS SCRIPT
-      let iframeOculto = document.getElementById("iframe-pdf-bella");
-      if (!iframeOculto) {
-        iframeOculto = document.createElement("iframe");
-        iframeOculto.name = "iframe-pdf-bella";
-        iframeOculto.id = "iframe-pdf-bella";
-        iframeOculto.style.display = "none";
-        document.body.appendChild(iframeOculto);
-      }
 
       const formOculto = document.createElement("form");
       formOculto.method = "POST";
@@ -570,14 +574,13 @@
 
       document.body.appendChild(formOculto);
       formOculto.submit();
-      formOculto.remove();
 
-      // 2. ESPERA 1.5 SEGUNDOS Y ABRE WHATSAPP DIRECTO
       setTimeout(() => {
         let msg = "¡Hola *BELLA Indumentaria*! 👋 Quiero realizar el siguiente pedido:\n\n";
         msg += "*ORDEN DE COMPRA (" + fechaStr + " " + horaStr + "):*\n";
         msg += detalleWsp;
-        msg += `\n*TOTAL DEL PEDIDO: $${total.toLocaleString('es-AR')}*\n\n`;
+        msg += `• Embalaje y traslado: $4.000\n`;
+        msg += `\n*TOTAL FINAL A PAGAR: $${totalFinal.toLocaleString('es-AR')}*\n\n`;
         msg += `*FORMA DE ENVÍO:*\n`;
         msg += `• Transporte: ${transpFinal}\n`;
         msg += `• Modalidad: ${modalidadSeleccionada}\n\n`;
@@ -589,9 +592,8 @@
         msg += `• Localidad: ${localidad} (CP: ${cp})\n`;
         msg += `• Provincia: ${provincia}\n`;
 
-        window.location.href = "https://wa.me/" + TELEFONO + "?text=" + encodeURIComponent(msg);
-      }, 1500);
- 
+        window.location.href = "https://whatsapp.com" + TELEFONO + "&text=" + encodeURIComponent(msg);
+      }, 1800);
     }
 
     cargarCatalogo();
