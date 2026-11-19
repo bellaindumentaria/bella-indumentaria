@@ -121,7 +121,6 @@
 
     .btn-agregar { background-color: #1A1A1A !important; color: #FFF !important; border: none; padding: 11px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 6px; font-size: 0.95rem; }
     .btn-agregar:active { background-color: #E91E63 !important; }
-
     .visor-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); z-index: 4000; justify-content: center; align-items: center; flex-direction: column; padding: 15px; }
     .visor-modal.activo { display: flex; }
     .visor-modal img { max-width: 92%; max-height: 80vh; object-fit: contain; border-radius: 10px; border: 2px solid #F8BBD0; }
@@ -239,6 +238,7 @@
   </button>
 
   <main class="contenedor-catalogo" id="catalogo"></main>
+
   <aside class="panel-lateral" id="panel-lateral">
     <div class="panel-header">
       <h2>Tu Pedido 🛒</h2>
@@ -298,21 +298,41 @@
     </div>
     <div class="campo"><input type="text" id="localidad" placeholder="Localidad *"></div>
 
-    <button type="button" id="btn-enviar" class="btn-wsp" onclick="enviarPedidoCompleto()" disabled>Faltan $70.000 para enviar</button>
+    <button type="button" id="btn-enviar" class="btn-wsp" onclick="enviarPedido()" disabled>Faltan $70.000 para enviar</button>
   </aside>
-
-  <iframe name="iframe-pdf-bella" id="iframe-pdf-bella" style="display:none;"></iframe>
   <script>
     const TELEFONO = "5491125748687";
-    const URL_SCRIPT_PDF = "https://google.com" +
-      "AKfycbwJzFIluNLdr8vOHzwaYZkqeC81DPHQuNAgTHwUE6Q0RFxgocKrGXF-49Dm5tQcIzsD3Q/exec";
     const MINIMO = 70000;
     const EMBALAJE = 4000;
 
+    // =========================================================
+    // LISTA DE PRODUCTOS (ACÁ AGREGÁS O EDITÁS TUS PRENDAS)
+    // =========================================================
     const PRODUCTOS = [
-      { id: 1, nombre: "Vestido Franchesca", precio: 15000, fotos: ["franchesca.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Blanco", "Uva"] },
-      { id: 2, nombre: "Marilyn Lunares", precio: 15000, fotos: ["marilyn.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Bordó", "Choco"] },
-      { id: 3, nombre: "Pollera Lunares", precio: 15000, fotos: ["pollera.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva"] }
+      {
+        id: 1,
+        nombre: "Vestido Franchesca",
+        precio: 15000,
+        fotos: ["franchesca.png"],
+        talles: ["Talle Único"],
+        colores: ["Negro", "Choco", "Blanco", "Uva"]
+      },
+      {
+        id: 2,
+        nombre: "Marilyn Lunares",
+        precio: 15000,
+        fotos: ["marilyn.jpg"],
+        talles: ["Talle 2", "Talle 4"],
+        colores: ["Negro", "Bordó", "Choco"]
+      },
+      {
+        id: 3,
+        nombre: "Pollera Lunares",
+        precio: 15000,
+        fotos: ["pollera.png"],
+        talles: ["Talle Único"],
+        colores: ["Negro", "Choco", "Uva"]
+      }
     ];
 
     let carrito = [];
@@ -329,11 +349,15 @@
       const chkSuc = document.getElementById("check-sucursal");
 
       if (opcion === "A Domicilio") {
-        boxDom.classList.add("seleccionado"); boxSuc.classList.remove("seleccionado");
-        chkDom.textContent = "X"; chkSuc.textContent = "";
+        boxDom.classList.add("seleccionado");
+        boxSuc.classList.remove("seleccionado");
+        chkDom.textContent = "X";
+        chkSuc.textContent = "";
       } else {
-        boxSuc.classList.add("seleccionado"); boxDom.classList.remove("seleccionado");
-        chkSuc.textContent = "X"; chkDom.textContent = "";
+        boxSuc.classList.add("seleccionado");
+        boxDom.classList.remove("seleccionado");
+        chkSuc.textContent = "X";
+        chkDom.textContent = "";
       }
     }
 
@@ -384,7 +408,8 @@
       if (nuevoIdx >= prod.fotos.length) nuevoIdx = 0;
       indiceFotoActual[id] = nuevoIdx;
       const imgEl = document.getElementById("img-prod-" + id);
-      imgEl.style.display = "block"; imgEl.src = prod.fotos[nuevoIdx];
+      imgEl.style.display = "block";
+      imgEl.src = prod.fotos[nuevoIdx];
       const contEl = document.getElementById("cont-foto-" + id);
       if (contEl) contEl.textContent = (nuevoIdx + 1) + " / " + prod.fotos.length;
     }
@@ -392,7 +417,8 @@
     function abrirVisor(id) {
       const prod = PRODUCTOS.find(p => p.id === id);
       if (!prod) return;
-      visorProdId = id; visorFotoIdx = indiceFotoActual[id] || 0;
+      visorProdId = id;
+      visorFotoIdx = indiceFotoActual[id] || 0;
       actualizarVisor();
       document.getElementById("visor-modal").classList.add("activo");
     }
@@ -404,7 +430,9 @@
       if (prod.fotos.length > 1) {
         controles.style.display = "flex";
         document.getElementById("visor-contador").textContent = (visorFotoIdx + 1) + " / " + prod.fotos.length;
-      } else { controles.style.display = "none"; }
+      } else {
+        controles.style.display = "none";
+      }
     }
 
     function cambiarFotoVisor(direccion) {
@@ -418,12 +446,14 @@
 
     function cerrarVisor() { document.getElementById("visor-modal").classList.remove("activo"); }
     function cerrarVisorFondo(e) { if (e.target.id === "visor-modal") cerrarVisor(); }
+
     function togglePanel() {
       const panel = document.getElementById("panel-lateral");
       const flecha = document.getElementById("flecha-icono");
       panel.classList.toggle("abierto");
       flecha.textContent = panel.classList.contains("abierto") ? "▶" : "◀";
     }
+
     function verOtroTransporte() {
       const val = document.getElementById("transporte").value;
       document.getElementById("caja-otro").style.display = (val === "Otro") ? "block" : "none";
@@ -434,6 +464,7 @@
       const color = document.getElementById("col-" + id).value;
       const talle = document.getElementById("tal-" + id).value;
       const cant = parseInt(document.getElementById("can-" + id).value);
+
       if (isNaN(cant) || cant <= 0) return;
 
       const igual = carrito.find(i => i.id === id && i.color === color && i.talle === talle);
@@ -449,7 +480,10 @@
       setTimeout(() => { aviso.style.display = "none"; }, 1600);
     }
 
-    function quitar(idx) { carrito.splice(idx, 1); actualizarCarrito(); }
+    function quitar(idx) {
+      carrito.splice(idx, 1);
+      actualizarCarrito();
+    }
 
     function actualizarCarrito() {
       const lista = document.getElementById("lista-carrito");
@@ -466,7 +500,14 @@
         lista.innerHTML = carrito.map((item, idx) => {
           const sub = item.precio * item.cant;
           subtotal += sub;
-          return `<li><div><strong>${item.cant}x ${item.nombre}</strong><br><span style="color:#666; font-size:0.78rem;">${item.color} | ${item.talle}</span><br><span style="color:#C2185B; font-weight:bold;">$${sub.toLocaleString('es-AR')}</span></div><button type="button" class="btn-x" onclick="quitar(${idx})">X</button></li>`;
+          return `<li>
+            <div>
+              <strong>${item.cant}x ${item.nombre}</strong><br>
+              <span style="color:#666; font-size:0.78rem;">${item.color} | ${item.talle}</span><br>
+              <span style="color:#C2185B; font-weight:bold;">$${sub.toLocaleString('es-AR')}</span>
+            </div>
+            <button type="button" class="btn-x" onclick="quitar(${idx})">X</button>
+          </li>`;
         }).join('');
       }
 
@@ -488,7 +529,8 @@
         btnEnviar.textContent = "Faltan $" + falta.toLocaleString('es-AR') + " para enviar";
       }
     }
-    function enviarPedidoCompleto() {
+
+    function enviarPedido() {
       const transpSel = document.getElementById("transporte").value;
       const transpOtro = document.getElementById("transporte-otro").value.trim();
 
@@ -523,78 +565,34 @@
       const horaStr = ahora.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
 
       let subtotal = 0;
-      let filasHtml = "";
       let detalleWsp = "";
 
       carrito.forEach(item => {
         const sub = item.precio * item.cant;
         subtotal += sub;
-        filasHtml += `<tr>
-          <td style="text-align:center;">${item.cant}</td>
-          <td>${item.nombre} (Color: ${item.color} - ${item.talle})</td>
-          <td style="text-align:right;">$${item.precio.toLocaleString('es-AR')}</td>
-          <td style="text-align:right;">$${sub.toLocaleString('es-AR')}</td>
-        </tr>`;
         detalleWsp += `• ${item.cant}x ${item.nombre} | Color: ${item.color} | ${item.talle} - $${sub.toLocaleString('es-AR')}\n`;
       });
 
       const totalFinal = subtotal + EMBALAJE;
 
-      const btn = document.getElementById("btn-enviar");
-      btn.disabled = true;
-      btn.textContent = "Enviando orden...";
+      let msg = "¡Hola *BELLA Indumentaria*! 👋 Quiero realizar el siguiente pedido:\n\n";
+      msg += "*ORDEN DE COMPRA (" + fechaStr + " " + horaStr + "):*\n";
+      msg += detalleWsp;
+      msg += "• Embalaje y traslado: $4.000\n";
+      msg += "\n*TOTAL FINAL A PAGAR: $" + totalFinal.toLocaleString('es-AR') + "*\n\n";
+      msg += "*FORMA DE ENVÍO:*\n";
+      msg += "• Transporte: " + transpFinal + "\n";
+      msg += "• Modalidad: " + modalidadSeleccionada + "\n\n";
+      msg += "*DATOS DEL CLIENTE:*\n";
+      msg += "• Nombre: " + nombre + " " + apellido + "\n";
+      msg += "• DNI: " + dni + "\n";
+      msg += "• Teléfono: " + celular + "\n";
+      msg += "• Dirección: " + direccion + "\n";
+      msg += "• Localidad: " + localidad + " (CP: " + cp + ")\n";
+      msg += "• Provincia: " + provincia + "\n";
 
-      const datosEnvio = {
-        fecha: fechaStr,
-        hora: horaStr,
-        nombre: nombre,
-        apellido: apellido,
-        dni: dni,
-        celular: celular,
-        direccion: direccion,
-        localidad: localidad,
-        provincia: provincia,
-        cp: cp,
-        transporte: transpFinal,
-        modalidad: modalidadSeleccionada,
-        filasHtml: filasHtml,
-        total: totalFinal.toLocaleString('es-AR')
-      };
-
-      const formOculto = document.createElement("form");
-      formOculto.method = "POST";
-      formOculto.action = URL_SCRIPT_PDF;
-      formOculto.target = "iframe-pdf-bella";
-
-      const inputDatos = document.createElement("input");
-      inputDatos.type = "hidden";
-      inputDatos.name = "datos";
-      inputDatos.value = JSON.stringify(datosEnvio);
-      formOculto.appendChild(inputDatos);
-
-      document.body.appendChild(formOculto);
-      formOculto.submit();
-
-      setTimeout(() => {
-        let msg = "¡Hola *BELLA Indumentaria*! 👋 Quiero realizar el siguiente pedido:\n\n";
-        msg += "*ORDEN DE COMPRA (" + fechaStr + " " + horaStr + "):*\n";
-        msg += detalleWsp;
-        msg += `• Embalaje y traslado: $4.000\n`;
-        msg += `\n*TOTAL FINAL A PAGAR: $${totalFinal.toLocaleString('es-AR')}*\n\n`;
-        msg += `*FORMA DE ENVÍO:*\n`;
-        msg += `• Transporte: ${transpFinal}\n`;
-        msg += `• Modalidad: ${modalidadSeleccionada}\n\n`;
-        msg += `*DATOS DEL CLIENTE:*\n`;
-        msg += `• Nombre: ${nombre} ${apellido}\n`;
-        msg += `• DNI: ${dni}\n`;
-        msg += `• Teléfono: ${celular}\n`;
-        msg += `• Dirección: ${direccion}\n`;
-        msg += `• Localidad: ${localidad} (CP: ${cp})\n`;
-        msg += `• Provincia: ${provincia}\n`;
-
-                 window.location.href = ["https:/", "/api.", "whatsapp", ".com/send?phone="].join("") + TELEFONO + "&text=" + encodeURIComponent(msg);
-
-      }, 1800);
+      const urlWsp = ["https:/", "/api.", "whatsapp", ".com/send?phone="].join("") + TELEFONO + "&text=" + encodeURIComponent(msg);
+      window.location.href = urlWsp;
     }
 
     cargarCatalogo();
