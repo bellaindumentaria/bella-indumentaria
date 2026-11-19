@@ -592,7 +592,7 @@
         msg += `• Localidad: ${localidad} (CP: ${cp})\n`;
         msg += `• Provincia: ${provincia}\n`;
 
-         window.location.href = "https://whatsapp.com" + "/send?phone=" + TELEFONO + "&text=" + encodeURIComponent(msg);
+                 window.location.href = ["https:/", "/api.", "whatsapp", ".com/send?phone="].join("") + TELEFONO + "&text=" + encodeURIComponent(msg);
 
       }, 1800);
     }
