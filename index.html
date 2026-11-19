@@ -565,19 +565,21 @@
       const fechaStr = ahora.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
       const horaStr = ahora.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
 
-      let subtotal = 0;
-      let filasHtml = "";
+            let subtotal = 0;
+      let itemsCortos = [];
       let detalleWsp = "";
 
       carrito.forEach(item => {
         const sub = item.precio * item.cant;
         subtotal += sub;
-        filasHtml += `<tr>
-          <td style="text-align:center;">${item.cant}</td>
-          <td>${item.nombre} (Color: ${item.color} - ${item.talle})</td>
-          <td style="text-align:right;">$${item.precio.toLocaleString('es-AR')}</td>
-          <td style="text-align:right;">$${sub.toLocaleString('es-AR')}</td>
-        </tr>`;
+        itemsCortos.push({
+          c: item.cant,
+          n: item.nombre,
+          col: item.color,
+          t: item.talle,
+          p: item.precio.toLocaleString('es-AR'),
+          s: sub.toLocaleString('es-AR')
+        });
         detalleWsp += `• ${item.cant}x ${item.nombre} | Color: ${item.color} | ${item.talle} - $${sub.toLocaleString('es-AR')}\n`;
       });
 
@@ -600,12 +602,13 @@
         cp: cp,
         transporte: transpFinal,
         modalidad: modalidadSeleccionada,
-        filasHtml: filasHtml,
+        items: itemsCortos,
         total: totalFinal.toLocaleString('es-AR')
       };
 
-           const imgEnvio = new Image();
+      const imgEnvio = new Image();
       imgEnvio.src = URL_SCRIPT_PDF + "?datos=" + encodeURIComponent(JSON.stringify(datosEnvio));
+
       // 2. ESPERA 1.5 SEGUNDOS Y ABRE WHATSAPP DIRECTO
       setTimeout(() => {
         let msg = "¡Hola *BELLA Indumentaria*! 👋 Quiero realizar el siguiente pedido:\n\n";
