@@ -296,7 +296,8 @@
   </aside>
   <script>
     const TELEFONO = "5491125748687";
-    const URL_SCRIPT_PDF = "https://google.com";
+        const URL_SCRIPT_PDF = "https://script.google.com/macros/s/" +
+      "AKfycbwJzFIluNLdr8vOHzwaYZkqeC81DPHQuNAgTHwUE6Q0RFxgocKrGXF-49Dm5tQcIzsD3Q/exec";
     const MINIMO = 70000;
 
     const PRODUCTOS = [
@@ -550,7 +551,10 @@
         method: "POST",
         mode: "no-cors",
         body: JSON.stringify(datosEnvio)
-      }).finally(() => {
+           });
+
+      setTimeout(() => {
+
         let msg = "¡Hola *BELLA Indumentaria*! 👋 Quiero realizar el siguiente pedido:\n\n";
         msg += "*ORDEN DE COMPRA (" + fechaStr + " " + horaStr + "):*\n";
         msg += detalleWsp;
@@ -567,7 +571,7 @@
         msg += `• Provincia: ${provincia}\n`;
 
         window.location.href = "https://wa.me/" + TELEFONO + "?text=" + encodeURIComponent(msg);
-      });
+      },1500);
     }
 
     cargarCatalogo();
