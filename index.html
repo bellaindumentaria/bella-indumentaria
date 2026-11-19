@@ -200,7 +200,6 @@
 
     .aviso-flotante { position: fixed; top: 15px; left: 50%; transform: translateX(-50%); background-color: #1A1A1A; color: #FFF; border: 2px solid #E91E63; padding: 9px 18px; border-radius: 20px; font-size: 0.88rem; font-weight: bold; z-index: 3000; display: none; }
 
-    /* ESTILOS DE LA VISTA DE COMPROBANTE DE 2 HOJAS (CUANDO SE ABRE EL LINK) */
     #vista-comprobante { max-width: 800px; margin: 20px auto; padding: 20px; background: #FFF; }
     .barra-imprimir { display: flex; justify-content: space-between; align-items: center; background: #FCE4EC; border: 2px solid #E91E63; padding: 12px 16px; border-radius: 10px; margin-bottom: 20px; }
     .btn-imprimir-pdf { background: #E91E63; color: #FFF; border: none; padding: 10px 18px; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; }
@@ -238,10 +237,8 @@
 </head>
 <body>
 
-  <!-- VISTA OCULTA QUE SE ACTIVA SOLO CUANDO ABRÍS EL LINK DESDE TU WHATSAPP -->
   <div id="vista-comprobante" style="display:none;"></div>
 
-  <!-- VISTA NORMAL DE LA TIENDA PARA CLIENTAS -->
   <div id="vista-tienda">
     <div id="aviso-flotante" class="aviso-flotante">✓ Agregado al carrito</div>
 
@@ -337,91 +334,17 @@
     const MINIMO = 70000;
     const EMBALAJE = 4000;
 
-        // =========================================================
-    // LISTA COMPLETA DE PRODUCTOS (13 ARTÍCULOS)
-    // =========================================================
     const PRODUCTOS = [
-      {
-        id: 1,
-        nombre: "Vestido Franchesca",
-        precio: 15000,
-        fotos: ["franchesca.png"],
-        talles: ["Talle Único"],
-        colores: ["Negro", "Choco", "Blanco", "Uva"]
-      },
-      {
-        id: 2,
-        nombre: "Marilyn Lunares",
-        precio: 6000,
-        fotos: ["marilyn.jpg"],
-        talles: ["Talle 2", "Talle 4"],
-        colores: ["Negro", "Bordó", "Choco"]
-      },
-      {
-        id: 3,
-        nombre: "Pollera Lunares",
-        precio: 5500,
-        fotos: ["pollera.png"],
-        talles: ["Talle Único"],
-        colores: ["Negro", "Choco", "Uva"]
-      },
-      {
-        id: 4,
-        nombre: "Vestido Isa",
-        precio: 13500,
-        fotos: ["isa.jpg"],
-        talles: ["Talle Único"],
-        colores: ["Choco"]
-      },
-      {
-        id: 5,
-        nombre: "Pollera Volado de Tul",
-        subtitulo: "Con lentejuela y short interno",
-        precio: 9000,
-        fotos: ["tul1.jpg", "tul2.jpg", "tul3.jpg"],
-        talles: ["Talle Único"],
-        colores: ["Negro", "Plateado", "Blanco"]
-      },
-      {
-        id: 6,
-        nombre: "Pollera Glitter",
-        precio: 5000,
-        fotos: ["glitter1.jpg", "glitter2.jpg", "glitter3.jpg"],
-        talles: ["Talle Único"],
-        colores: ["Negro", "Rojo", "Plateado"]
-      },
-      {
-        id: 7,
-        nombre: "Body Carla",
-        precio: 8000,
-        fotos: ["carla1.jpg", "carla2.jpg", "carla3.jpg"],
-        talles: ["Talle 2", "Talle 4"],
-        colores: ["Negro", "Choco", "Uva", "Blanco"]
-      },
-      {
-        id: 8,
-        nombre: "Pollera Mini",
-        precio: 7000,
-        fotos: ["mini1.jpg", "mini2.jpg", "mini3.jpg"],
-        talles: ["Talle 2", "Talle 4"],
-        colores: ["Print Clarito", "Print Oscurito"]
-      },
-      {
-        id: 9,
-        nombre: "Body Melisa Print",
-        precio: 8000,
-        fotos: ["melisaprint.jpg"],
-        talles: ["Talle Único"],
-        colores: ["Print Amarillito", "Print Manchas Grandes", "Print Manchas Chicas"]
-      },
-      {
-        id: 10,
-        nombre: "Body Melisa",
-        precio: 7000,
-        fotos: ["melisa.jpg"],
-        talles: ["Talle Único"],
-        colores: ["Negro"]
-      },
+      { id: 1, nombre: "Vestido Franchesca", precio: 15000, fotos: ["franchesca.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Blanco", "Uva"] },
+      { id: 2, nombre: "Marilyn Lunares", precio: 15000, fotos: ["marilyn.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Bordó", "Choco"] },
+      { id: 3, nombre: "Pollera Lunares", precio: 15000, fotos: ["pollera.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva"] },
+      { id: 4, nombre: "Vestido Isa", precio: 13500, fotos: ["isa.jpg"], talles: ["Talle Único"], colores: ["Choco"] },
+      { id: 5, nombre: "Pollera Volado de Tul", subtitulo: "Con lentejuela y short interno", precio: 9000, fotos: ["tul1.jpg", "tul2.jpg", "tul3.jpg"], talles: ["Talle Único"], colores: ["Negro", "Plateado", "Blanco"] },
+      { id: 6, nombre: "Pollera Glitter", precio: 5000, fotos: ["glitter1.jpg", "glitter2.jpg", "glitter3.jpg"], talles: ["Talle Único"], colores: ["Negro", "Rojo", "Plateado"] },
+      { id: 7, nombre: "Body Carla", precio: 8000, fotos: ["carla1.jpg", "carla2.jpg", "carla3.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
+      { id: 8, nombre: "Pollera Mini", precio: 7000, fotos: ["mini1.jpg", "mini2.jpg", "mini3.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Print Clarito", "Print Oscurito"] },
+      { id: 9, nombre: "Body Melisa Print", precio: 8000, fotos: ["melisaprint.jpg"], talles: ["Talle Único"], colores: ["Print Amarillito", "Print Manchas Grandes", "Print Manchas Chicas"] },
+      { id: 10, nombre: "Body Melisa", precio: 7000, fotos: ["melisa.jpg"], talles: ["Talle Único"], colores: ["Negro"] },
       {
         id: 11,
         nombre: "Short Camila",
@@ -432,25 +355,112 @@
           "Talle 4": ["Negro", "Choco", "Uva"]
         }
       },
-      {
-        id: 12,
-        nombre: "Polleras Voladas con Diseño",
-        precio: 4000,
-        fotos: ["voladas.jpg"],
-        talles: ["Talle Único"],
-        colores: ["Negro Floreado", "Bordó Floreado", "Vaquita"]
-      },
-      {
-        id: 13,
-        nombre: "Vestido Anahi",
-        subtitulo: "Satén elastizado premium",
-        precio: 15000,
-        fotos: ["anahi1.jpg", "anahi2.jpg"],
-        talles: ["Talle Único"],
-        colores: ["Negro", "Chocolate"]
-      }
+      { id: 12, nombre: "Polleras Voladas con Diseño", precio: 4000, fotos: ["voladas.jpg"], talles: ["Talle Único"], colores: ["Negro Floreado", "Bordó Floreado", "Vaquita"] },
+      { id: 13, nombre: "Vestido Anahi", subtitulo: "Satén elastizado premium", precio: 15000, fotos: ["anahi1.jpg", "anahi2.jpg"], talles: ["Talle Único"], colores: ["Negro", "Chocolate"] }
     ];
 
+    let carrito = [];
+    let indiceFotoActual = {};
+    let visorProdId = null;
+    let visorFotoIdx = 0;
+    let modalidadSeleccionada = "";
+
+    function codificarDatos(obj) {
+      const jsonStr = JSON.stringify(obj);
+      const bytes = new TextEncoder().encode(jsonStr);
+      let bin = "";
+      bytes.forEach(b => bin += String.fromCharCode(b));
+      return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
+
+    function decodificarDatos(str) {
+      let b64 = str.replace(/-/g, '+').replace(/_/g, '/');
+      while (b64.length % 4) b64 += '=';
+      const bin = atob(b64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      return JSON.parse(new TextDecoder().decode(bytes));
+    }
+
+    function verificarModoComprobante() {
+      const params = new URLSearchParams(window.location.search);
+      const codigoOrden = params.get("orden");
+      if (!codigoOrden) { cargarCatalogo(); return; }
+
+      try {
+        const d = decodificarDatos(codigoOrden);
+        document.getElementById("vista-tienda").style.display = "none";
+        const cont = document.getElementById("vista-comprobante");
+        cont.style.display = "block";
+
+        let filasHtml = d.items.map(it => `
+          <tr>
+            <td style="text-align:center;">${it.c}</td>
+            <td>${it.n} (Color: ${it.col} - ${it.t})</td>
+            <td style="text-align:right;">$${it.p}</td>
+            <td style="text-align:right;">$${it.s}</td>
+          </tr>
+        `).join("");
+
+        cont.innerHTML = `
+          <div class="barra-imprimir no-imprimir">
+            <button type="button" class="btn-imprimir-pdf" onclick="window.print()">🖨️ Imprimir / Guardar PDF (2 Hojas)</button>
+            <button type="button" class="btn-volver-tienda" onclick="window.location.href=window.location.pathname">Ir a la Tienda</button>
+          </div>
+          <div class="hoja-pdf">
+            <table class="pdf-header">
+              <tr>
+                <td style="width: 38%;"><div class="pdf-logo">BELLA</div><div style="font-size:11px; font-weight:bold;">FABRICANTE DIRECTO</div><div style="font-size:10px;">Campana 378 - Local A6<br>Galería Smart Campana - Flores</div></td>
+                <td style="width: 34%; text-align: center;"><div style="font-weight:bold; font-size:13px;">Venta por Mayor y Menor<br>Envíos al Interior</div><div style="font-size:11px; margin-top:6px;">Fecha: ${d.f}<br>Hora: ${d.h}</div></td>
+                <td style="width: 28%; font-size: 10px;"><b>Dany: 11-2574-8687<br>Isa: 11-6735-3960</b><br>FB: BELLA Indumentaria<br>TK: bella.indumentaria<br>IG: bella.indumentariadama</td>
+              </tr>
+            </table>
+            <table class="pdf-envios">
+              <tr>
+                <td class="pdf-vertical">E<br>N<br>V<br>Í<br>O<br>S</td>
+                <td style="width: 12px;"></td>
+                <td class="pdf-datos">
+                  <div class="pdf-linea"><b>Nombre:</b> ${d.nom} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Apellido:</b> ${d.ape}</div>
+                  <div class="pdf-linea"><b>DNI:</b> ${d.dni} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Teléfono:</b> ${d.cel}</div>
+                  <div class="pdf-linea"><b>Dirección:</b> ${d.dir}</div>
+                  <div class="pdf-linea"><b>Localidad:</b> ${d.loc} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Provincia:</b> ${d.prov}</div>
+                  <div class="pdf-linea"><b>Código Postal:</b> ${d.cp} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Transporte:</b> ${d.tr}</div>
+                  <div style="margin-top: 22px; text-align: right; font-size: 13px; font-weight: bold;">
+                    A Domicilio <span class="pdf-casilla">${d.mod === 'A Domicilio' ? 'X' : '&nbsp;'}</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    Retira en Sucursal <span class="pdf-casilla">${d.mod === 'Retira en Sucursal' ? 'X' : '&nbsp;'}</span>
+                  </div>
+                  <div style="margin-top: 18px; font-size: 10px; color: #555;">Documento no válido como factura</div>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="hoja-pdf salto-pagina">
+            <table class="pdf-header">
+              <tr>
+                <td style="width: 35%;"><div class="pdf-logo">BELLA</div><div style="font-family: Georgia, serif; font-style: italic; font-size: 17px;">Indumentaria</div></td>
+                <td style="width: 37%; text-align: center;"><div style="font-size:11px; font-weight:bold;">FABRICANTE DIRECTO</div><div style="font-size:10px;">Venta por Mayor y Menor - Envíos al Interior<br><b>Campana 378 - Local A6<br>Galería Smart Campana - Flores</b></div></td>
+                <td style="width: 28%; font-size: 10px;"><b>Dany: 11-2574-8687<br>Isa: 11-6735-3960</b><br>FB: BELLA Indumentaria<br>TK: bella.indumentaria<br>IG: bella.indumentariadama</td>
+              </tr>
+            </table>
+            <div style="border: 2px solid #1A1A1A; padding: 12px; margin-bottom: 12px; font-size: 12px;">
+              <b>ORDEN DE COMPRA</b> &nbsp;|&nbsp; <b>Fecha:</b> ${d.f} &nbsp;|&nbsp; <b>Hora:</b> ${d.h}<br><br>
+              <b>Señor/es:</b> ${d.nom} ${d.ape}<br>
+              <b>Domicilio:</b> ${d.dir} (${d.loc}, ${d.prov})
+            </div>
+            <table class="pdf-tabla">
+              <thead><tr><th style="width: 12%;">CANT.</th><th style="width: 52%;">DETALLE</th><th style="width: 18%;">P. UNIT.</th><th style="width: 18%;">IMPORTE</th></tr></thead>
+              <tbody>
+                ${filasHtml}
+                <tr><td style="text-align:center;">1</td><td><b>Embalaje y Traslado</b></td><td style="text-align:right;">$4.000</td><td style="text-align:right;">$4.000</td></tr>
+              </tbody>
+            </table>
+            <div class="pdf-total">TOTAL FINAL: $${d.tot}</div>
+            <div style="clear: both; padding-top: 18px; font-size: 10px; color: #555;">Documento no válido como factura - BELLA Indumentaria</div>
+          </div>
+        `;
+      } catch (err) { cargarCatalogo(); }
+    }
     function actualizarColoresPorTalle(id) {
       const prod = PRODUCTOS.find(p => p.id === id);
       if (!prod || !prod.coloresPorTalle) return;
@@ -460,13 +470,30 @@
       selectColor.innerHTML = listaColores.map(c => `<option value="${c}">${c}</option>`).join('');
     }
 
+    function elegirModalidad(opcion) {
+      modalidadSeleccionada = opcion;
+      const boxDom = document.getElementById("opt-domicilio");
+      const boxSuc = document.getElementById("opt-sucursal");
+      const chkDom = document.getElementById("check-domicilio");
+      const chkSuc = document.getElementById("check-sucursal");
+
+      if (opcion === "A Domicilio") {
+        boxDom.classList.add("seleccionado"); boxSuc.classList.remove("seleccionado");
+        chkDom.textContent = "X"; chkSuc.textContent = "";
+      } else {
+        boxSuc.classList.add("seleccionado"); boxDom.classList.remove("seleccionado");
+        chkSuc.textContent = "X"; chkDom.textContent = "";
+      }
+    }
+
     function cargarCatalogo() {
       const cont = document.getElementById("catalogo");
       cont.innerHTML = PRODUCTOS.map(p => {
         indiceFotoActual[p.id] = 0;
         const tieneVarias = p.fotos.length > 1;
         const listaTalles = p.coloresPorTalle ? Object.keys(p.coloresPorTalle) : p.talles;
-        const listaColoresInicial = p.coloresPorTalle ? p.coloresPorTalle[listaTalles[0]] : p.colores;
+        const primerTalle = listaTalles;
+        const listaColoresInicial = p.coloresPorTalle ? p.coloresPorTalle[primerTalle] : p.colores;
 
         return `
         <div class="producto">
@@ -474,7 +501,7 @@
             <div class="galeria-box">
               <span class="tip-ampliar">🔍 Tocar para ampliar</span>
               ${tieneVarias ? `<button type="button" class="btn-foto-nav btn-foto-izq" onclick="cambiarFotoTarjeta(${p.id}, -1)">❮</button>` : ''}
-              <img id="img-prod-${p.id}" src="${p.fotos[0]}" alt="${p.nombre}" onclick="abrirVisor(${p.id})" onerror="this.style.display='none'">
+              <img id="img-prod-${p.id}" src="${p.fotos}" alt="${p.nombre}" onclick="abrirVisor(${p.id})" onerror="this.style.display='none'">
               ${tieneVarias ? `<button type="button" class="btn-foto-nav btn-foto-der" onclick="cambiarFotoTarjeta(${p.id}, 1)">❯</button>` : ''}
               ${tieneVarias ? `<span class="contador-fotos" id="cont-foto-${p.id}">1 / ${p.fotos.length}</span>` : ''}
             </div>
@@ -505,214 +532,6 @@
       `}).join('');
     }
 
-    ];
-
-    let carrito = [];
-    let indiceFotoActual = {};
-    let visorProdId = null;
-    let visorFotoIdx = 0;
-    let modalidadSeleccionada = "";
-
-    function codificarDatos(obj) {
-      const jsonStr = JSON.stringify(obj);
-      const bytes = new TextEncoder().encode(jsonStr);
-      let bin = "";
-      bytes.forEach(b => bin += String.fromCharCode(b));
-      return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-    }
-
-    function decodificarDatos(str) {
-      let b64 = str.replace(/-/g, '+').replace(/_/g, '/');
-      while (b64.length % 4) b64 += '=';
-      const bin = atob(b64);
-      const bytes = new Uint8Array(bin.length);
-      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-      return JSON.parse(new TextDecoder().decode(bytes));
-    }
-
-    function verificarModoComprobante() {
-      const params = new URLSearchParams(window.location.search);
-      const codigoOrden = params.get("orden");
-      if (!codigoOrden) {
-        cargarCatalogo();
-        return;
-      }
-
-      try {
-        const d = decodificarDatos(codigoOrden);
-        document.getElementById("vista-tienda").style.display = "none";
-        const cont = document.getElementById("vista-comprobante");
-        cont.style.display = "block";
-
-        let filasHtml = d.items.map(it => `
-          <tr>
-            <td style="text-align:center;">${it.c}</td>
-            <td>${it.n} (Color: ${it.col} - ${it.t})</td>
-            <td style="text-align:right;">$${it.p}</td>
-            <td style="text-align:right;">$${it.s}</td>
-          </tr>
-        `).join("");
-
-        cont.innerHTML = `
-          <div class="barra-imprimir no-imprimir">
-            <button type="button" class="btn-imprimir-pdf" onclick="window.print()">🖨️ Imprimir / Guardar PDF (2 Hojas)</button>
-            <button type="button" class="btn-volver-tienda" onclick="window.location.href=window.location.pathname">Ir a la Tienda</button>
-          </div>
-
-          <!-- HOJA 1: TALÓN DE ENVÍOS -->
-          <div class="hoja-pdf">
-            <table class="pdf-header">
-              <tr>
-                <td style="width: 38%;">
-                  <div class="pdf-logo">BELLA</div>
-                  <div style="font-size:11px; font-weight:bold;">FABRICANTE DIRECTO</div>
-                  <div style="font-size:10px;">Campana 378 - Local A6<br>Galería Smart Campana - Flores</div>
-                </td>
-                <td style="width: 34%; text-align: center;">
-                  <div style="font-weight:bold; font-size:13px;">Venta por Mayor y Menor<br>Envíos al Interior</div>
-                  <div style="font-size:11px; margin-top:6px;">Fecha: ${d.f}<br>Hora: ${d.h}</div>
-                </td>
-                <td style="width: 28%; font-size: 10px;">
-                  <b>Dany: 11-2574-8687<br>Isa: 11-6735-3960</b><br>
-                  FB: BELLA Indumentaria<br>TK: bella.indumentaria<br>IG: bella.indumentariadama
-                </td>
-              </tr>
-            </table>
-
-            <table class="pdf-envios">
-              <tr>
-                <td class="pdf-vertical">E<br>N<br>V<br>Í<br>O<br>S</td>
-                <td style="width: 12px;"></td>
-                <td class="pdf-datos">
-                  <div class="pdf-linea"><b>Nombre:</b> ${d.nom} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Apellido:</b> ${d.ape}</div>
-                  <div class="pdf-linea"><b>DNI:</b> ${d.dni} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Teléfono:</b> ${d.cel}</div>
-                  <div class="pdf-linea"><b>Dirección:</b> ${d.dir}</div>
-                  <div class="pdf-linea"><b>Localidad:</b> ${d.loc} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Provincia:</b> ${d.prov}</div>
-                  <div class="pdf-linea"><b>Código Postal:</b> ${d.cp} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Transporte:</b> ${d.tr}</div>
-                  <div style="margin-top: 22px; text-align: right; font-size: 13px; font-weight: bold;">
-                    A Domicilio <span class="pdf-casilla">${d.mod === 'A Domicilio' ? 'X' : '&nbsp;'}</span>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    Retira en Sucursal <span class="pdf-casilla">${d.mod === 'Retira en Sucursal' ? 'X' : '&nbsp;'}</span>
-                  </div>
-                  <div style="margin-top: 18px; font-size: 10px; color: #555;">Documento no válido como factura</div>
-                </td>
-              </tr>
-            </table>
-          </div>
-
-          <!-- HOJA 2: ORDEN DE COMPRA -->
-          <div class="hoja-pdf salto-pagina">
-            <table class="pdf-header">
-              <tr>
-                <td style="width: 35%;">
-                  <div class="pdf-logo">BELLA</div>
-                  <div style="font-family: Georgia, serif; font-style: italic; font-size: 17px;">Indumentaria</div>
-                </td>
-                <td style="width: 37%; text-align: center;">
-                  <div style="font-size:11px; font-weight:bold;">FABRICANTE DIRECTO</div>
-                  <div style="font-size:10px;">Venta por Mayor y Menor - Envíos al Interior<br><b>Campana 378 - Local A6<br>Galería Smart Campana - Flores</b></div>
-                </td>
-                <td style="width: 28%; font-size: 10px;">
-                  <b>Dany: 11-2574-8687<br>Isa: 11-6735-3960</b><br>
-                  FB: BELLA Indumentaria<br>TK: bella.indumentaria<br>IG: bella.indumentariadama
-                </td>
-              </tr>
-            </table>
-
-            <div style="border: 2px solid #1A1A1A; padding: 12px; margin-bottom: 12px; font-size: 12px;">
-              <b>ORDEN DE COMPRA</b> &nbsp;|&nbsp; <b>Fecha:</b> ${d.f} &nbsp;|&nbsp; <b>Hora:</b> ${d.h}<br><br>
-              <b>Señor/es:</b> ${d.nom} ${d.ape}<br>
-              <b>Domicilio:</b> ${d.dir} (${d.loc}, ${d.prov})
-            </div>
-
-            <table class="pdf-tabla">
-              <thead>
-                <tr>
-                  <th style="width: 12%;">CANT.</th>
-                  <th style="width: 52%;">DETALLE</th>
-                  <th style="width: 18%;">P. UNIT.</th>
-                  <th style="width: 18%;">IMPORTE</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${filasHtml}
-                <tr>
-                  <td style="text-align:center;">1</td>
-                  <td><b>Embalaje y Traslado</b></td>
-                  <td style="text-align:right;">$4.000</td>
-                  <td style="text-align:right;">$4.000</td>
-                </tr>
-              </tbody>
-            </table>
-
-            <div class="pdf-total">TOTAL FINAL: $${d.tot}</div>
-            <div style="clear: both; padding-top: 18px; font-size: 10px; color: #555;">Documento no válido como factura - BELLA Indumentaria</div>
-          </div>
-        `;
-      } catch (err) {
-        cargarCatalogo();
-      }
-    }
-
-    function elegirModalidad(opcion) {
-      modalidadSeleccionada = opcion;
-      const boxDom = document.getElementById("opt-domicilio");
-      const boxSuc = document.getElementById("opt-sucursal");
-      const chkDom = document.getElementById("check-domicilio");
-      const chkSuc = document.getElementById("check-sucursal");
-
-      if (opcion === "A Domicilio") {
-        boxDom.classList.add("seleccionado");
-        boxSuc.classList.remove("seleccionado");
-        chkDom.textContent = "X";
-        chkSuc.textContent = "";
-      } else {
-        boxSuc.classList.add("seleccionado");
-        boxDom.classList.remove("seleccionado");
-        chkSuc.textContent = "X";
-        chkDom.textContent = "";
-      }
-    }
-
-    function cargarCatalogo() {
-      const cont = document.getElementById("catalogo");
-      cont.innerHTML = PRODUCTOS.map(p => {
-        indiceFotoActual[p.id] = 0;
-        const tieneVarias = p.fotos.length > 1;
-        return `
-        <div class="producto">
-          <div>
-            <div class="galeria-box">
-              <span class="tip-ampliar">🔍 Tocar para ampliar</span>
-              ${tieneVarias ? `<button type="button" class="btn-foto-nav btn-foto-izq" onclick="cambiarFotoTarjeta(${p.id}, -1)">❮</button>` : ''}
-              <img id="img-prod-${p.id}" src="${p.fotos}" alt="${p.nombre}" onclick="abrirVisor(${p.id})" onerror="this.style.display='none'">
-              ${tieneVarias ? `<button type="button" class="btn-foto-nav btn-foto-der" onclick="cambiarFotoTarjeta(${p.id}, 1)">❯</button>` : ''}
-              ${tieneVarias ? `<span class="contador-fotos" id="cont-foto-${p.id}">1 / ${p.fotos.length}</span>` : ''}
-            </div>
-            <h3>${p.nombre}</h3>
-            <p class="precio">$${p.precio.toLocaleString('es-AR')}</p>
-          </div>
-          <div>
-            <div class="campo">
-              <label>Color:</label>
-              <select id="col-${p.id}">${p.colores.map(c => `<option value="${c}">${c}</option>`).join('')}</select>
-            </div>
-            <div class="fila-doble">
-              <div class="campo" style="flex:2;">
-                <label>Talle:</label>
-                <select id="tal-${p.id}">${p.talles.map(t => `<option value="${t}">${t}</option>`).join('')}</select>
-              </div>
-              <div class="campo" style="flex:1;">
-                <label>Cant.:</label>
-                <input type="number" id="can-${p.id}" value="1" min="1">
-              </div>
-            </div>
-            <button type="button" class="btn-agregar" onclick="agregar(${p.id})">Agregar al carrito</button>
-          </div>
-        </div>
-      `}).join('');
-    }
-
     function cambiarFotoTarjeta(id, direccion) {
       const prod = PRODUCTOS.find(p => p.id === id);
       if (!prod || prod.fotos.length <= 1) return;
@@ -721,8 +540,7 @@
       if (nuevoIdx >= prod.fotos.length) nuevoIdx = 0;
       indiceFotoActual[id] = nuevoIdx;
       const imgEl = document.getElementById("img-prod-" + id);
-      imgEl.style.display = "block";
-      imgEl.src = prod.fotos[nuevoIdx];
+      imgEl.style.display = "block"; imgEl.src = prod.fotos[nuevoIdx];
       const contEl = document.getElementById("cont-foto-" + id);
       if (contEl) contEl.textContent = (nuevoIdx + 1) + " / " + prod.fotos.length;
     }
@@ -730,8 +548,7 @@
     function abrirVisor(id) {
       const prod = PRODUCTOS.find(p => p.id === id);
       if (!prod) return;
-      visorProdId = id;
-      visorFotoIdx = indiceFotoActual[id] || 0;
+      visorProdId = id; visorFotoIdx = indiceFotoActual[id] || 0;
       actualizarVisor();
       document.getElementById("visor-modal").classList.add("activo");
     }
@@ -743,9 +560,7 @@
       if (prod.fotos.length > 1) {
         controles.style.display = "flex";
         document.getElementById("visor-contador").textContent = (visorFotoIdx + 1) + " / " + prod.fotos.length;
-      } else {
-        controles.style.display = "none";
-      }
+      } else { controles.style.display = "none"; }
     }
 
     function cambiarFotoVisor(direccion) {
@@ -777,7 +592,6 @@
       const color = document.getElementById("col-" + id).value;
       const talle = document.getElementById("tal-" + id).value;
       const cant = parseInt(document.getElementById("can-" + id).value);
-
       if (isNaN(cant) || cant <= 0) return;
 
       const igual = carrito.find(i => i.id === id && i.color === color && i.talle === talle);
@@ -793,10 +607,8 @@
       setTimeout(() => { aviso.style.display = "none"; }, 1600);
     }
 
-    function quitar(idx) {
-      carrito.splice(idx, 1);
-      actualizarCarrito();
-    }
+    function quitar(idx) { carrito.splice(idx, 1); actualizarCarrito(); }
+
     function actualizarCarrito() {
       const lista = document.getElementById("lista-carrito");
       const subtotalTxt = document.getElementById("subtotal-texto");
@@ -812,14 +624,7 @@
         lista.innerHTML = carrito.map((item, idx) => {
           const sub = item.precio * item.cant;
           subtotal += sub;
-          return `<li>
-            <div>
-              <strong>${item.cant}x ${item.nombre}</strong><br>
-              <span style="color:#666; font-size:0.78rem;">${item.color} | ${item.talle}</span><br>
-              <span style="color:#C2185B; font-weight:bold;">$${sub.toLocaleString('es-AR')}</span>
-            </div>
-            <button type="button" class="btn-x" onclick="quitar(${idx})">X</button>
-          </li>`;
+          return `<li><div><strong>${item.cant}x ${item.nombre}</strong><br><span style="color:#666; font-size:0.78rem;">${item.color} | ${item.talle}</span><br><span style="color:#C2185B; font-weight:bold;">$${sub.toLocaleString('es-AR')}</span></div><button type="button" class="btn-x" onclick="quitar(${idx})">X</button></li>`;
         }).join('');
       }
 
@@ -897,20 +702,9 @@
       const totalFinal = subtotal + EMBALAJE;
 
       const paqueteOrden = {
-        f: fechaStr,
-        h: horaStr,
-        nom: nombre,
-        ape: apellido,
-        dni: dni,
-        cel: celular,
-        dir: direccion,
-        loc: localidad,
-        prov: provincia,
-        cp: cp,
-        tr: transpFinal,
-        mod: modalidadSeleccionada,
-        items: itemsCortos,
-        tot: totalFinal.toLocaleString('es-AR')
+        f: fechaStr, h: horaStr, nom: nombre, ape: apellido, dni: dni, cel: celular,
+        dir: direccion, loc: localidad, prov: provincia, cp: cp, tr: transpFinal,
+        mod: modalidadSeleccionada, items: itemsCortos, tot: totalFinal.toLocaleString('es-AR')
       };
 
       const urlBase = window.location.origin + window.location.pathname;
