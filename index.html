@@ -547,12 +547,33 @@
         total: total.toLocaleString('es-AR')
       };
 
-           const paquete = new Blob([JSON.stringify(datosEnvio)], { type: "text/plain;charset=utf-8" });
-      navigator.sendBeacon(URL_SCRIPT_PDF, paquete);
- 
+           // 1. ENVÍO INFALIBLE MEDIANTE FORMULARIO OCULTO A GOOGLE APPS SCRIPT
+      let iframeOculto = document.getElementById("iframe-pdf-bella");
+      if (!iframeOculto) {
+        iframeOculto = document.createElement("iframe");
+        iframeOculto.name = "iframe-pdf-bella";
+        iframeOculto.id = "iframe-pdf-bella";
+        iframeOculto.style.display = "none";
+        document.body.appendChild(iframeOculto);
+      }
 
+      const formOculto = document.createElement("form");
+      formOculto.method = "POST";
+      formOculto.action = URL_SCRIPT_PDF;
+      formOculto.target = "iframe-pdf-bella";
+
+      const inputDatos = document.createElement("input");
+      inputDatos.type = "hidden";
+      inputDatos.name = "datos";
+      inputDatos.value = JSON.stringify(datosEnvio);
+      formOculto.appendChild(inputDatos);
+
+      document.body.appendChild(formOculto);
+      formOculto.submit();
+      formOculto.remove();
+
+      // 2. ESPERA 1.5 SEGUNDOS Y ABRE WHATSAPP DIRECTO
       setTimeout(() => {
-
         let msg = "¡Hola *BELLA Indumentaria*! 👋 Quiero realizar el siguiente pedido:\n\n";
         msg += "*ORDEN DE COMPRA (" + fechaStr + " " + horaStr + "):*\n";
         msg += detalleWsp;
@@ -568,8 +589,9 @@
         msg += `• Localidad: ${localidad} (CP: ${cp})\n`;
         msg += `• Provincia: ${provincia}\n`;
 
-        window.location.href = "https://wa.me/" + TELEFONO + "?text=" + encodeURIComponent(msg);
-      },1500);
+        window.location.href = "https://wa.me" + TELEFONO + "?text=" + encodeURIComponent(msg);
+      }, 1500);
+ 
     }
 
     cargarCatalogo();
