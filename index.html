@@ -337,8 +337,8 @@
     const MINIMO = 70000;
     const EMBALAJE = 4000;
 
-    // =========================================================
-    // LISTA DE PRODUCTOS (ACÁ AGREGÁS O EDITÁS TUS PRENDAS)
+        // =========================================================
+    // LISTA COMPLETA DE PRODUCTOS (13 ARTÍCULOS)
     // =========================================================
     const PRODUCTOS = [
       {
@@ -364,8 +364,146 @@
         fotos: ["pollera.png"],
         talles: ["Talle Único"],
         colores: ["Negro", "Choco", "Uva"]
-      }
       },
+      {
+        id: 4,
+        nombre: "Vestido Isa",
+        precio: 13500,
+        fotos: ["isa.jpg"],
+        talles: ["Talle Único"],
+        colores: ["Choco"]
+      },
+      {
+        id: 5,
+        nombre: "Pollera Volado de Tul",
+        subtitulo: "Con lentejuela y short interno",
+        precio: 9000,
+        fotos: ["tul1.jpg", "tul2.jpg", "tul3.jpg"],
+        talles: ["Talle Único"],
+        colores: ["Negro", "Plateado", "Blanco"]
+      },
+      {
+        id: 6,
+        nombre: "Pollera Glitter",
+        precio: 5000,
+        fotos: ["glitter1.jpg", "glitter2.jpg", "glitter3.jpg"],
+        talles: ["Talle Único"],
+        colores: ["Negro", "Rojo", "Plateado"]
+      },
+      {
+        id: 7,
+        nombre: "Body Carla",
+        precio: 8000,
+        fotos: ["carla1.jpg", "carla2.jpg", "carla3.jpg"],
+        talles: ["Talle 2", "Talle 4"],
+        colores: ["Negro", "Choco", "Uva", "Blanco"]
+      },
+      {
+        id: 8,
+        nombre: "Pollera Mini",
+        precio: 7000,
+        fotos: ["mini1.jpg", "mini2.jpg", "mini3.jpg"],
+        talles: ["Talle 2", "Talle 4"],
+        colores: ["Print Clarito", "Print Oscurito"]
+      },
+      {
+        id: 9,
+        nombre: "Body Melisa Print",
+        precio: 8000,
+        fotos: ["melisaprint.jpg"],
+        talles: ["Talle Único"],
+        colores: ["Print Amarillito", "Print Manchas Grandes", "Print Manchas Chicas"]
+      },
+      {
+        id: 10,
+        nombre: "Body Melisa",
+        precio: 7000,
+        fotos: ["melisa.jpg"],
+        talles: ["Talle Único"],
+        colores: ["Negro"]
+      },
+      {
+        id: 11,
+        nombre: "Short Camila",
+        precio: 4500,
+        fotos: ["camila.jpg"],
+        coloresPorTalle: {
+          "Talle 2": ["Negro", "Choco", "Uva", "Blanco"],
+          "Talle 4": ["Negro", "Choco", "Uva"]
+        }
+      },
+      {
+        id: 12,
+        nombre: "Polleras Voladas con Diseño",
+        precio: 4000,
+        fotos: ["voladas.jpg"],
+        talles: ["Talle Único"],
+        colores: ["Negro Floreado", "Bordó Floreado", "Vaquita"]
+      },
+      {
+        id: 13,
+        nombre: "Vestido Anahi",
+        subtitulo: "Satén elastizado premium",
+        precio: 15000,
+        fotos: ["anahi1.jpg", "anahi2.jpg"],
+        talles: ["Talle Único"],
+        colores: ["Negro", "Chocolate"]
+      }
+    ];
+
+    function actualizarColoresPorTalle(id) {
+      const prod = PRODUCTOS.find(p => p.id === id);
+      if (!prod || !prod.coloresPorTalle) return;
+      const talleElegido = document.getElementById("tal-" + id).value;
+      const listaColores = prod.coloresPorTalle[talleElegido] || [];
+      const selectColor = document.getElementById("col-" + id);
+      selectColor.innerHTML = listaColores.map(c => `<option value="${c}">${c}</option>`).join('');
+    }
+
+    function cargarCatalogo() {
+      const cont = document.getElementById("catalogo");
+      cont.innerHTML = PRODUCTOS.map(p => {
+        indiceFotoActual[p.id] = 0;
+        const tieneVarias = p.fotos.length > 1;
+        const listaTalles = p.coloresPorTalle ? Object.keys(p.coloresPorTalle) : p.talles;
+        const listaColoresInicial = p.coloresPorTalle ? p.coloresPorTalle[listaTalles[0]] : p.colores;
+
+        return `
+        <div class="producto">
+          <div>
+            <div class="galeria-box">
+              <span class="tip-ampliar">🔍 Tocar para ampliar</span>
+              ${tieneVarias ? `<button type="button" class="btn-foto-nav btn-foto-izq" onclick="cambiarFotoTarjeta(${p.id}, -1)">❮</button>` : ''}
+              <img id="img-prod-${p.id}" src="${p.fotos[0]}" alt="${p.nombre}" onclick="abrirVisor(${p.id})" onerror="this.style.display='none'">
+              ${tieneVarias ? `<button type="button" class="btn-foto-nav btn-foto-der" onclick="cambiarFotoTarjeta(${p.id}, 1)">❯</button>` : ''}
+              ${tieneVarias ? `<span class="contador-fotos" id="cont-foto-${p.id}">1 / ${p.fotos.length}</span>` : ''}
+            </div>
+            <h3>${p.nombre}</h3>
+            ${p.subtitulo ? `<p style="font-size:0.83rem; color:#666; font-weight:bold; margin-bottom:4px;">${p.subtitulo}</p>` : ''}
+            <p class="precio">$${p.precio.toLocaleString('es-AR')}</p>
+          </div>
+          <div>
+            <div class="fila-doble">
+              <div class="campo" style="flex:2;">
+                <label>Talle:</label>
+                <select id="tal-${p.id}" ${p.coloresPorTalle ? `onchange="actualizarColoresPorTalle(${p.id})"` : ''}>
+                  ${listaTalles.map(t => `<option value="${t}">${t}</option>`).join('')}
+                </select>
+              </div>
+              <div class="campo" style="flex:1;">
+                <label>Cant.:</label>
+                <input type="number" id="can-${p.id}" value="1" min="1">
+              </div>
+            </div>
+            <div class="campo">
+              <label>Color:</label>
+              <select id="col-${p.id}">${listaColoresInicial.map(c => `<option value="${c}">${c}</option>`).join('')}</select>
+            </div>
+            <button type="button" class="btn-agregar" onclick="agregar(${p.id})">Agregar al carrito</button>
+          </div>
+        </div>
+      `}).join('');
+    }
 
     ];
 
