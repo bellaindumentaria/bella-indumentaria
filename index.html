@@ -338,25 +338,25 @@
       { id: 1, nombre: "Vestido Franchesca", precio: 15000, fotos: ["franchesca.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Blanco", "Uva"] },
       { id: 2, nombre: "Marilyn Lunares", precio: 15000, fotos: ["marilyn.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Bordó", "Choco"] },
       { id: 3, nombre: "Pollera Lunares", precio: 15000, fotos: ["pollera.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva"] },
-      { id: 4, nombre: "Vestido Isa", precio: 13500, fotos: ["isa.jpg"], talles: ["Talle Único"], colores: ["Choco"] },
-      { id: 5, nombre: "Pollera Volado de Tul", subtitulo: "Con lentejuela y short interno", precio: 9000, fotos: ["tul1.jpg", "tul2.jpg", "tul3.jpg"], talles: ["Talle Único"], colores: ["Negro", "Plateado", "Blanco"] },
-      { id: 6, nombre: "Pollera Glitter", precio: 5000, fotos: ["glitter1.jpg", "glitter2.jpg", "glitter3.jpg"], talles: ["Talle Único"], colores: ["Negro", "Rojo", "Plateado"] },
-      { id: 7, nombre: "Body Carla", precio: 8000, fotos: ["carla1.jpg", "carla2.jpg", "carla3.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
-      { id: 8, nombre: "Pollera Mini", precio: 7000, fotos: ["mini1.jpg", "mini2.jpg", "mini3.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Print Clarito", "Print Oscurito"] },
-      { id: 9, nombre: "Body Melisa Print", precio: 8000, fotos: ["melisaprint.jpg"], talles: ["Talle Único"], colores: ["Print Amarillito", "Print Manchas Grandes", "Print Manchas Chicas"] },
-      { id: 10, nombre: "Body Melisa", precio: 7000, fotos: ["melisa.jpg"], talles: ["Talle Único"], colores: ["Negro"] },
+      { id: 4, nombre: "Vestido Isa", precio: 13500, fotos: ["isa.jpg.jpg"], talles: ["Talle Único"], colores: ["Choco"] },
+      { id: 5, nombre: "Pollera Volado de Tul", subtitulo: "Con lentejuela y short interno", precio: 9000, fotos: ["tul1.jpg.jpg", "tul2.jpg.jpg", "tul3.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Plateado", "Blanco"] },
+      { id: 6, nombre: "Pollera Glitter", precio: 5000, fotos: ["glitter1.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Rojo", "Plateado"] },
+      { id: 7, nombre: "Body Carla", precio: 8000, fotos: ["carla1.jpg.jpg", "carla2.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
+      { id: 8, nombre: "Pollera Mini", precio: 7000, fotos: ["mini1.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Print Clarito", "Print Oscurito"] },
+      { id: 9, nombre: "Body Melisa Print", precio: 8000, fotos: ["melisaprint.jpg.jpg"], talles: ["Talle Único"], colores: ["Print Amarillito", "Print Manchas Grandes", "Print Manchas Chicas"] },
+      { id: 10, nombre: "Body Melisa", precio: 7000, fotos: ["melisa.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro"] },
       {
         id: 11,
         nombre: "Short Camila",
         precio: 4500,
-        fotos: ["camila.jpg"],
+        fotos: ["camila.jpg.jpg"],
         coloresPorTalle: {
           "Talle 2": ["Negro", "Choco", "Uva", "Blanco"],
           "Talle 4": ["Negro", "Choco", "Uva"]
         }
       },
-      { id: 12, nombre: "Polleras Voladas con Diseño", precio: 4000, fotos: ["voladas.jpg"], talles: ["Talle Único"], colores: ["Negro Floreado", "Bordó Floreado", "Vaquita"] },
-      { id: 13, nombre: "Vestido Anahi", subtitulo: "Satén elastizado premium", precio: 15000, fotos: ["anahi1.jpg", "anahi2.jpg"], talles: ["Talle Único"], colores: ["Negro", "Chocolate"] }
+      { id: 12, nombre: "Polleras Voladas con Diseño", precio: 4000, fotos: ["voladas.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro Floreado", "Bordó Floreado", "Vaquita"] },
+      { id: 13, nombre: "Vestido Anahi", subtitulo: "Satén elastizado premium", precio: 15000, fotos: ["anahi1.jpg.jpg", "anahi2.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Chocolate"] }
     ];
 
     let carrito = [];
@@ -465,7 +465,6 @@
       const prod = PRODUCTOS.find(p => p.id === id);
       if (!prod || !prod.coloresPorTalle) return;
       const talleElegido = document.getElementById("tal-" + id).value;
-      const listaColores = prod.coloresPorTalle.hasOwnProperty(talleElegido) ? prod.coloresPorTalle.valueOf().constructor(prod.coloresPorTalle) : [];
       const coloresFinales = Object.entries(prod.coloresPorTalle).find(par => par.at(0) === talleElegido)?.at(1) || [];
       const selectColor = document.getElementById("col-" + id);
       selectColor.innerHTML = coloresFinales.map(c => `<option value="${c}">${c}</option>`).join('');
