@@ -86,6 +86,44 @@
     }
     .galeria-box img { width: 100%; height: 100%; object-fit: contain; cursor: zoom-in; }
 
+    .cartel-agotado {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-8deg);
+      background-color: #D50000 !important;
+      color: #FFFFFF !important;
+      border: 3px solid #FFFFFF;
+      padding: 10px 26px;
+      font-size: 1.45rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+      z-index: 20;
+      pointer-events: none;
+      text-transform: uppercase;
+    }
+    .cartel-agotado.visible { display: block; }
+
+    .badge-stock {
+      font-size: 0.78rem;
+      font-weight: bold;
+      color: #2E7D32;
+      background-color: #E8F5E9;
+      border: 1px solid #A5D6A7;
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+    .badge-stock.sin-stock {
+      color: #D50000;
+      background-color: #FFEBEE;
+      border-color: #EF9A9A;
+    }
+
     .btn-foto-nav {
       position: absolute;
       top: 50%;
@@ -112,7 +150,7 @@
     .tip-ampliar { position: absolute; top: 6px; left: 8px; background-color: rgba(255, 255, 255, 0.9); color: #C2185B; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 6px; pointer-events: none; }
 
     .producto h3 { font-size: 1.15rem; color: #1A1A1A !important; margin-bottom: 4px; }
-    .producto .precio { font-size: 1.3rem; font-weight: bold; color: #E91E63 !important; margin-bottom: 10px; }
+    .producto .precio { font-size: 1.3rem; font-weight: bold; color: #E91E63 !important; margin-bottom: 6px; }
 
     .campo { margin-bottom: 8px; }
     .campo label { display: block; font-size: 0.8rem; font-weight: bold; color: #444 !important; margin-bottom: 2px; }
@@ -121,6 +159,7 @@
 
     .btn-agregar { background-color: #1A1A1A !important; color: #FFF !important; border: none; padding: 11px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 6px; font-size: 0.95rem; }
     .btn-agregar:active { background-color: #E91E63 !important; }
+    .btn-agregar:disabled { background-color: #B0BEC5 !important; color: #FFF !important; cursor: not-allowed; }
     .visor-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); z-index: 4000; justify-content: center; align-items: center; flex-direction: column; padding: 15px; }
     .visor-modal.activo { display: flex; }
     .visor-modal img { max-width: 92%; max-height: 80vh; object-fit: contain; border-radius: 10px; border: 2px solid #F8BBD0; }
@@ -273,7 +312,6 @@
         <button type="button" class="btn-cerrar-panel" onclick="togglePanel()">Cerrar ▶</button>
       </div>
 
-      <!-- DOS RECUADROS EXCLUSIVOS DEBAJO DE TU PEDIDO -->
       <div class="grupo-cuadraditos">
         <div class="opcion-cuadradito" id="tipo-envio" onclick="elegirTipoEntrega('Envío')">
           <span class="texto-opcion">Envío</span>
@@ -295,7 +333,6 @@
         <div class="fila-costo total-final"><span>Total Final:</span><span id="total-texto">$0</span></div>
       </div>
 
-      <!-- FORMULARIO 1: SE MUESTRA SOLO SI MARCA "ENVÍO" -->
       <div id="bloque-form-envio" style="display:none;">
         <div class="titulo-seccion">1. Forma de Envío / Transporte</div>
         <div class="campo">
@@ -341,7 +378,6 @@
         <div class="campo"><input type="text" id="localidad" placeholder="Localidad *"></div>
       </div>
 
-      <!-- FORMULARIO 2: SE MUESTRA SOLO SI MARCA "RETIRO POR LOCAL" -->
       <div id="bloque-form-retiro" style="display:none;">
         <div class="titulo-seccion">Datos de quien retira en el local</div>
         <div class="campo">
@@ -370,6 +406,7 @@
     const MINIMO_ENVIO = 80000;
     const MINIMO_PRENDAS_RETIRO = 5;
     const EMBALAJE = 4000;
+    const STOCK_INICIAL_POR_VARIANTE = 50;
 
     const PRODUCTOS = [
       { id: 1, nombre: "Vestido Franchesca", precio: 15000, fotos: ["franchesca.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Blanco", "Uva"] },
@@ -402,6 +439,76 @@
     let visorFotoIdx = 0;
     let tipoEntrega = "";
     let modalidadSeleccionada = "";
+
+    function obtenerClaveStock(id, talle, color) {
+      return id + "|" + talle + "|" + color;
+    }
+
+    function cargarStockGuardado() {
+      try {
+        const raw = localStorage.getItem("bella_stock_v1");
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) { return {}; }
+    }
+
+    function guardarStock(mapaStock) {
+      try {
+        localStorage.setItem("bella_stock_v1", JSON.stringify(mapaStock));
+      } catch (e) {}
+    }
+
+    function obtenerStockDisponible(id, talle, color) {
+      const mapa = cargarStockGuardado();
+      const clave = obtenerClaveStock(id, talle, color);
+      const base = mapa.hasOwnProperty(clave) ? mapa[clave] : STOCK_INICIAL_POR_VARIANTE;
+      const enCarrito = carrito.find(i => i.id === id && i.talle === talle && i.color === color);
+      const reservado = enCarrito ? enCarrito.cant : 0;
+      return Math.max(0, base - reservado);
+    }
+
+    function descontarStockDefinitivo(itemsComprados) {
+      const mapa = cargarStockGuardado();
+      itemsComprados.forEach(it => {
+        const clave = obtenerClaveStock(it.id, it.talle, it.color);
+        const actual = mapa.hasOwnProperty(clave) ? mapa[clave] : STOCK_INICIAL_POR_VARIANTE;
+        mapa[clave] = Math.max(0, actual - it.cant);
+      });
+      guardarStock(mapa);
+    }
+
+    function actualizarEstadoStockTarjeta(id) {
+      const selTal = document.getElementById("tal-" + id);
+      const selCol = document.getElementById("col-" + id);
+      const inpCan = document.getElementById("can-" + id);
+      const badge = document.getElementById("stock-badge-" + id);
+      const cartel = document.getElementById("agotado-" + id);
+      const btn = document.getElementById("btn-add-" + id);
+
+      if (!selTal || !selCol) return;
+      const disp = obtenerStockDisponible(id, selTal.value, selCol.value);
+
+      if (disp <= 0) {
+        badge.textContent = "AGOTADO en este talle y color";
+        badge.classList.add("sin-stock");
+        cartel.classList.add("visible");
+        btn.disabled = true;
+        btn.textContent = "Agotado";
+        inpCan.value = 0;
+        inpCan.max = 0;
+      } else {
+        badge.textContent = "Disponibles: " + disp + " unid.";
+        badge.classList.remove("sin-stock");
+        cartel.classList.remove("visible");
+        btn.disabled = false;
+        btn.textContent = "Agregar al carrito";
+        inpCan.max = disp;
+        if (parseInt(inpCan.value) > disp || parseInt(inpCan.value) <= 0) inpCan.value = 1;
+      }
+    }
+
+    function actualizarTodasLasTarjetas() {
+      PRODUCTOS.forEach(p => actualizarEstadoStockTarjeta(p.id));
+    }
 
     function codificarDatos(obj) {
       const jsonStr = JSON.stringify(obj);
@@ -515,6 +622,7 @@
         `;
       } catch (err) { cargarCatalogo(); }
     }
+
     function elegirTipoEntrega(tipo) {
       tipoEntrega = tipo;
       const boxEnvio = document.getElementById("tipo-envio");
@@ -525,30 +633,27 @@
       const formRetiro = document.getElementById("bloque-form-retiro");
 
       if (tipo === "Envío") {
-        boxEnvio.classList.add("seleccionado");
-        boxRetiro.classList.remove("seleccionado");
-        chkEnvio.textContent = "X";
-        chkRetiro.textContent = "";
-        formEnvio.style.display = "block";
-        formRetiro.style.display = "none";
+        boxEnvio.classList.add("seleccionado"); boxRetiro.classList.remove("seleccionado");
+        chkEnvio.textContent = "X"; chkRetiro.textContent = "";
+        formEnvio.style.display = "block"; formRetiro.style.display = "none";
       } else {
-        boxRetiro.classList.add("seleccionado");
-        boxEnvio.classList.remove("seleccionado");
-        chkRetiro.textContent = "X";
-        chkEnvio.textContent = "";
-        formRetiro.style.display = "block";
-        formEnvio.style.display = "none";
+        boxRetiro.classList.add("seleccionado"); boxEnvio.classList.remove("seleccionado");
+        chkRetiro.textContent = "X"; chkEnvio.textContent = "";
+        formRetiro.style.display = "block"; formEnvio.style.display = "none";
       }
       actualizarCarrito();
     }
 
     function actualizarColoresPorTalle(id) {
       const prod = PRODUCTOS.find(p => p.id === id);
-      if (!prod || !prod.coloresPorTalle) return;
-      const talleElegido = document.getElementById("tal-" + id).value;
-      const coloresFinales = Object.entries(prod.coloresPorTalle).find(par => par.at(0) === talleElegido)?.at(1) || [];
-      const selectColor = document.getElementById("col-" + id);
-      selectColor.innerHTML = coloresFinales.map(c => `<option value="${c}">${c}</option>`).join('');
+      if (!prod) return;
+      if (prod.coloresPorTalle) {
+        const talleElegido = document.getElementById("tal-" + id).value;
+        const coloresFinales = Object.entries(prod.coloresPorTalle).find(par => par.at(0) === talleElegido)?.at(1) || [];
+        const selectColor = document.getElementById("col-" + id);
+        selectColor.innerHTML = coloresFinales.map(c => `<option value="${c}">${c}</option>`).join('');
+      }
+      actualizarEstadoStockTarjeta(id);
     }
 
     function elegirModalidad(opcion) {
@@ -566,7 +671,6 @@
         chkSuc.textContent = "X"; chkDom.textContent = "";
       }
     }
-
     function cargarCatalogo() {
       const cont = document.getElementById("catalogo");
       cont.innerHTML = PRODUCTOS.map(p => {
@@ -579,6 +683,7 @@
         <div class="producto">
           <div>
             <div class="galeria-box">
+              <div class="cartel-agotado" id="agotado-${p.id}">AGOTADO</div>
               <span class="tip-ampliar">🔍 Tocar para ampliar</span>
               ${tieneVarias ? `<button type="button" class="btn-foto-nav btn-foto-izq" onclick="cambiarFotoTarjeta(${p.id}, -1)">❮</button>` : ''}
               <img id="img-prod-${p.id}" src="${p.fotos.at(0)}" alt="${p.nombre}" onclick="abrirVisor(${p.id})" onerror="this.style.display='none'">
@@ -588,28 +693,31 @@
             <h3>${p.nombre}</h3>
             ${p.subtitulo ? `<p style="font-size:0.83rem; color:#666; font-weight:bold; margin-bottom:4px;">${p.subtitulo}</p>` : ''}
             <p class="precio">$${p.precio.toLocaleString('es-AR')}</p>
+            <div class="badge-stock" id="stock-badge-${p.id}">Disponibles: 50 unid.</div>
           </div>
           <div>
             <div class="fila-doble">
               <div class="campo" style="flex:2;">
                 <label>Talle:</label>
-                <select id="tal-${p.id}" ${p.coloresPorTalle ? `onchange="actualizarColoresPorTalle(${p.id})"` : ''}>
+                <select id="tal-${p.id}" onchange="actualizarColoresPorTalle(${p.id})">
                   ${listaTalles.map(t => `<option value="${t}">${t}</option>`).join('')}
                 </select>
               </div>
               <div class="campo" style="flex:1;">
                 <label>Cant.:</label>
-                <input type="number" id="can-${p.id}" value="1" min="1">
+                <input type="number" id="can-${p.id}" value="1" min="1" max="50">
               </div>
             </div>
             <div class="campo">
               <label>Color:</label>
-              <select id="col-${p.id}">${listaColoresInicial.map(c => `<option value="${c}">${c}</option>`).join('')}</select>
+              <select id="col-${p.id}" onchange="actualizarEstadoStockTarjeta(${p.id})">${listaColoresInicial.map(c => `<option value="${c}">${c}</option>`).join('')}</select>
             </div>
-            <button type="button" class="btn-agregar" onclick="agregar(${p.id})">Agregar al carrito</button>
+            <button type="button" id="btn-add-${p.id}" class="btn-agregar" onclick="agregar(${p.id})">Agregar al carrito</button>
           </div>
         </div>
       `}).join('');
+
+      actualizarTodasLasTarjetas();
     }
 
     function cambiarFotoTarjeta(id, direccion) {
@@ -672,14 +780,26 @@
       const color = document.getElementById("col-" + id).value;
       const talle = document.getElementById("tal-" + id).value;
       const cant = parseInt(document.getElementById("can-" + id).value);
+      const disponible = obtenerStockDisponible(id, talle, color);
+
+      if (disponible <= 0) {
+        alert("Este modelo en " + talle + " y color " + color + " está AGOTADO.");
+        return;
+      }
       if (isNaN(cant) || cant <= 0) return;
+
+      if (cant > disponible) {
+        alert("Solo quedan " + disponible + " unidades disponibles de " + prod.nombre + " (" + talle + " - " + color + ").");
+        document.getElementById("can-" + id).value = disponible;
+        return;
+      }
 
       const igual = carrito.find(i => i.id === id && i.color === color && i.talle === talle);
       if (igual) igual.cant += cant;
       else carrito.push({ id: prod.id, nombre: prod.nombre, precio: prod.precio, color, talle, cant });
 
-      document.getElementById("can-" + id).value = 1;
       actualizarCarrito();
+      actualizarEstadoStockTarjeta(id);
 
       const aviso = document.getElementById("aviso-flotante");
       aviso.textContent = "✓ Agregaste " + cant + "x " + prod.nombre;
@@ -687,8 +807,12 @@
       setTimeout(() => { aviso.style.display = "none"; }, 1600);
     }
 
-    function quitar(idx) { carrito.splice(idx, 1); actualizarCarrito(); }
-
+    function quitar(idx) {
+      const itemQuitado = carrito.at(idx);
+      carrito.splice(idx, 1);
+      actualizarCarrito();
+      if (itemQuitado) actualizarEstadoStockTarjeta(itemQuitado.id);
+    }
     function actualizarCarrito() {
       const lista = document.getElementById("lista-carrito");
       const subtotalTxt = document.getElementById("subtotal-texto");
@@ -803,6 +927,7 @@
           const el = document.getElementById(c.id);
           if (!el.value.trim()) { alert("Falta rellenar el casillero: " + c.nombre); el.focus(); return; }
         }
+
         const transpFinal = transpSel === "Otro" ? transpOtro : transpSel;
         const nombre = document.getElementById("nombre").value.trim();
         const apellido = document.getElementById("apellido").value.trim();
@@ -871,6 +996,7 @@
         msg += linkPdfRetiro;
       }
 
+      descontarStockDefinitivo(carrito);
       const urlWsp = ["https:/", "/api.", "whatsapp", ".com/send?phone="].join("") + TELEFONO + "&text=" + encodeURIComponent(msg);
       window.location.href = urlWsp;
     }
