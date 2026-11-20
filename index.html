@@ -44,11 +44,11 @@
       padding: 18px 34px;
       text-align: center;
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
-      max-width: 720px;
+      max-width: 760px;
       width: 100%;
     }
     .caja-titulo-header h1 { font-size: 2.1rem; letter-spacing: 3px; color: #1A1A1A !important; text-transform: uppercase; font-weight: 900; line-height: 1.15; }
-    .caja-titulo-header p { color: #C2185B !important; font-weight: bold; font-size: 0.92rem; margin-top: 8px; letter-spacing: 0.8px; }
+    .caja-titulo-header p { color: #C2185B !important; font-weight: bold; font-size: 0.88rem; margin-top: 8px; letter-spacing: 0.6px; }
 
     .contenedor-catalogo {
       max-width: 1280px;
@@ -190,7 +190,7 @@
     .caja-otro { display: none; background-color: #FFF0F5; padding: 8px; border-radius: 8px; border: 1px solid #E91E63; margin-bottom: 8px; }
 
     .grupo-cuadraditos { display: flex; gap: 10px; margin-bottom: 10px; }
-    .opcion-cuadradito { flex: 1; display: flex; align-items: center; justify-content: space-between; background-color: #FFF5F8; border: 1.5px solid #F8BBD0; border-radius: 8px; padding: 8px 10px; cursor: pointer; user-select: none; }
+    .opcion-cuadradito { flex: 1; display: flex; align-items: center; justify-content: space-between; background-color: #FFF5F8; border: 2px solid #F8BBD0; border-radius: 8px; padding: 9px 10px; cursor: pointer; user-select: none; }
     .opcion-cuadradito.seleccionado { border-color: #E91E63; background-color: #FCE4EC; }
     .opcion-cuadradito span.texto-opcion { font-size: 0.82rem; font-weight: bold; color: #1A1A1A; }
     .cajita-x { width: 24px; height: 24px; border: 2px solid #1A1A1A; background-color: #FFFFFF; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; color: #E91E63; flex-shrink: 0; }
@@ -231,7 +231,7 @@
       .panel-lateral { width: 90%; min-width: 280px; }
       .caja-titulo-header { padding: 14px 16px; }
       .caja-titulo-header h1 { font-size: 1.5rem; letter-spacing: 2px; }
-      .caja-titulo-header p { font-size: 0.8rem; }
+      .caja-titulo-header p { font-size: 0.78rem; }
     }
   </style>
 </head>
@@ -255,7 +255,7 @@
     <header>
       <div class="caja-titulo-header">
         <h1>BELLA INDUMENTARIA</h1>
-        <p>FABRICANTE DIRECTO • COMPRA MÍNIMA DE $70.000</p>
+        <p>FABRICANTE DIRECTO • MÍNIMO $80.000 (ENVÍO) • 5 PRENDAS (RETIRO LOCAL)</p>
       </div>
     </header>
 
@@ -273,71 +273,108 @@
         <button type="button" class="btn-cerrar-panel" onclick="togglePanel()">Cerrar ▶</button>
       </div>
 
-      <div id="aviso-minimo" class="aviso-minimo">Compra mínima: $70.000 (Faltan $70.000)</div>
+      <!-- DOS RECUADROS EXCLUSIVOS DEBAJO DE TU PEDIDO -->
+      <div class="grupo-cuadraditos">
+        <div class="opcion-cuadradito" id="tipo-envio" onclick="elegirTipoEntrega('Envío')">
+          <span class="texto-opcion">Envío</span>
+          <div class="cajita-x" id="check-tipo-envio"></div>
+        </div>
+        <div class="opcion-cuadradito" id="tipo-retiro" onclick="elegirTipoEntrega('Retiro por Local')">
+          <span class="texto-opcion">Retiro por Local</span>
+          <div class="cajita-x" id="check-tipo-retiro"></div>
+        </div>
+      </div>
+
+      <div id="aviso-minimo" class="aviso-minimo">Seleccioná arriba: Envío o Retiro por Local</div>
 
       <ul id="lista-carrito"><li style="color:#777; justify-content:center;">Tu carrito está vacío</li></ul>
 
       <div class="resumen-costos">
-        <div class="fila-costo"><span>Prendas:</span><span id="subtotal-texto">$0</span></div>
-        <div class="fila-costo"><span>Embalaje y traslado:</span><span>$4.000</span></div>
-        <div class="fila-costo total-final"><span>Total Final:</span><span id="total-texto">$4.000</span></div>
+        <div class="fila-costo"><span>Prendas (<span id="cant-prendas-txt">0</span>):</span><span id="subtotal-texto">$0</span></div>
+        <div class="fila-costo" id="fila-embalaje" style="display:none;"><span>Embalaje y traslado:</span><span>$4.000</span></div>
+        <div class="fila-costo total-final"><span>Total Final:</span><span id="total-texto">$0</span></div>
       </div>
 
-      <div class="titulo-seccion">1. Forma de Envío / Transporte</div>
-      <div class="campo">
-        <select id="transporte" onchange="verOtroTransporte()">
-          <option value="">-- Seleccioná transporte --</option>
-          <option value="Vía Cargo">Vía Cargo</option>
-          <option value="Correo Argentino">Correo Argentino</option>
-          <option value="Micro">Micro</option>
-          <option value="Otro">Opcional (Escribir transporte)</option>
-        </select>
-      </div>
-
-      <div class="caja-otro" id="caja-otro">
-        <label style="font-size:0.8rem; font-weight:bold; color:#C2185B; display:block; margin-bottom:4px;">Escribí el transporte:</label>
-        <input type="text" id="transporte-otro" placeholder="Ej: Andreani, Buspack, Expreso..." style="width:100%; padding:8px; border:1px solid #E91E63; border-radius:6px;">
-      </div>
-
-      <div class="grupo-cuadraditos">
-        <div class="opcion-cuadradito" id="opt-domicilio" onclick="elegirModalidad('A Domicilio')">
-          <span class="texto-opcion">A Domicilio</span>
-          <div class="cajita-x" id="check-domicilio"></div>
+      <!-- FORMULARIO 1: SE MUESTRA SOLO SI MARCA "ENVÍO" -->
+      <div id="bloque-form-envio" style="display:none;">
+        <div class="titulo-seccion">1. Forma de Envío / Transporte</div>
+        <div class="campo">
+          <select id="transporte" onchange="verOtroTransporte()">
+            <option value="">-- Seleccioná transporte --</option>
+            <option value="Vía Cargo">Vía Cargo</option>
+            <option value="Correo Argentino">Correo Argentino</option>
+            <option value="Micro">Micro</option>
+            <option value="Otro">Opcional (Escribir transporte)</option>
+          </select>
         </div>
-        <div class="opcion-cuadradito" id="opt-sucursal" onclick="elegirModalidad('Retira en Sucursal')">
-          <span class="texto-opcion">A Sucursal</span>
-          <div class="cajita-x" id="check-sucursal"></div>
+
+        <div class="caja-otro" id="caja-otro">
+          <label style="font-size:0.8rem; font-weight:bold; color:#C2185B; display:block; margin-bottom:4px;">Escribí el transporte:</label>
+          <input type="text" id="transporte-otro" placeholder="Ej: Andreani, Buspack, Expreso..." style="width:100%; padding:8px; border:1px solid #E91E63; border-radius:6px;">
+        </div>
+
+        <div class="grupo-cuadraditos">
+          <div class="opcion-cuadradito" id="opt-domicilio" onclick="elegirModalidad('A Domicilio')">
+            <span class="texto-opcion">A Domicilio</span>
+            <div class="cajita-x" id="check-domicilio"></div>
+          </div>
+          <div class="opcion-cuadradito" id="opt-sucursal" onclick="elegirModalidad('Retira en Sucursal')">
+            <span class="texto-opcion">A Sucursal</span>
+            <div class="cajita-x" id="check-sucursal"></div>
+          </div>
+        </div>
+
+        <div class="titulo-seccion">2. Tus Datos de Envío</div>
+        <div class="fila-doble">
+          <div class="campo" style="flex:1;"><input type="text" id="nombre" placeholder="Nombre *"></div>
+          <div class="campo" style="flex:1;"><input type="text" id="apellido" placeholder="Apellido *"></div>
+        </div>
+        <div class="fila-doble">
+          <div class="campo" style="flex:1;"><input type="tel" id="celular" placeholder="Teléfono / Cel *"></div>
+          <div class="campo" style="flex:1;"><input type="text" id="dni" placeholder="DNI *"></div>
+        </div>
+        <div class="campo"><input type="text" id="direccion" placeholder="Dirección (Calle y Altura) *"></div>
+        <div class="fila-doble">
+          <div class="campo" style="flex:1;"><input type="text" id="cp" placeholder="Código Postal *"></div>
+          <div class="campo" style="flex:1.5;"><input type="text" id="provincia" placeholder="Provincia *"></div>
+        </div>
+        <div class="campo"><input type="text" id="localidad" placeholder="Localidad *"></div>
+      </div>
+
+      <!-- FORMULARIO 2: SE MUESTRA SOLO SI MARCA "RETIRO POR LOCAL" -->
+      <div id="bloque-form-retiro" style="display:none;">
+        <div class="titulo-seccion">Datos de quien retira en el local</div>
+        <div class="campo">
+          <label>Nombre del que retira:</label>
+          <input type="text" id="retiro-nombre" placeholder="Escribí tu nombre *">
+        </div>
+        <div class="campo">
+          <label>Apellido:</label>
+          <input type="text" id="retiro-apellido" placeholder="Escribí tu apellido *">
+        </div>
+        <div class="campo">
+          <label>Celular:</label>
+          <input type="tel" id="retiro-celular" placeholder="Escribí tu celular *">
+        </div>
+        <div class="campo">
+          <label>DNI:</label>
+          <input type="text" id="retiro-dni" placeholder="Escribí tu DNI *">
         </div>
       </div>
 
-      <div class="titulo-seccion">2. Tus Datos de Envío</div>
-      <div class="fila-doble">
-        <div class="campo" style="flex:1;"><input type="text" id="nombre" placeholder="Nombre *"></div>
-        <div class="campo" style="flex:1;"><input type="text" id="apellido" placeholder="Apellido *"></div>
-      </div>
-      <div class="fila-doble">
-        <div class="campo" style="flex:1;"><input type="tel" id="celular" placeholder="Teléfono / Cel *"></div>
-        <div class="campo" style="flex:1;"><input type="text" id="dni" placeholder="DNI *"></div>
-      </div>
-      <div class="campo"><input type="text" id="direccion" placeholder="Dirección (Calle y Altura) *"></div>
-      <div class="fila-doble">
-        <div class="campo" style="flex:1;"><input type="text" id="cp" placeholder="Código Postal *"></div>
-        <div class="campo" style="flex:1.5;"><input type="text" id="provincia" placeholder="Provincia *"></div>
-      </div>
-      <div class="campo"><input type="text" id="localidad" placeholder="Localidad *"></div>
-
-      <button type="button" id="btn-enviar" class="btn-wsp" onclick="enviarPedido()" disabled>Faltan $70.000 para enviar</button>
+      <button type="button" id="btn-enviar" class="btn-wsp" onclick="enviarPedido()" disabled>Seleccioná Envío o Retiro</button>
     </aside>
   </div>
   <script>
     const TELEFONO = "5491125748687";
-    const MINIMO = 70000;
+    const MINIMO_ENVIO = 80000;
+    const MINIMO_PRENDAS_RETIRO = 5;
     const EMBALAJE = 4000;
 
     const PRODUCTOS = [
       { id: 1, nombre: "Vestido Franchesca", precio: 15000, fotos: ["franchesca.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Blanco", "Uva"] },
-      { id: 2, nombre: "Marilyn Lunares", precio: 6000, fotos: ["marilyn.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Bordó", "Choco"] },
-      { id: 3, nombre: "Pollera Lunares", precio: 5500, fotos: ["pollera.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva"] },
+      { id: 2, nombre: "Marilyn Lunares", precio: 15000, fotos: ["marilyn.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Bordó", "Choco"] },
+      { id: 3, nombre: "Pollera Lunares", precio: 15000, fotos: ["pollera.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva"] },
       { id: 4, nombre: "Vestido Isa", precio: 13500, fotos: ["isa.jpg.jpg"], talles: ["Talle Único"], colores: ["Choco"] },
       { id: 5, nombre: "Pollera Volado de Tul", subtitulo: "Con lentejuela y short interno", precio: 9000, fotos: ["tul1.jpg.jpg", "tul2.jpg.jpg", "tul3.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Plateado", "Blanco"] },
       { id: 6, nombre: "Pollera Glitter", precio: 5000, fotos: ["glitter1.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Rojo", "Plateado"] },
@@ -363,6 +400,7 @@
     let indiceFotoActual = {};
     let visorProdId = null;
     let visorFotoIdx = 0;
+    let tipoEntrega = "";
     let modalidadSeleccionada = "";
 
     function codificarDatos(obj) {
@@ -393,6 +431,8 @@
         const cont = document.getElementById("vista-comprobante");
         cont.style.display = "block";
 
+        const esRetiroLocal = (d.tipo === "Retiro por Local");
+
         let filasHtml = d.items.map(it => `
           <tr>
             <td style="text-align:center;">${it.c}</td>
@@ -402,40 +442,55 @@
           </tr>
         `).join("");
 
+        let hojaEnvioHtml = "";
+        if (!esRetiroLocal) {
+          hojaEnvioHtml = `
+            <div class="hoja-pdf">
+              <table class="pdf-header">
+                <tr>
+                  <td style="width: 38%;"><div class="pdf-logo">BELLA</div><div style="font-size:11px; font-weight:bold;">FABRICANTE DIRECTO</div><div style="font-size:10px;">Campana 378 - Local A6<br>Galería Smart Campana - Flores</div></td>
+                  <td style="width: 34%; text-align: center;"><div style="font-weight:bold; font-size:13px;">Venta por Mayor y Menor<br>Envíos al Interior</div><div style="font-size:11px; margin-top:6px;">Fecha: ${d.f}<br>Hora: ${d.h}</div></td>
+                  <td style="width: 28%; font-size: 10px;"><b>Dany: 11-2574-8687<br>Isa: 11-6735-3960</b><br>FB: BELLA Indumentaria<br>TK: bella.indumentaria<br>IG: bella.indumentariadama</td>
+                </tr>
+              </table>
+              <table class="pdf-envios">
+                <tr>
+                  <td class="pdf-vertical">E<br>N<br>V<br>Í<br>O<br>S</td>
+                  <td style="width: 12px;"></td>
+                  <td class="pdf-datos">
+                    <div class="pdf-linea"><b>Nombre:</b> ${d.nom} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Apellido:</b> ${d.ape}</div>
+                    <div class="pdf-linea"><b>DNI:</b> ${d.dni} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Teléfono:</b> ${d.cel}</div>
+                    <div class="pdf-linea"><b>Dirección:</b> ${d.dir}</div>
+                    <div class="pdf-linea"><b>Localidad:</b> ${d.loc} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Provincia:</b> ${d.prov}</div>
+                    <div class="pdf-linea"><b>Código Postal:</b> ${d.cp} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Transporte:</b> ${d.tr}</div>
+                    <div style="margin-top: 22px; text-align: right; font-size: 13px; font-weight: bold;">
+                      A Domicilio <span class="pdf-casilla">${d.mod === 'A Domicilio' ? 'X' : '&nbsp;'}</span>
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                      Retira en Sucursal <span class="pdf-casilla">${d.mod === 'Retira en Sucursal' ? 'X' : '&nbsp;'}</span>
+                    </div>
+                    <div style="margin-top: 18px; font-size: 10px; color: #555;">Documento no válido como factura</div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          `;
+        }
+
+        const filaEmbalajePdf = esRetiroLocal
+          ? ""
+          : `<tr><td style="text-align:center;">1</td><td><b>Embalaje y Traslado</b></td><td style="text-align:right;">$4.000</td><td style="text-align:right;">$4.000</td></tr>`;
+
+        const datosClienteOrdenPdf = esRetiroLocal
+          ? `<b>Modalidad:</b> RETIRO POR LOCAL<br><b>Retira:</b> ${d.nom} ${d.ape} &nbsp;|&nbsp; <b>DNI:</b> ${d.dni} &nbsp;|&nbsp; <b>Cel:</b> ${d.cel}`
+          : `<b>Señor/es:</b> ${d.nom} ${d.ape} &nbsp;|&nbsp; <b>DNI:</b> ${d.dni}<br><b>Domicilio:</b> ${d.dir} (${d.loc}, ${d.prov})`;
+
         cont.innerHTML = `
           <div class="barra-imprimir no-imprimir">
-            <button type="button" class="btn-imprimir-pdf" onclick="window.print()">🖨️ Imprimir / Guardar PDF (2 Hojas)</button>
+            <button type="button" class="btn-imprimir-pdf" onclick="window.print()">🖨️ Imprimir / Guardar PDF (${esRetiroLocal ? '1 Hoja' : '2 Hojas'})</button>
             <button type="button" class="btn-volver-tienda" onclick="window.location.href=window.location.pathname">Ir a la Tienda</button>
           </div>
-          <div class="hoja-pdf">
-            <table class="pdf-header">
-              <tr>
-                <td style="width: 38%;"><div class="pdf-logo">BELLA</div><div style="font-size:11px; font-weight:bold;">FABRICANTE DIRECTO</div><div style="font-size:10px;">Campana 378 - Local A6<br>Galería Smart Campana - Flores</div></td>
-                <td style="width: 34%; text-align: center;"><div style="font-weight:bold; font-size:13px;">Venta por Mayor y Menor<br>Envíos al Interior</div><div style="font-size:11px; margin-top:6px;">Fecha: ${d.f}<br>Hora: ${d.h}</div></td>
-                <td style="width: 28%; font-size: 10px;"><b>Dany: 11-2574-8687<br>Isa: 11-6735-3960</b><br>FB: BELLA Indumentaria<br>TK: bella.indumentaria<br>IG: bella.indumentariadama</td>
-              </tr>
-            </table>
-            <table class="pdf-envios">
-              <tr>
-                <td class="pdf-vertical">E<br>N<br>V<br>Í<br>O<br>S</td>
-                <td style="width: 12px;"></td>
-                <td class="pdf-datos">
-                  <div class="pdf-linea"><b>Nombre:</b> ${d.nom} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Apellido:</b> ${d.ape}</div>
-                  <div class="pdf-linea"><b>DNI:</b> ${d.dni} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Teléfono:</b> ${d.cel}</div>
-                  <div class="pdf-linea"><b>Dirección:</b> ${d.dir}</div>
-                  <div class="pdf-linea"><b>Localidad:</b> ${d.loc} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Provincia:</b> ${d.prov}</div>
-                  <div class="pdf-linea"><b>Código Postal:</b> ${d.cp} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Transporte:</b> ${d.tr}</div>
-                  <div style="margin-top: 22px; text-align: right; font-size: 13px; font-weight: bold;">
-                    A Domicilio <span class="pdf-casilla">${d.mod === 'A Domicilio' ? 'X' : '&nbsp;'}</span>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    Retira en Sucursal <span class="pdf-casilla">${d.mod === 'Retira en Sucursal' ? 'X' : '&nbsp;'}</span>
-                  </div>
-                  <div style="margin-top: 18px; font-size: 10px; color: #555;">Documento no válido como factura</div>
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div class="hoja-pdf salto-pagina">
+          ${hojaEnvioHtml}
+          <div class="hoja-pdf ${esRetiroLocal ? '' : 'salto-pagina'}">
             <table class="pdf-header">
               <tr>
                 <td style="width: 35%;"><div class="pdf-logo">BELLA</div><div style="font-family: Georgia, serif; font-style: italic; font-size: 17px;">Indumentaria</div></td>
@@ -443,16 +498,15 @@
                 <td style="width: 28%; font-size: 10px;"><b>Dany: 11-2574-8687<br>Isa: 11-6735-3960</b><br>FB: BELLA Indumentaria<br>TK: bella.indumentaria<br>IG: bella.indumentariadama</td>
               </tr>
             </table>
-            <div style="border: 2px solid #1A1A1A; padding: 12px; margin-bottom: 12px; font-size: 12px;">
-              <b>ORDEN DE COMPRA</b> &nbsp;|&nbsp; <b>Fecha:</b> ${d.f} &nbsp;|&nbsp; <b>Hora:</b> ${d.h}<br><br>
-              <b>Señor/es:</b> ${d.nom} ${d.ape}<br>
-              <b>Domicilio:</b> ${d.dir} (${d.loc}, ${d.prov})
+            <div style="border: 2px solid #1A1A1A; padding: 12px; margin-bottom: 12px; font-size: 12px; line-height: 1.5;">
+              <b>ORDEN DE COMPRA</b> &nbsp;|&nbsp; <b>Fecha:</b> ${d.f} &nbsp;|&nbsp; <b>Hora:</b> ${d.h}<br>
+              ${datosClienteOrdenPdf}
             </div>
             <table class="pdf-tabla">
               <thead><tr><th style="width: 12%;">CANT.</th><th style="width: 52%;">DETALLE</th><th style="width: 18%;">P. UNIT.</th><th style="width: 18%;">IMPORTE</th></tr></thead>
               <tbody>
                 ${filasHtml}
-                <tr><td style="text-align:center;">1</td><td><b>Embalaje y Traslado</b></td><td style="text-align:right;">$4.000</td><td style="text-align:right;">$4.000</td></tr>
+                ${filaEmbalajePdf}
               </tbody>
             </table>
             <div class="pdf-total">TOTAL FINAL: $${d.tot}</div>
@@ -461,6 +515,33 @@
         `;
       } catch (err) { cargarCatalogo(); }
     }
+    function elegirTipoEntrega(tipo) {
+      tipoEntrega = tipo;
+      const boxEnvio = document.getElementById("tipo-envio");
+      const boxRetiro = document.getElementById("tipo-retiro");
+      const chkEnvio = document.getElementById("check-tipo-envio");
+      const chkRetiro = document.getElementById("check-tipo-retiro");
+      const formEnvio = document.getElementById("bloque-form-envio");
+      const formRetiro = document.getElementById("bloque-form-retiro");
+
+      if (tipo === "Envío") {
+        boxEnvio.classList.add("seleccionado");
+        boxRetiro.classList.remove("seleccionado");
+        chkEnvio.textContent = "X";
+        chkRetiro.textContent = "";
+        formEnvio.style.display = "block";
+        formRetiro.style.display = "none";
+      } else {
+        boxRetiro.classList.add("seleccionado");
+        boxEnvio.classList.remove("seleccionado");
+        chkRetiro.textContent = "X";
+        chkEnvio.textContent = "";
+        formRetiro.style.display = "block";
+        formEnvio.style.display = "none";
+      }
+      actualizarCarrito();
+    }
+
     function actualizarColoresPorTalle(id) {
       const prod = PRODUCTOS.find(p => p.id === id);
       if (!prod || !prod.coloresPorTalle) return;
@@ -611,70 +692,75 @@
     function actualizarCarrito() {
       const lista = document.getElementById("lista-carrito");
       const subtotalTxt = document.getElementById("subtotal-texto");
+      const cantPrendasTxt = document.getElementById("cant-prendas-txt");
+      const filaEmbalaje = document.getElementById("fila-embalaje");
       const totalTxt = document.getElementById("total-texto");
       const badgeTotal = document.getElementById("badge-total");
       const avisoMin = document.getElementById("aviso-minimo");
       const btnEnviar = document.getElementById("btn-enviar");
 
       let subtotal = 0;
+      let totalPrendas = 0;
+
       if (carrito.length === 0) {
         lista.innerHTML = '<li style="color:#777; justify-content:center;">Tu carrito está vacío</li>';
       } else {
         lista.innerHTML = carrito.map((item, idx) => {
           const sub = item.precio * item.cant;
           subtotal += sub;
+          totalPrendas += item.cant;
           return `<li><div><strong>${item.cant}x ${item.nombre}</strong><br><span style="color:#666; font-size:0.78rem;">${item.color} | ${item.talle}</span><br><span style="color:#C2185B; font-weight:bold;">$${sub.toLocaleString('es-AR')}</span></div><button type="button" class="btn-x" onclick="quitar(${idx})">X</button></li>`;
         }).join('');
       }
 
-      const totalFinal = subtotal + EMBALAJE;
+      const cobraEmbalaje = (tipoEntrega === "Envío");
+      filaEmbalaje.style.display = cobraEmbalaje ? "flex" : "none";
+      const totalFinal = subtotal + (cobraEmbalaje ? EMBALAJE : 0);
+
+      cantPrendasTxt.textContent = totalPrendas;
       subtotalTxt.textContent = "$" + subtotal.toLocaleString('es-AR');
-      totalTxt.textContent = "$" + totalFinal.toLocaleString('es-AR');
+      totalTxt.textContent = "$" + (subtotal > 0 ? totalFinal.toLocaleString('es-AR') : "0");
       badgeTotal.textContent = "$" + (subtotal > 0 ? totalFinal.toLocaleString('es-AR') : "0");
 
-      if (subtotal >= MINIMO) {
-        avisoMin.textContent = "¡Mínimo alcanzado! Ya podés enviar tu pedido.";
-        avisoMin.classList.add("ok");
-        btnEnviar.disabled = false;
-        btnEnviar.textContent = "Enviar Pedido por WhatsApp";
-      } else {
-        const falta = MINIMO - subtotal;
-        avisoMin.textContent = "Compra mínima: $70.000 (Faltan $" + falta.toLocaleString('es-AR') + ")";
+      if (!tipoEntrega) {
+        avisoMin.textContent = "Seleccioná arriba: Envío o Retiro por Local";
         avisoMin.classList.remove("ok");
         btnEnviar.disabled = true;
-        btnEnviar.textContent = "Faltan $" + falta.toLocaleString('es-AR') + " para enviar";
+        btnEnviar.textContent = "Seleccioná Envío o Retiro";
+        return;
+      }
+
+      if (tipoEntrega === "Envío") {
+        if (subtotal >= MINIMO_ENVIO) {
+          avisoMin.textContent = "¡Mínimo de $80.000 alcanzado! Ya podés enviar.";
+          avisoMin.classList.add("ok");
+          btnEnviar.disabled = false;
+          btnEnviar.textContent = "Enviar Pedido por WhatsApp";
+        } else {
+          const falta = MINIMO_ENVIO - subtotal;
+          avisoMin.textContent = "Compra mínima Envío: $80.000 (Faltan $" + falta.toLocaleString('es-AR') + ")";
+          avisoMin.classList.remove("ok");
+          btnEnviar.disabled = true;
+          btnEnviar.textContent = "Faltan $" + falta.toLocaleString('es-AR') + " para enviar";
+        }
+      } else {
+        if (totalPrendas >= MINIMO_PRENDAS_RETIRO) {
+          avisoMin.textContent = "¡Mínimo de 5 prendas alcanzado! Ya podés enviar.";
+          avisoMin.classList.add("ok");
+          btnEnviar.disabled = false;
+          btnEnviar.textContent = "Enviar Pedido por WhatsApp";
+        } else {
+          const faltanUnidades = MINIMO_PRENDAS_RETIRO - totalPrendas;
+          avisoMin.textContent = "Mínimo Retiro por Local: 5 artículos (Faltan " + faltanUnidades + ")";
+          avisoMin.classList.remove("ok");
+          btnEnviar.disabled = true;
+          btnEnviar.textContent = "Faltan " + faltanUnidades + " artículo(s) para enviar";
+        }
       }
     }
 
     function enviarPedido() {
-      const transpSel = document.getElementById("transporte").value;
-      const transpOtro = document.getElementById("transporte-otro").value.trim();
-
-      if (!transpSel) { alert("Falta rellenar el casillero: Forma de Envío / Transporte"); document.getElementById("transporte").focus(); return; }
-      if (transpSel === "Otro" && !transpOtro) { alert("Falta rellenar el casillero: Escribí el transporte"); document.getElementById("transporte-otro").focus(); return; }
-      if (!modalidadSeleccionada) { alert("Por favor marcá uno de los cuadraditos: A Domicilio o A Sucursal."); return; }
-
-      const campos = [
-        { id: "nombre", nombre: "Nombre" }, { id: "apellido", nombre: "Apellido" },
-        { id: "celular", nombre: "Teléfono / Celular" }, { id: "dni", nombre: "DNI" },
-        { id: "direccion", nombre: "Dirección" }, { id: "cp", nombre: "Código Postal" },
-        { id: "provincia", nombre: "Provincia" }, { id: "localidad", nombre: "Localidad" }
-      ];
-
-      for (let c of campos) {
-        const el = document.getElementById(c.id);
-        if (!el.value.trim()) { alert("Falta rellenar el casillero: " + c.nombre); el.focus(); return; }
-      }
-
-      const transpFinal = transpSel === "Otro" ? transpOtro : transpSel;
-      const nombre = document.getElementById("nombre").value.trim();
-      const apellido = document.getElementById("apellido").value.trim();
-      const celular = document.getElementById("celular").value.trim();
-      const dni = document.getElementById("dni").value.trim();
-      const direccion = document.getElementById("direccion").value.trim();
-      const cp = document.getElementById("cp").value.trim();
-      const provincia = document.getElementById("provincia").value.trim();
-      const localidad = document.getElementById("localidad").value.trim();
+      if (!tipoEntrega) { alert("Por favor seleccioná Envío o Retiro por Local."); return; }
 
       const ahora = new Date();
       const fechaStr = ahora.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
@@ -694,34 +780,96 @@
         detalleWsp += `• ${item.cant}x ${item.nombre} | Color: ${item.color} | ${item.talle} - $${sub.toLocaleString('es-AR')}\n`;
       });
 
-      const totalFinal = subtotal + EMBALAJE;
-
-      const paqueteOrden = {
-        f: fechaStr, h: horaStr, nom: nombre, ape: apellido, dni: dni, cel: celular,
-        dir: direccion, loc: localidad, prov: provincia, cp: cp, tr: transpFinal,
-        mod: modalidadSeleccionada, items: itemsCortos, tot: totalFinal.toLocaleString('es-AR')
-      };
-
       const urlBase = window.location.origin + window.location.pathname;
-      const linkPdfComprobante = urlBase + "?orden=" + codificarDatos(paqueteOrden);
-
       let msg = "¡Hola *BELLA Indumentaria*! 👋 Quiero realizar el siguiente pedido:\n\n";
       msg += "*ORDEN DE COMPRA (" + fechaStr + " " + horaStr + "):*\n";
       msg += detalleWsp;
-      msg += "• Embalaje y traslado: $4.000\n";
-      msg += "\n*TOTAL FINAL A PAGAR: $" + totalFinal.toLocaleString('es-AR') + "*\n\n";
-      msg += "*FORMA DE ENVÍO:*\n";
-      msg += "• Transporte: " + transpFinal + "\n";
-      msg += "• Modalidad: " + modalidadSeleccionada + "\n\n";
-      msg += "*DATOS DEL CLIENTE:*\n";
-      msg += "• Nombre: " + nombre + " " + apellido + "\n";
-      msg += "• DNI: " + dni + "\n";
-      msg += "• Teléfono: " + celular + "\n";
-      msg += "• Dirección: " + direccion + "\n";
-      msg += "• Localidad: " + localidad + " (CP: " + cp + ")\n";
-      msg += "• Provincia: " + provincia + "\n\n";
-      msg += "📄 *ABRIR TALÓN DE ENVÍO Y ORDEN (PDF 2 HOJAS):*\n";
-      msg += linkPdfComprobante;
+
+      if (tipoEntrega === "Envío") {
+        const transpSel = document.getElementById("transporte").value;
+        const transpOtro = document.getElementById("transporte-otro").value.trim();
+
+        if (!transpSel) { alert("Falta rellenar el casillero: Forma de Envío / Transporte"); document.getElementById("transporte").focus(); return; }
+        if (transpSel === "Otro" && !transpOtro) { alert("Falta rellenar el casillero: Escribí el transporte"); document.getElementById("transporte-otro").focus(); return; }
+        if (!modalidadSeleccionada) { alert("Por favor marcá A Domicilio o A Sucursal."); return; }
+
+        const campos = [
+          { id: "nombre", nombre: "Nombre" }, { id: "apellido", nombre: "Apellido" },
+          { id: "celular", nombre: "Teléfono / Celular" }, { id: "dni", nombre: "DNI" },
+          { id: "direccion", nombre: "Dirección" }, { id: "cp", nombre: "Código Postal" },
+          { id: "provincia", nombre: "Provincia" }, { id: "localidad", nombre: "Localidad" }
+        ];
+        for (let c of campos) {
+          const el = document.getElementById(c.id);
+          if (!el.value.trim()) { alert("Falta rellenar el casillero: " + c.nombre); el.focus(); return; }
+        }
+        const transpFinal = transpSel === "Otro" ? transpOtro : transpSel;
+        const nombre = document.getElementById("nombre").value.trim();
+        const apellido = document.getElementById("apellido").value.trim();
+        const celular = document.getElementById("celular").value.trim();
+        const dni = document.getElementById("dni").value.trim();
+        const direccion = document.getElementById("direccion").value.trim();
+        const cp = document.getElementById("cp").value.trim();
+        const provincia = document.getElementById("provincia").value.trim();
+        const localidad = document.getElementById("localidad").value.trim();
+        const totalFinal = subtotal + EMBALAJE;
+
+        const paqueteOrden = {
+          tipo: "Envío", f: fechaStr, h: horaStr, nom: nombre, ape: apellido, dni: dni, cel: celular,
+          dir: direccion, loc: localidad, prov: provincia, cp: cp, tr: transpFinal,
+          mod: modalidadSeleccionada, items: itemsCortos, tot: totalFinal.toLocaleString('es-AR')
+        };
+
+        const linkPdfComprobante = urlBase + "?orden=" + codificarDatos(paqueteOrden);
+
+        msg += "• Embalaje y traslado: $4.000\n";
+        msg += "\n*TOTAL FINAL A PAGAR: $" + totalFinal.toLocaleString('es-AR') + "*\n\n";
+        msg += "*FORMA DE ENVÍO:*\n";
+        msg += "• Transporte: " + transpFinal + "\n";
+        msg += "• Modalidad: " + modalidadSeleccionada + "\n\n";
+        msg += "*DATOS DEL CLIENTE:*\n";
+        msg += "• Nombre: " + nombre + " " + apellido + "\n";
+        msg += "• DNI: " + dni + "\n";
+        msg += "• Teléfono: " + celular + "\n";
+        msg += "• Dirección: " + direccion + "\n";
+        msg += "• Localidad: " + localidad + " (CP: " + cp + ")\n";
+        msg += "• Provincia: " + provincia + "\n\n";
+        msg += "📄 *ABRIR TALÓN DE ENVÍO Y ORDEN (PDF 2 HOJAS):*\n";
+        msg += linkPdfComprobante;
+
+      } else {
+        const camposRetiro = [
+          { id: "retiro-nombre", nombre: "Nombre del que retira" },
+          { id: "retiro-apellido", nombre: "Apellido" },
+          { id: "retiro-celular", nombre: "Celular" },
+          { id: "retiro-dni", nombre: "DNI" }
+        ];
+        for (let c of camposRetiro) {
+          const el = document.getElementById(c.id);
+          if (!el.value.trim()) { alert("Falta rellenar el casillero: " + c.nombre); el.focus(); return; }
+        }
+
+        const rNombre = document.getElementById("retiro-nombre").value.trim();
+        const rApellido = document.getElementById("retiro-apellido").value.trim();
+        const rCelular = document.getElementById("retiro-celular").value.trim();
+        const rDni = document.getElementById("retiro-dni").value.trim();
+
+        const paqueteRetiro = {
+          tipo: "Retiro por Local", f: fechaStr, h: horaStr,
+          nom: rNombre, ape: rApellido, cel: rCelular, dni: rDni,
+          items: itemsCortos, tot: subtotal.toLocaleString('es-AR')
+        };
+
+        const linkPdfRetiro = urlBase + "?orden=" + codificarDatos(paqueteRetiro);
+
+        msg += "\n*TOTAL FINAL A PAGAR: $" + subtotal.toLocaleString('es-AR') + "*\n\n";
+        msg += "*MODALIDAD: RETIRO POR LOCAL*\n";
+        msg += "• Retira: " + rNombre + " " + rApellido + "\n";
+        msg += "• DNI: " + rDni + "\n";
+        msg += "• Celular: " + rCelular + "\n\n";
+        msg += "📄 *ABRIR ORDEN DE COMPRA (PDF):*\n";
+        msg += linkPdfRetiro;
+      }
 
       const urlWsp = ["https:/", "/api.", "whatsapp", ".com/send?phone="].join("") + TELEFONO + "&text=" + encodeURIComponent(msg);
       window.location.href = urlWsp;
