@@ -406,31 +406,49 @@
     const MINIMO_ENVIO = 80000;
     const MINIMO_PRENDAS_RETIRO = 5;
     const EMBALAJE = 4000;
-    const STOCK_INICIAL_POR_VARIANTE = 50;
 
     const PRODUCTOS = [
-      { id: 1, nombre: "Vestido Franchesca", precio: 15000, fotos: ["franchesca.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Blanco", "Uva"] },
-      { id: 2, nombre: "Marilyn Lunares", precio: 15000, fotos: ["marilyn.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Bordó", "Choco"] },
-      { id: 3, nombre: "Pollera Lunares", precio: 15000, fotos: ["pollera.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva"] },
-      { id: 4, nombre: "Vestido Isa", precio: 13500, fotos: ["isa.jpg.jpg"], talles: ["Talle Único"], colores: ["Choco"] },
-      { id: 5, nombre: "Pollera Volado de Tul", subtitulo: "Con lentejuela y short interno", precio: 9000, fotos: ["tul1.jpg.jpg", "tul2.jpg.jpg", "tul3.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Plateado", "Blanco"] },
-      { id: 6, nombre: "Pollera Glitter", precio: 5000, fotos: ["glitter1.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Rojo", "Plateado"] },
-      { id: 7, nombre: "Body Carla", precio: 8000, fotos: ["carla1.jpg.jpg", "carla2.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
-      { id: 8, nombre: "Pollera Mini", precio: 7000, fotos: ["mini1.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Print Clarito", "Print Oscurito"] },
-      { id: 9, nombre: "Body Melisa Print", precio: 8000, fotos: ["melisaprint.jpg.jpg"], talles: ["Talle Único"], colores: ["Print Amarillito", "Print Manchas Grandes", "Print Manchas Chicas"] },
-      { id: 10, nombre: "Body Melisa", precio: 7000, fotos: ["melisa.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro"] },
+      { id: 1, nombre: "Vestido Franchesca", precio: 15000, stockDefault: 20, fotos: ["franchesca.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Blanco", "Uva"] },
+      { id: 2, nombre: "Marilyn Lunares", precio: 6000, stockDefault: 5, fotos: ["marilyn.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Bordó", "Choco"] },
+      { id: 3, nombre: "Pollera Lunares", precio: 5500, stockDefault: 8, fotos: ["pollera.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva"] },
+      { id: 4, nombre: "Vestido Isa", precio: 13500, stockDefault: 10, fotos: ["isa.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco"] },
+      { id: 5, nombre: "Pollera Volado de Tul", subtitulo: "Con lentejuela y short interno", precio: 9000, stockDefault: 8, fotos: ["tul1.jpg.jpg", "tul2.jpg.jpg", "tul3.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Plateado", "Blanco"] },
+      { id: 6, nombre: "Pollera Glitter", precio: 5000, stockDefault: 6, fotos: ["glitter1.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Rojo", "Plateado"] },
+      { id: 7, nombre: "Body Carla", precio: 8000, stockDefault: 10, fotos: ["carla1.jpg.jpg", "carla2.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
+      { id: 8, nombre: "Pollera Mini Print", precio: 7000, stockDefault: 10, fotos: ["mini1.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Print Clarito", "Print Oscurito"] },
+      { id: 9, nombre: "Body Melisa Print", precio: 8000, stockDefault: 15, fotos: ["melisaprint.jpg.jpg"], talles: ["Talle Único"], colores: ["Print Amarillito", "Print Manchas Grandes", "Print Manchas Chicas"] },
       {
         id: 11,
         nombre: "Short Camila",
         precio: 4500,
+        stockDefault: 8,
         fotos: ["camila.jpg.jpg"],
         coloresPorTalle: {
           "Talle 2": ["Negro", "Choco", "Uva", "Blanco"],
           "Talle 4": ["Negro", "Choco", "Uva"]
         }
       },
-      { id: 12, nombre: "Polleras Voladas con Diseño", precio: 4000, fotos: ["voladas.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro Floreado", "Bordó Floreado", "Vaquita"] },
-      { id: 13, nombre: "Vestido Anahi", subtitulo: "Satén elastizado premium", precio: 15000, fotos: ["anahi1.jpg.jpg", "anahi2.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Chocolate"] }
+      { id: 12, nombre: "Polleras Voladas con Diseño", precio: 4000, stockDefault: 4, fotos: ["voladas.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro Floreado", "Bordó Floreado", "Vaquita"] },
+      { id: 13, nombre: "Vestido Anahi", subtitulo: "Satén elastizado premium", precio: 15000, stockDefault: 10, fotos: ["anahi1.jpg.jpg", "anahi2.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Chocolate"] },
+      { id: 14, nombre: "Vestido Isa con Strass", precio: 16000, stockDefault: 15, fotos: ["isastrass1.jpg", "isastrass2.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
+      { id: 15, nombre: "Vestido Straple", precio: 13500, stockDefault: 15, fotos: ["straple.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
+      { id: 16, nombre: "Short con Strass", precio: 5000, stockDefault: 15, fotos: ["shortstrass.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
+      { id: 17, nombre: "Vestido Oriana con Strass", precio: 11500, stockDefault: 10, fotos: ["oriana1.jpg", "oriana2.jpg", "oriana3.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
+      { id: 18, nombre: "Catsuit Brisa", precio: 8500, stockDefault: 15, fotos: ["brisa.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva"] },
+      { id: 19, nombre: "Top Buche Strass", precio: 6500, stockDefault: 15, fotos: ["topbuche1.jpg", "topbuche2.jpg"], talles: ["Talle Único"], colores: ["Negro", "Uva"] },
+      { id: 20, nombre: "Top Corazón", precio: 5000, stockDefault: 15, fotos: ["topcorazon.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Celeste", "Blanco", "Rosa", "Lila"] },
+      { id: 21, nombre: "Reme Tokio Print", precio: 8000, stockDefault: 10, fotos: ["tokioprint.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Print Manchas Grandes", "Print Amarillito"] },
+      { id: 22, nombre: "Palazzo Kheyla", precio: 9000, stockDefault: 15, fotos: ["kheyla.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
+      {
+        id: 23,
+        nombre: "Reme Tokio",
+        precio: 7000,
+        stockDefault: 10,
+        stockEspecialColor: { "Uva": 5 },
+        fotos: ["tokio1.jpg", "tokio2.jpg"],
+        talles: ["Talle 2", "Talle 4"],
+        colores: ["Negro", "Choco", "Blanco", "Uva", "Celeste", "Rosa", "Lila"]
+      }
     ];
 
     let carrito = [];
@@ -440,27 +458,38 @@
     let tipoEntrega = "";
     let modalidadSeleccionada = "";
 
+    function obtenerStockInicialVariante(id, color) {
+      const prod = PRODUCTOS.find(p => p.id === id);
+      if (!prod) return 0;
+      if (prod.stockEspecialColor && prod.stockEspecialColor.hasOwnProperty(color)) {
+        const par = Object.entries(prod.stockEspecialColor).find(x => x.at(0) === color);
+        if (par) return par.at(1);
+      }
+      return prod.stockDefault || 10;
+    }
+
     function obtenerClaveStock(id, talle, color) {
       return id + "|" + talle + "|" + color;
     }
 
     function cargarStockGuardado() {
       try {
-        const raw = localStorage.getItem("bella_stock_v1");
+        const raw = localStorage.getItem("bella_stock_v2");
         return raw ? JSON.parse(raw) : {};
       } catch (e) { return {}; }
     }
 
     function guardarStock(mapaStock) {
       try {
-        localStorage.setItem("bella_stock_v1", JSON.stringify(mapaStock));
+        localStorage.setItem("bella_stock_v2", JSON.stringify(mapaStock));
       } catch (e) {}
     }
 
     function obtenerStockDisponible(id, talle, color) {
       const mapa = cargarStockGuardado();
       const clave = obtenerClaveStock(id, talle, color);
-      const base = mapa.hasOwnProperty(clave) ? mapa[clave] : STOCK_INICIAL_POR_VARIANTE;
+      const inicial = obtenerStockInicialVariante(id, color);
+      const base = mapa.hasOwnProperty(clave) ? Object.entries(mapa).find(x => x.at(0) === clave).at(1) : inicial;
       const enCarrito = carrito.find(i => i.id === id && i.talle === talle && i.color === color);
       const reservado = enCarrito ? enCarrito.cant : 0;
       return Math.max(0, base - reservado);
@@ -470,7 +499,8 @@
       const mapa = cargarStockGuardado();
       itemsComprados.forEach(it => {
         const clave = obtenerClaveStock(it.id, it.talle, it.color);
-        const actual = mapa.hasOwnProperty(clave) ? mapa[clave] : STOCK_INICIAL_POR_VARIANTE;
+        const inicial = obtenerStockInicialVariante(it.id, it.color);
+        const actual = mapa.hasOwnProperty(clave) ? Object.entries(mapa).find(x => x.at(0) === clave).at(1) : inicial;
         mapa[clave] = Math.max(0, actual - it.cant);
       });
       guardarStock(mapa);
@@ -526,7 +556,6 @@
       for (let i = 0; i < bin.length; i++) bytes.set([bin.charCodeAt(i)], i);
       return JSON.parse(new TextDecoder().decode(bytes));
     }
-
     function verificarModoComprobante() {
       const params = new URLSearchParams(window.location.search);
       const codigoOrden = params.get("orden");
@@ -671,6 +700,7 @@
         chkSuc.textContent = "X"; chkDom.textContent = "";
       }
     }
+
     function cargarCatalogo() {
       const cont = document.getElementById("catalogo");
       cont.innerHTML = PRODUCTOS.map(p => {
@@ -693,7 +723,7 @@
             <h3>${p.nombre}</h3>
             ${p.subtitulo ? `<p style="font-size:0.83rem; color:#666; font-weight:bold; margin-bottom:4px;">${p.subtitulo}</p>` : ''}
             <p class="precio">$${p.precio.toLocaleString('es-AR')}</p>
-            <div class="badge-stock" id="stock-badge-${p.id}">Disponibles: 50 unid.</div>
+            <div class="badge-stock" id="stock-badge-${p.id}">Disponibles: ${p.stockDefault} unid.</div>
           </div>
           <div>
             <div class="fila-doble">
@@ -762,7 +792,6 @@
 
     function cerrarVisor() { document.getElementById("visor-modal").classList.remove("activo"); }
     function cerrarVisorFondo(e) { if (e.target.id === "visor-modal") cerrarVisor(); }
-
     function togglePanel() {
       const panel = document.getElementById("panel-lateral");
       const flecha = document.getElementById("flecha-icono");
@@ -813,6 +842,7 @@
       actualizarCarrito();
       if (itemQuitado) actualizarEstadoStockTarjeta(itemQuitado.id);
     }
+
     function actualizarCarrito() {
       const lista = document.getElementById("lista-carrito");
       const subtotalTxt = document.getElementById("subtotal-texto");
@@ -882,7 +912,6 @@
         }
       }
     }
-
     function enviarPedido() {
       if (!tipoEntrega) { alert("Por favor seleccioná Envío o Retiro por Local."); return; }
 
