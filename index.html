@@ -8,14 +8,7 @@
   <style>
     :root { color-scheme: light only; }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
-    
-    body {
-      background-color: #FFFFFF !important;
-      color: #1A1A1A !important;
-      overflow-x: hidden;
-      overflow-y: auto;
-    }
-
+    body { background-color: #FFFFFF !important; color: #1A1A1A !important; overflow-x: hidden; overflow-y: auto; }
     header {
       background-color: #F48FB1 !important;
       background-image:
@@ -36,127 +29,29 @@
       justify-content: center;
       align-items: center;
     }
-
-    .caja-titulo-header {
-      background-color: #F8BBD0 !important;
-      border: 3px solid #1A1A1A;
-      border-radius: 16px;
-      padding: 18px 34px;
-      text-align: center;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
-      max-width: 760px;
-      width: 100%;
-    }
+    .caja-titulo-header { background-color: #F8BBD0 !important; border: 3px solid #1A1A1A; border-radius: 16px; padding: 18px 34px; text-align: center; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22); max-width: 760px; width: 100%; }
     .caja-titulo-header h1 { font-size: 2.1rem; letter-spacing: 3px; color: #1A1A1A !important; text-transform: uppercase; font-weight: 900; line-height: 1.15; }
     .caja-titulo-header p { color: #C2185B !important; font-weight: bold; font-size: 0.88rem; margin-top: 8px; letter-spacing: 0.6px; }
-
-    .contenedor-catalogo {
-      max-width: 1280px;
-      margin: 25px auto;
-      padding: 0 20px 60px 20px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-      background-color: #FFFFFF !important;
-    }
-
-    .producto {
-      background-color: #FFFFFF !important;
-      border: 2px solid #F8BBD0;
-      border-radius: 14px;
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-shadow: 0 4px 14px rgba(233, 30, 99, 0.1);
-    }
-
-    .galeria-box {
-      position: relative;
-      width: 100%;
-      height: 310px;
-      background-color: #FFF9FB;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #F8BBD0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
+    .contenedor-catalogo { max-width: 1280px; margin: 25px auto; padding: 0 20px 60px 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; background-color: #FFFFFF !important; }
+    .producto { background-color: #FFFFFF !important; border: 2px solid #F8BBD0; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 14px rgba(233, 30, 99, 0.1); }
+    .galeria-box { position: relative; width: 100%; height: 310px; background-color: #FFF9FB; border-radius: 10px; margin-bottom: 10px; border: 1px solid #F8BBD0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
     .galeria-box img { width: 100%; height: 100%; object-fit: contain; cursor: zoom-in; }
-
-    .cartel-agotado {
-      display: none;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-8deg);
-      background-color: #D50000 !important;
-      color: #FFFFFF !important;
-      border: 3px solid #FFFFFF;
-      padding: 10px 26px;
-      font-size: 1.45rem;
-      font-weight: 900;
-      letter-spacing: 3px;
-      border-radius: 10px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
-      z-index: 20;
-      pointer-events: none;
-      text-transform: uppercase;
-    }
+    .cartel-agotado { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-8deg); background-color: #D50000 !important; color: #FFFFFF !important; border: 3px solid #FFFFFF; padding: 10px 26px; font-size: 1.45rem; font-weight: 900; letter-spacing: 3px; border-radius: 10px; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45); z-index: 20; pointer-events: none; text-transform: uppercase; }
     .cartel-agotado.visible { display: block; }
-
-    .badge-stock {
-      font-size: 0.78rem;
-      font-weight: bold;
-      color: #2E7D32;
-      background-color: #E8F5E9;
-      border: 1px solid #A5D6A7;
-      padding: 3px 8px;
-      border-radius: 6px;
-      display: inline-block;
-      margin-bottom: 8px;
-    }
-    .badge-stock.sin-stock {
-      color: #D50000;
-      background-color: #FFEBEE;
-      border-color: #EF9A9A;
-    }
-
-    .btn-foto-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background-color: rgba(26, 26, 26, 0.75);
-      color: #FFFFFF;
-      border: 1px solid #F8BBD0;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      font-size: 0.95rem;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-    }
+    .badge-stock { font-size: 0.78rem; font-weight: bold; color: #2E7D32; background-color: #E8F5E9; border: 1px solid #A5D6A7; padding: 3px 8px; border-radius: 6px; display: inline-block; margin-bottom: 8px; }
+    .badge-stock.sin-stock { color: #D50000; background-color: #FFEBEE; border-color: #EF9A9A; }
+    .btn-foto-nav { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(26, 26, 26, 0.75); color: #FFFFFF; border: 1px solid #F8BBD0; width: 30px; height: 30px; border-radius: 50%; font-size: 0.95rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; }
     .btn-foto-nav:hover { background-color: #E91E63; }
     .btn-foto-izq { left: 6px; }
     .btn-foto-der { right: 6px; }
-
     .contador-fotos { position: absolute; bottom: 6px; right: 8px; background-color: rgba(26, 26, 26, 0.7); color: #FFF; font-size: 0.72rem; padding: 2px 7px; border-radius: 10px; }
     .tip-ampliar { position: absolute; top: 6px; left: 8px; background-color: rgba(255, 255, 255, 0.9); color: #C2185B; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 6px; pointer-events: none; }
-
     .producto h3 { font-size: 1.15rem; color: #1A1A1A !important; margin-bottom: 4px; }
     .producto .precio { font-size: 1.3rem; font-weight: bold; color: #E91E63 !important; margin-bottom: 6px; }
-
     .campo { margin-bottom: 8px; }
     .campo label { display: block; font-size: 0.8rem; font-weight: bold; color: #444 !important; margin-bottom: 2px; }
     .campo select, .campo input { width: 100%; padding: 8px; border: 1px solid #CCC; border-radius: 8px; font-size: 0.9rem; background-color: #FFF !important; color: #1A1A1A !important; }
     .fila-doble { display: flex; gap: 8px; }
-
     .btn-agregar { background-color: #1A1A1A !important; color: #FFF !important; border: none; padding: 11px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 6px; font-size: 0.95rem; }
     .btn-agregar:active { background-color: #E91E63 !important; }
     .btn-agregar:disabled { background-color: #B0BEC5 !important; color: #FFF !important; cursor: not-allowed; }
@@ -166,86 +61,35 @@
     .visor-cerrar { position: absolute; top: 18px; right: 20px; background-color: #E91E63; color: #FFF; border: none; padding: 8px 14px; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; }
     .visor-controles { display: flex; align-items: center; gap: 20px; margin-top: 14px; color: #FFF; font-weight: bold; }
     .visor-btn { background-color: #F8BBD0; color: #1A1A1A; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; }
-
-    .btn-flecha-carrito {
-      position: fixed;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      background-color: #1A1A1A !important;
-      color: #FFFFFF !important;
-      border: 2px solid #E91E63;
-      border-right: none;
-      border-radius: 12px 0 0 12px;
-      padding: 14px 10px;
-      cursor: pointer;
-      z-index: 2500;
-      font-weight: bold;
-      font-size: 0.9rem;
-      box-shadow: -3px 3px 10px rgba(0,0,0,0.25);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-    }
+    .btn-flecha-carrito { position: fixed; right: 0; top: 50%; transform: translateY(-50%); background-color: #1A1A1A !important; color: #FFFFFF !important; border: 2px solid #E91E63; border-right: none; border-radius: 12px 0 0 12px; padding: 14px 10px; cursor: pointer; z-index: 2500; font-weight: bold; font-size: 0.9rem; box-shadow: -3px 3px 10px rgba(0,0,0,0.25); display: flex; flex-direction: column; align-items: center; gap: 4px; }
     .btn-flecha-carrito span.icono-flecha { font-size: 1.2rem; color: #F8BBD0; }
-
-    .panel-lateral {
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 28%;
-      min-width: 340px;
-      max-width: 430px;
-      height: 100dvh;
-      max-height: 100vh;
-      background-color: #FFFFFF !important;
-      border-left: 3px solid #1A1A1A;
-      box-shadow: -5px 0 20px rgba(0,0,0,0.2);
-      z-index: 2600;
-      padding: 16px 14px 120px 16px;
-      overflow-y: scroll;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: auto;
-      scrollbar-color: #E91E63 #FCE4EC;
-      transform: translateX(100%);
-      transition: transform 0.3s ease;
-    }
+    .panel-lateral { position: fixed; top: 0; right: 0; width: 28%; min-width: 340px; max-width: 430px; height: 100dvh; max-height: 100vh; background-color: #FFFFFF !important; border-left: 3px solid #1A1A1A; box-shadow: -5px 0 20px rgba(0,0,0,0.2); z-index: 2600; padding: 16px 14px 120px 16px; overflow-y: scroll; -webkit-overflow-scrolling: touch; scrollbar-width: auto; scrollbar-color: #E91E63 #FCE4EC; transform: translateX(100%); transition: transform 0.3s ease; }
     .panel-lateral::-webkit-scrollbar { width: 10px; }
     .panel-lateral::-webkit-scrollbar-track { background: #FCE4EC; }
     .panel-lateral::-webkit-scrollbar-thumb { background: #E91E63; border-radius: 6px; border: 2px solid #FCE4EC; }
     .panel-lateral.abierto { transform: translateX(0); }
-
     .panel-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #F8BBD0; padding-bottom: 8px; margin-bottom: 10px; }
     .panel-header h2 { font-size: 1.15rem; color: #1A1A1A !important; }
     .btn-cerrar-panel { background-color: #E91E63; color: #FFF; border: none; border-radius: 6px; padding: 6px 12px; font-weight: bold; cursor: pointer; }
-
     .aviso-minimo { background-color: #FFF0F5 !important; border: 1px dashed #E91E63; color: #C2185B !important; padding: 8px; border-radius: 8px; font-size: 0.82rem; font-weight: bold; text-align: center; margin-bottom: 10px; }
     .aviso-minimo.ok { background-color: #E8F5E9 !important; border: 1px solid #4CAF50; color: #2E7D32 !important; }
-
     #lista-carrito { list-style: none; max-height: 140px; overflow-y: auto; margin-bottom: 10px; border-bottom: 1px solid #E0E0E0; padding-bottom: 6px; }
     #lista-carrito li { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #F2F2F2; font-size: 0.84rem; }
     .btn-x { background-color: #FF4D4D; color: #FFF; border: none; border-radius: 4px; padding: 3px 7px; cursor: pointer; font-weight: bold; }
-
     .resumen-costos { background-color: #FCE4EC !important; padding: 9px; border-radius: 8px; margin-bottom: 10px; font-size: 0.88rem; }
     .fila-costo { display: flex; justify-content: space-between; margin-bottom: 4px; }
     .fila-costo.total-final { font-size: 1.1rem; font-weight: bold; border-top: 1px solid #F48FB1; padding-top: 5px; margin-top: 4px; margin-bottom: 0; }
     .fila-costo.total-final span:last-child { color: #C2185B !important; }
-
     .titulo-seccion { font-size: 0.88rem; font-weight: bold; margin: 8px 0 6px 0; border-top: 1px solid #EEE; padding-top: 8px; }
     .caja-otro { display: none; background-color: #FFF0F5; padding: 8px; border-radius: 8px; border: 1px solid #E91E63; margin-bottom: 8px; }
-
     .grupo-cuadraditos { display: flex; gap: 10px; margin-bottom: 10px; }
     .opcion-cuadradito { flex: 1; display: flex; align-items: center; justify-content: space-between; background-color: #FFF5F8; border: 2px solid #F8BBD0; border-radius: 8px; padding: 9px 10px; cursor: pointer; user-select: none; }
     .opcion-cuadradito.seleccionado { border-color: #E91E63; background-color: #FCE4EC; }
     .opcion-cuadradito span.texto-opcion { font-size: 0.82rem; font-weight: bold; color: #1A1A1A; }
     .cajita-x { width: 24px; height: 24px; border: 2px solid #1A1A1A; background-color: #FFFFFF; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; color: #E91E63; flex-shrink: 0; }
-
     .btn-wsp { background-color: #25D366 !important; color: #FFF !important; border: none; padding: 14px; width: 100%; border-radius: 8px; font-size: 0.96rem; font-weight: bold; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.35); }
     .btn-wsp:disabled { background-color: #9E9E9E !important; box-shadow: none; cursor: not-allowed; }
-
     .aviso-flotante { position: fixed; top: 15px; left: 50%; transform: translateX(-50%); background-color: #1A1A1A; color: #FFF; border: 2px solid #E91E63; padding: 9px 18px; border-radius: 20px; font-size: 0.88rem; font-weight: bold; z-index: 3000; display: none; }
-
     #vista-comprobante { max-width: 800px; margin: 20px auto; padding: 20px; background: #FFF; }
     .barra-imprimir { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; background: #FCE4EC; border: 2px solid #E91E63; padding: 12px 16px; border-radius: 10px; margin-bottom: 20px; }
     .btn-imprimir-pdf { background: #E91E63; color: #FFF; border: none; padding: 10px 14px; border-radius: 8px; font-weight: bold; font-size: 0.92rem; cursor: pointer; }
@@ -264,19 +108,13 @@
     .pdf-tabla th { background: #F8BBD0; border: 1.5px solid #1A1A1A; padding: 8px; font-size: 12px; }
     .pdf-tabla td { border: 1.5px solid #1A1A1A; padding: 8px; font-size: 12px; }
     .pdf-total { margin-top: 14px; float: right; border: 2px solid #1A1A1A; background: #FCE4EC; padding: 8px 18px; font-size: 15px; font-weight: bold; }
-
-    @page {
-      margin: 3mm;
-    }
-
+    @page { margin: 3mm; }
     @media print {
       .no-imprimir { display: none !important; }
       #vista-comprobante { margin: 0 !important; padding: 0 !important; max-width: 100% !important; }
       .hoja-pdf { border: none !important; padding: 0 !important; margin: 0 !important; page-break-inside: avoid !important; }
       body.solo-envio .hoja-orden { display: none !important; }
       body.solo-orden .hoja-envio { display: none !important; }
-
-      /* HOJA 1 (ENVÍO EN HORIZONTAL): Ajustada al milímetro para 1 sola etiqueta */
       .hoja-envio .pdf-header { margin-bottom: 4px !important; }
       .hoja-envio .pdf-header td { padding: 4px 6px !important; font-size: 9px !important; line-height: 1.15 !important; }
       .hoja-envio .pdf-logo { font-size: 22px !important; }
@@ -286,8 +124,6 @@
       .hoja-envio .fila-casillas-envio { margin-top: 8px !important; font-size: 11px !important; }
       .hoja-envio .pdf-casilla { width: 20px !important; height: 17px !important; font-size: 12px !important; }
       .hoja-envio .pie-envio { margin-top: 5px !important; font-size: 8.5px !important; }
-
-      /* HOJA 2 (DETALLE DE COMPRA): Ultra compacta para entrar siempre en 1 sola etiqueta */
       .hoja-orden .pdf-header { margin-bottom: 3px !important; }
       .hoja-orden .pdf-header td { padding: 2px 4px !important; font-size: 7.5px !important; line-height: 1.1 !important; }
       .hoja-orden .pdf-logo { font-size: 16px !important; }
@@ -298,7 +134,6 @@
       .hoja-orden .pdf-total { margin-top: 3px !important; padding: 2.5px 8px !important; font-size: 10px !important; }
       .hoja-orden .pie-orden { padding-top: 3px !important; font-size: 7px !important; }
     }
-
     @media (max-width: 950px) { .contenedor-catalogo { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 650px) {
       .contenedor-catalogo { grid-template-columns: 1fr; padding: 0 14px 60px 14px; }
@@ -309,14 +144,10 @@
     }
   </style>
 </head>
-```html
 <body>
-
   <div id="vista-comprobante" style="display:none;"></div>
-
   <div id="vista-tienda">
     <div id="aviso-flotante" class="aviso-flotante">✓ Agregado al carrito</div>
-
     <div id="visor-modal" class="visor-modal" onclick="cerrarVisorFondo(event)">
       <button type="button" class="visor-cerrar" onclick="cerrarVisor()">✕ Cerrar</button>
       <img id="visor-img" src="" alt="Vista ampliada">
@@ -326,28 +157,23 @@
         <button type="button" class="visor-btn" onclick="cambiarFotoVisor(1)">Siguiente ▶</button>
       </div>
     </div>
-
     <header>
       <div class="caja-titulo-header">
         <h1>BELLA INDUMENTARIA</h1>
         <p>FABRICANTE DIRECTO • MÍNIMO $80.000 (ENVÍO) • 5 PRENDAS (RETIRO LOCAL)</p>
       </div>
     </header>
-
     <button type="button" class="btn-flecha-carrito" id="btn-flecha-carrito" onclick="togglePanel()">
       <span class="icono-flecha" id="flecha-icono">◀</span>
       <span>Pedido</span>
       <span id="badge-total" style="font-size:0.78rem; color:#F8BBD0;">$0</span>
     </button>
-
     <main class="contenedor-catalogo" id="catalogo"></main>
-
     <aside class="panel-lateral" id="panel-lateral">
       <div class="panel-header">
         <h2>Tu Pedido 🛒</h2>
         <button type="button" class="btn-cerrar-panel" onclick="togglePanel()">Cerrar ▶</button>
       </div>
-
       <div class="grupo-cuadraditos">
         <div class="opcion-cuadradito" id="tipo-envio" onclick="elegirTipoEntrega('Envío')">
           <span class="texto-opcion">Envío</span>
@@ -358,17 +184,13 @@
           <div class="cajita-x" id="check-tipo-retiro"></div>
         </div>
       </div>
-
       <div id="aviso-minimo" class="aviso-minimo">Seleccioná arriba: Envío o Retiro por Local</div>
-
       <ul id="lista-carrito"><li style="color:#777; justify-content:center;">Tu carrito está vacío</li></ul>
-
       <div class="resumen-costos">
         <div class="fila-costo"><span>Prendas (<span id="cant-prendas-txt">0</span>):</span><span id="subtotal-texto">$0</span></div>
         <div class="fila-costo" id="fila-embalaje" style="display:none;"><span>Embalaje y traslado:</span><span>$4.000</span></div>
         <div class="fila-costo total-final"><span>Total Final:</span><span id="total-texto">$0</span></div>
       </div>
-
       <div id="bloque-form-envio" style="display:none;">
         <div class="titulo-seccion">1. Forma de Envío / Transporte</div>
         <div class="campo">
@@ -380,12 +202,10 @@
             <option value="Otro">Opcional (Escribir transporte)</option>
           </select>
         </div>
-
         <div class="caja-otro" id="caja-otro">
           <label style="font-size:0.8rem; font-weight:bold; color:#C2185B; display:block; margin-bottom:4px;">Escribí el transporte:</label>
           <input type="text" id="transporte-otro" placeholder="Ej: Andreani, Buspack, Expreso..." style="width:100%; padding:8px; border:1px solid #E91E63; border-radius:6px;">
         </div>
-
         <div class="grupo-cuadraditos">
           <div class="opcion-cuadradito" id="opt-domicilio" onclick="elegirModalidad('A Domicilio')">
             <span class="texto-opcion">A Domicilio</span>
@@ -396,7 +216,6 @@
             <div class="cajita-x" id="check-sucursal"></div>
           </div>
         </div>
-
         <div class="titulo-seccion">2. Tus Datos de Envío</div>
         <div class="fila-doble">
           <div class="campo" style="flex:1;"><input type="text" id="nombre" placeholder="Nombre *"></div>
@@ -413,31 +232,17 @@
         </div>
         <div class="campo"><input type="text" id="localidad" placeholder="Localidad *"></div>
       </div>
-
       <div id="bloque-form-retiro" style="display:none;">
         <div class="titulo-seccion">Datos de quien retira en el local</div>
-        <div class="campo">
-          <label>Nombre del que retira:</label>
-          <input type="text" id="retiro-nombre" placeholder="Escribí tu nombre *">
-        </div>
-        <div class="campo">
-          <label>Apellido:</label>
-          <input type="text" id="retiro-apellido" placeholder="Escribí tu apellido *">
-        </div>
-        <div class="campo">
-          <label>Celular:</label>
-          <input type="tel" id="retiro-celular" placeholder="Escribí tu celular *">
-        </div>
-        <div class="campo">
-          <label>DNI:</label>
-          <input type="text" id="retiro-dni" placeholder="Escribí tu DNI *">
-        </div>
+        <div class="campo"><label>Nombre del que retira:</label><input type="text" id="retiro-nombre" placeholder="Escribí tu nombre *"></div>
+        <div class="campo"><label>Apellido:</label><input type="text" id="retiro-apellido" placeholder="Escribí tu apellido *"></div>
+        <div class="campo"><label>Celular:</label><input type="tel" id="retiro-celular" placeholder="Escribí tu celular *"></div>
+        <div class="campo"><label>DNI:</label><input type="text" id="retiro-dni" placeholder="Escribí tu DNI *"></div>
       </div>
-
       <button type="button" id="btn-enviar" class="btn-wsp" onclick="enviarPedido()" disabled>Seleccioná Envío o Retiro</button>
     </aside>
   </div>
-    <script>
+  <script>
     const TELEFONO = "5491125748687";
     const MINIMO_ENVIO = 80000;
     const MINIMO_PRENDAS_RETIRO = 5;
@@ -453,17 +258,7 @@
       { id: 7, nombre: "Body Carla", precio: 8000, stockDefault: 10, fotos: ["carla1.jpg.jpg", "carla2.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
       { id: 8, nombre: "Pollera Mini Print", precio: 7000, stockDefault: 10, fotos: ["mini1.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Print Clarito", "Print Oscurito"] },
       { id: 9, nombre: "Body Melisa Print", precio: 8000, stockDefault: 15, fotos: ["melisaprint.jpg.jpg"], talles: ["Talle Único"], colores: ["Print Amarillito", "Print Manchas Grandes", "Print Manchas Chicas"] },
-      {
-        id: 11,
-        nombre: "Short Camila",
-        precio: 4500,
-        stockDefault: 8,
-        fotos: ["camila.jpg.jpg"],
-        coloresPorTalle: {
-          "Talle 2": ["Negro", "Choco", "Uva", "Blanco"],
-          "Talle 4": ["Negro", "Choco", "Uva"]
-        }
-      },
+      { id: 11, nombre: "Short Camila", precio: 4500, stockDefault: 8, fotos: ["camila.jpg.jpg"], coloresPorTalle: { "Talle 2": ["Negro", "Choco", "Uva", "Blanco"], "Talle 4": ["Negro", "Choco", "Uva"] } },
       { id: 12, nombre: "Polleras Voladas con Diseño", precio: 4000, stockDefault: 4, fotos: ["voladas.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro Floreado", "Bordó Floreado", "Vaquita"] },
       { id: 13, nombre: "Vestido Anahi", subtitulo: "Satén elastizado premium", precio: 15000, stockDefault: 10, fotos: ["anahi1.jpg.jpg", "anahi2.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Chocolate"] },
       { id: 14, nombre: "Vestido Isa con Strass", precio: 16000, stockDefault: 15, fotos: ["isastrass1.jpg", "isastrass2.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
@@ -475,16 +270,7 @@
       { id: 20, nombre: "Top Corazón", precio: 5000, stockDefault: 15, fotos: ["topcorazon.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Celeste", "Blanco", "Rosa", "Lila"] },
       { id: 21, nombre: "Reme Tokio Print", precio: 8000, stockDefault: 10, fotos: ["tokioprint.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Print Manchas Grandes", "Print Amarillito"] },
       { id: 22, nombre: "Palazzo Kheyla", precio: 9000, stockDefault: 15, fotos: ["kheyla.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
-      {
-        id: 23,
-        nombre: "Reme Tokio",
-        precio: 7000,
-        stockDefault: 10,
-        stockEspecialColor: { "Uva": 5 },
-        fotos: ["tokio1.jpg", "tokio2.jpg"],
-        talles: ["Talle 2", "Talle 4"],
-        colores: ["Negro", "Choco", "Blanco", "Uva", "Celeste", "Rosa", "Lila"]
-      }
+      { id: 23, nombre: "Reme Tokio", precio: 7000, stockDefault: 10, stockEspecialColor: { "Uva": 5 }, fotos: ["tokio1.jpg", "tokio2.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Blanco", "Uva", "Celeste", "Rosa", "Lila"] }
     ];
 
     let carrito = [];
@@ -504,22 +290,9 @@
       return prod.stockDefault || 10;
     }
 
-    function obtenerClaveStock(id, talle, color) {
-      return id + "|" + talle + "|" + color;
-    }
-
-    function cargarStockGuardado() {
-      try {
-        const raw = localStorage.getItem("bella_stock_v3");
-        return raw ? JSON.parse(raw) : {};
-      } catch (e) { return {}; }
-    }
-
-    function guardarStock(mapaStock) {
-      try {
-        localStorage.setItem("bella_stock_v3", JSON.stringify(mapaStock));
-      } catch (e) {}
-    }
+    function obtenerClaveStock(id, talle, color) { return id + "|" + talle + "|" + color; }
+    function cargarStockGuardado() { try { const raw = localStorage.getItem("bella_stock_v5"); return raw ? JSON.parse(raw) : {}; } catch (e) { return {}; } }
+    function guardarStock(mapaStock) { try { localStorage.setItem("bella_stock_v5", JSON.stringify(mapaStock)); } catch (e) {} }
 
     function obtenerStockDisponible(id, talle, color) {
       const mapa = cargarStockGuardado();
@@ -541,7 +314,6 @@
       });
       guardarStock(mapa);
     }
-
     function actualizarEstadoStockTarjeta(id) {
       const selTal = document.getElementById("tal-" + id);
       const selCol = document.getElementById("col-" + id);
@@ -549,32 +321,25 @@
       const badge = document.getElementById("stock-badge-" + id);
       const cartel = document.getElementById("agotado-" + id);
       const btn = document.getElementById("btn-add-" + id);
-
       if (!selTal || !selCol) return;
       const disp = obtenerStockDisponible(id, selTal.value, selCol.value);
-
       if (disp <= 0) {
         badge.textContent = "AGOTADO en este talle y color";
         badge.classList.add("sin-stock");
         cartel.classList.add("visible");
-        btn.disabled = true;
-        btn.textContent = "Agotado";
-        inpCan.value = 0;
-        inpCan.max = 0;
+        btn.disabled = true; btn.textContent = "Agotado";
+        inpCan.value = 0; inpCan.max = 0;
       } else {
         badge.textContent = "Disponibles: " + disp + " unid.";
         badge.classList.remove("sin-stock");
         cartel.classList.remove("visible");
-        btn.disabled = false;
-        btn.textContent = "Agregar al carrito";
+        btn.disabled = false; btn.textContent = "Agregar al carrito";
         inpCan.max = disp;
         if (parseInt(inpCan.value) > disp || parseInt(inpCan.value) <= 0) inpCan.value = 1;
       }
     }
 
-    function actualizarTodasLasTarjetas() {
-      PRODUCTOS.forEach(p => actualizarEstadoStockTarjeta(p.id));
-    }
+    function actualizarTodasLasTarjetas() { PRODUCTOS.forEach(p => actualizarEstadoStockTarjeta(p.id)); }
 
     function codificarDatos(obj) {
       const jsonStr = JSON.stringify(obj);
@@ -592,117 +357,83 @@
       for (let i = 0; i < bin.length; i++) bytes.set([bin.charCodeAt(i)], i);
       return JSON.parse(new TextDecoder().decode(bytes));
     }
+
     function imprimirHojaIndividual(modo) {
       document.body.classList.remove("solo-envio", "solo-orden");
       if (modo === "envio") document.body.classList.add("solo-envio");
       if (modo === "orden") document.body.classList.add("solo-orden");
       window.print();
-      setTimeout(() => {
-        document.body.classList.remove("solo-envio", "solo-orden");
-      }, 500);
+      setTimeout(() => { document.body.classList.remove("solo-envio", "solo-orden"); }, 500);
     }
-
     function verificarModoComprobante() {
       const params = new URLSearchParams(window.location.search);
       const codigoOrden = params.get("orden");
       if (!codigoOrden) { cargarCatalogo(); return; }
-
       try {
         const d = decodificarDatos(codigoOrden);
         document.getElementById("vista-tienda").style.display = "none";
         const cont = document.getElementById("vista-comprobante");
         cont.style.display = "block";
-
         const esRetiroLocal = (d.tipo === "Retiro por Local");
-
-        let filasHtml = d.items.map(it => `
-          <tr>
-            <td style="text-align:center;">${it.c}</td>
-            <td>${it.n} (Color: ${it.col} - ${it.t})</td>
-            <td style="text-align:right;">$${it.p}</td>
-            <td style="text-align:right;">$${it.s}</td>
-          </tr>
-        `).join("");
-
+        const filasHtml = d.items.map(it =>
+          '<tr><td style="text-align:center;">' + it.c + '</td><td>' + it.n + ' (Color: ' + it.col + ' - ' + it.t + ')</td><td style="text-align:right;">$' + it.p + '</td><td style="text-align:right;">$' + it.s + '</td></tr>'
+        ).join("");
         let hojaEnvioHtml = "";
         if (!esRetiroLocal) {
-          hojaEnvioHtml = `
-            <div class="hoja-pdf hoja-envio">
-              <table class="pdf-header">
-                <tr>
-                  <td style="width: 38%;"><div class="pdf-logo">BELLA</div><div style="font-size:11px; font-weight:bold;">FABRICANTE DIRECTO</div><div style="font-size:10px;">Campana 378 - Local A6<br>Galería Smart Campana - Flores</div></td>
-                  <td style="width: 34%; text-align: center;"><div style="font-weight:bold; font-size:13px;">Venta por Mayor y Menor<br>Envíos al Interior</div><div style="font-size:11px; margin-top:4px;">Fecha: ${d.f} | Hora: ${d.h}</div></td>
-                  <td style="width: 28%; font-size: 10px;"><b>Dany: 11-2574-8687<br>Isa: 11-6735-3960</b><br>FB: BELLA Indumentaria<br>TK: bella.indumentaria<br>IG: bella.indumentariadama</td>
-                </tr>
-              </table>
-              <table class="pdf-envios">
-                <tr>
-                  <td class="pdf-vertical">E<br>N<br>V<br>Í<br>O<br>S</td>
-                  <td style="width: 10px;"></td>
-                  <td class="pdf-datos">
-                    <div class="pdf-linea"><b>Nombre:</b> ${d.nom} &nbsp;&nbsp;&nbsp;&nbsp; <b>Apellido:</b> ${d.ape}</div>
-                    <div class="pdf-linea"><b>DNI:</b> ${d.dni} &nbsp;&nbsp;&nbsp;&nbsp; <b>Teléfono:</b> ${d.cel}</div>
-                    <div class="pdf-linea"><b>Dirección:</b> ${d.dir}</div>
-                    <div class="pdf-linea"><b>Localidad:</b> ${d.loc} &nbsp;&nbsp;&nbsp;&nbsp; <b>Provincia:</b> ${d.prov}</div>
-                    <div class="pdf-linea"><b>Código Postal:</b> ${d.cp} &nbsp;&nbsp;&nbsp;&nbsp; <b>Transporte:</b> ${d.tr}</div>
-                    <div class="fila-casillas-envio" style="margin-top: 12px; text-align: right; font-size: 13px; font-weight: bold;">
-                      A Domicilio <span class="pdf-casilla">${d.mod === 'A Domicilio' ? 'X' : '&nbsp;'}</span>
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      Retira en Sucursal <span class="pdf-casilla">${d.mod === 'Retira en Sucursal' ? 'X' : '&nbsp;'}</span>
-                    </div>
-                    <div class="pie-envio" style="margin-top: 8px; font-size: 10px; color: #555;">Documento no válido como factura</div>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          `;
+          const marcaDom = (d.mod === "A Domicilio") ? "X" : "&nbsp;";
+          const marcaSuc = (d.mod === "Retira en Sucursal") ? "X" : "&nbsp;";
+          hojaEnvioHtml =
+            '<div class="hoja-pdf hoja-envio">' +
+              '<table class="pdf-header"><tr>' +
+                '<td style="width: 38%;"><div class="pdf-logo">BELLA</div><div style="font-size:11px; font-weight:bold;">FABRICANTE DIRECTO</div><div style="font-size:10px;">Campana 378 - Local A6<br>Galería Smart Campana - Flores</div></td>' +
+                '<td style="width: 34%; text-align: center;"><div style="font-weight:bold; font-size:13px;">Venta por Mayor y Menor<br>Envíos al Interior</div><div style="font-size:11px; margin-top:4px;">Fecha: ' + d.f + ' | Hora: ' + d.h + '</div></td>' +
+                '<td style="width: 28%; font-size: 10px;"><b>Dany: 11-2574-8687<br>Isa: 11-6735-3960</b><br>FB: BELLA Indumentaria<br>TK: bella.indumentaria<br>IG: bella.indumentariadama</td>' +
+              '</tr></table>' +
+              '<table class="pdf-envios"><tr>' +
+                '<td class="pdf-vertical">E<br>N<br>V<br>Í<br>O<br>S</td>' +
+                '<td style="width: 10px;"></td>' +
+                '<td class="pdf-datos">' +
+                  '<div class="pdf-linea"><b>Nombre:</b> ' + d.nom + ' &nbsp;&nbsp;&nbsp;&nbsp; <b>Apellido:</b> ' + d.ape + '</div>' +
+                  '<div class="pdf-linea"><b>DNI:</b> ' + d.dni + ' &nbsp;&nbsp;&nbsp;&nbsp; <b>Teléfono:</b> ' + d.cel + '</div>' +
+                  '<div class="pdf-linea"><b>Dirección:</b> ' + d.dir + '</div>' +
+                  '<div class="pdf-linea"><b>Localidad:</b> ' + d.loc + ' &nbsp;&nbsp;&nbsp;&nbsp; <b>Provincia:</b> ' + d.prov + '</div>' +
+                  '<div class="pdf-linea"><b>Código Postal:</b> ' + d.cp + ' &nbsp;&nbsp;&nbsp;&nbsp; <b>Transporte:</b> ' + d.tr + '</div>' +
+                  '<div class="fila-casillas-envio" style="margin-top: 12px; text-align: right; font-size: 13px; font-weight: bold;">' +
+                    'A Domicilio <span class="pdf-casilla">' + marcaDom + '</span> &nbsp;&nbsp;&nbsp;&nbsp; Retira en Sucursal <span class="pdf-casilla">' + marcaSuc + '</span>' +
+                  '</div>' +
+                  '<div class="pie-envio" style="margin-top: 8px; font-size: 10px; color: #555;">Documento no válido como factura</div>' +
+                '</td>' +
+              '</tr></table>' +
+            '</div>';
         }
-
-        const filaEmbalajePdf = esRetiroLocal
-          ? ""
-          : `<tr><td style="text-align:center;">1</td><td><b>Embalaje y Traslado</b></td><td style="text-align:right;">$4.000</td><td style="text-align:right;">$4.000</td></tr>`;
-
+        const filaEmbalajePdf = esRetiroLocal ? "" : '<tr><td style="text-align:center;">1</td><td><b>Embalaje y Traslado</b></td><td style="text-align:right;">$4.000</td><td style="text-align:right;">$4.000</td></tr>';
         const datosClienteOrdenPdf = esRetiroLocal
-          ? `<b>Modalidad:</b> RETIRO POR LOCAL<br><b>Retira:</b> ${d.nom} ${d.ape} &nbsp;|&nbsp; <b>DNI:</b> ${d.dni} &nbsp;|&nbsp; <b>Cel:</b> ${d.cel}`
-          : `<b>Señor/es:</b> ${d.nom} ${d.ape} &nbsp;|&nbsp; <b>DNI:</b> ${d.dni}<br><b>Domicilio:</b> ${d.dir} (${d.loc}, ${d.prov})`;
-
+          ? '<b>Modalidad:</b> RETIRO POR LOCAL<br><b>Retira:</b> ' + d.nom + ' ' + d.ape + ' &nbsp;|&nbsp; <b>DNI:</b> ' + d.dni + ' &nbsp;|&nbsp; <b>Cel:</b> ' + d.cel
+          : '<b>Señor/es:</b> ' + d.nom + ' ' + d.ape + ' &nbsp;|&nbsp; <b>DNI:</b> ' + d.dni + '<br><b>Domicilio:</b> ' + d.dir + ' (' + d.loc + ', ' + d.prov + ')';
         const botonesImprimirHtml = esRetiroLocal
-          ? `<button type="button" class="btn-imprimir-orden" onclick="imprimirHojaIndividual('orden')">🖨️ Imprimir Hoja 1 de Detalle de Compra</button>`
-          : `<button type="button" class="btn-imprimir-pdf" onclick="imprimirHojaIndividual('envio')">🖨️ Imprimir Hoja 1 de Envío</button>
-             <button type="button" class="btn-imprimir-orden" onclick="imprimirHojaIndividual('orden')">🖨️ Imprimir Hoja 1 de Detalle de Compra</button>`;
-
-        cont.innerHTML = `
-          <div class="barra-imprimir no-imprimir">
-            ${botonesImprimirHtml}
-            <button type="button" class="btn-volver-tienda" onclick="window.location.href=window.location.pathname">Ir a la Tienda</button>
-          </div>
-          ${hojaEnvioHtml}
-          <div class="hoja-pdf hoja-orden">
-            <table class="pdf-header">
-              <tr>
-                <td style="width: 35%;"><div class="pdf-logo">BELLA</div><div style="font-family: Georgia, serif; font-style: italic; font-size: 17px;">Indumentaria</div></td>
-                <td style="width: 37%; text-align: center;"><div style="font-size:11px; font-weight:bold;">FABRICANTE DIRECTO</div><div style="font-size:10px;">Venta por Mayor y Menor - Envíos al Interior<br><b>Campana 378 - Local A6<br>Galería Smart Campana - Flores</b></div></td>
-                <td style="width: 28%; font-size: 10px;"><b>Dany: 11-2574-8687<br>Isa: 11-6735-3960</b><br>FB: BELLA Indumentaria<br>TK: bella.indumentaria<br>IG: bella.indumentariadama</td>
-              </tr>
-            </table>
-            <div class="caja-orden-cliente" style="border: 2px solid #1A1A1A; padding: 12px; margin-bottom: 12px; font-size: 12px; line-height: 1.5;">
-              <b>ORDEN DE COMPRA</b> &nbsp;|&nbsp; <b>Fecha:</b> ${d.f} &nbsp;|&nbsp; <b>Hora:</b> ${d.h}<br>
-              ${datosClienteOrdenPdf}
-            </div>
-            <table class="pdf-tabla">
-              <thead><tr><th style="width: 12%;">CANT.</th><th style="width: 52%;">DETALLE</th><th style="width: 18%;">P. UNIT.</th><th style="width: 18%;">IMPORTE</th></tr></thead>
-              <tbody>
-                ${filasHtml}
-                ${filaEmbalajePdf}
-              </tbody>
-            </table>
-            <div class="pdf-total">TOTAL FINAL: $${d.tot}</div>
-            <div class="pie-orden" style="clear: both; padding-top: 18px; font-size: 10px; color: #555;">Documento no válido como factura - BELLA Indumentaria</div>
-          </div>
-        `;
+          ? '<button type="button" class="btn-imprimir-orden" onclick="imprimirHojaIndividual(\'orden\')">🖨️ Imprimir Hoja 1 de Detalle de Compra</button>'
+          : '<button type="button" class="btn-imprimir-pdf" onclick="imprimirHojaIndividual(\'envio\')">🖨️ Imprimir Hoja 1 de Envío</button><button type="button" class="btn-imprimir-orden" onclick="imprimirHojaIndividual(\'orden\')">🖨️ Imprimir Hoja 1 de Detalle de Compra</button>';
+        cont.innerHTML =
+          '<div class="barra-imprimir no-imprimir">' + botonesImprimirHtml + '<button type="button" class="btn-volver-tienda" onclick="window.location.href=window.location.pathname">Ir a la Tienda</button></div>' +
+          hojaEnvioHtml +
+          '<div class="hoja-pdf hoja-orden">' +
+            '<table class="pdf-header"><tr>' +
+              '<td style="width: 35%;"><div class="pdf-logo">BELLA</div><div style="font-family: Georgia, serif; font-style: italic; font-size: 17px;">Indumentaria</div></td>' +
+              '<td style="width: 37%; text-align: center;"><div style="font-size:11px; font-weight:bold;">FABRICANTE DIRECTO</div><div style="font-size:10px;">Venta por Mayor y Menor - Envíos al Interior<br><b>Campana 378 - Local A6<br>Galería Smart Campana - Flores</b></div></td>' +
+              '<td style="width: 28%; font-size: 10px;"><b>Dany: 11-2574-8687<br>Isa: 11-6735-3960</b><br>FB: BELLA Indumentaria<br>TK: bella.indumentaria<br>IG: bella.indumentariadama</td>' +
+            '</tr></table>' +
+            '<div class="caja-orden-cliente" style="border: 2px solid #1A1A1A; padding: 12px; margin-bottom: 12px; font-size: 12px; line-height: 1.5;">' +
+              '<b>ORDEN DE COMPRA</b> &nbsp;|&nbsp; <b>Fecha:</b> ' + d.f + ' &nbsp;|&nbsp; <b>Hora:</b> ' + d.h + '<br>' + datosClienteOrdenPdf +
+            '</div>' +
+            '<table class="pdf-tabla">' +
+              '<thead><tr><th style="width: 12%;">CANT.</th><th style="width: 52%;">DETALLE</th><th style="width: 18%;">P. UNIT.</th><th style="width: 18%;">IMPORTE</th></tr></thead>' +
+              '<tbody>' + filasHtml + filaEmbalajePdf + '</tbody>' +
+            '</table>' +
+            '<div class="pdf-total">TOTAL FINAL: $' + d.tot + '</div>' +
+            '<div class="pie-orden" style="clear: both; padding-top: 18px; font-size: 10px; color: #555;">Documento no válido como factura - BELLA Indumentaria</div>' +
+          '</div>';
       } catch (err) { cargarCatalogo(); }
     }
-
     function elegirTipoEntrega(tipo) {
       tipoEntrega = tipo;
       const boxEnvio = document.getElementById("tipo-envio");
@@ -711,7 +442,6 @@
       const chkRetiro = document.getElementById("check-tipo-retiro");
       const formEnvio = document.getElementById("bloque-form-envio");
       const formRetiro = document.getElementById("bloque-form-retiro");
-
       if (tipo === "Envío") {
         boxEnvio.classList.add("seleccionado"); boxRetiro.classList.remove("seleccionado");
         chkEnvio.textContent = "X"; chkRetiro.textContent = "";
@@ -731,7 +461,7 @@
         const talleElegido = document.getElementById("tal-" + id).value;
         const coloresFinales = Object.entries(prod.coloresPorTalle).find(par => par.at(0) === talleElegido)?.at(1) || [];
         const selectColor = document.getElementById("col-" + id);
-        selectColor.innerHTML = coloresFinales.map(c => `<option value="${c}">${c}</option>`).join('');
+        selectColor.innerHTML = coloresFinales.map(c => '<option value="' + c + '">' + c + '</option>').join('');
       }
       actualizarEstadoStockTarjeta(id);
     }
@@ -742,7 +472,6 @@
       const boxSuc = document.getElementById("opt-sucursal");
       const chkDom = document.getElementById("check-domicilio");
       const chkSuc = document.getElementById("check-sucursal");
-
       if (opcion === "A Domicilio") {
         boxDom.classList.add("seleccionado"); boxSuc.classList.remove("seleccionado");
         chkDom.textContent = "X"; chkSuc.textContent = "";
@@ -751,6 +480,7 @@
         chkSuc.textContent = "X"; chkDom.textContent = "";
       }
     }
+
     function cargarCatalogo() {
       const cont = document.getElementById("catalogo");
       cont.innerHTML = PRODUCTOS.map(p => {
@@ -758,48 +488,39 @@
         const tieneVarias = p.fotos.length > 1;
         const listaTalles = p.coloresPorTalle ? Object.keys(p.coloresPorTalle) : p.talles;
         const listaColoresInicial = p.coloresPorTalle ? Object.values(p.coloresPorTalle).at(0) : p.colores;
+        const btnIzq = tieneVarias ? '<button type="button" class="btn-foto-nav btn-foto-izq" onclick="cambiarFotoTarjeta(' + p.id + ', -1)">❮</button>' : '';
+        const btnDer = tieneVarias ? '<button type="button" class="btn-foto-nav btn-foto-der" onclick="cambiarFotoTarjeta(' + p.id + ', 1)">❯</button>' : '';
+        const badgeFotos = tieneVarias ? '<span class="contador-fotos" id="cont-foto-' + p.id + '">1 / ' + p.fotos.length + '</span>' : '';
+        const subHtml = p.subtitulo ? '<p style="font-size:0.83rem; color:#666; font-weight:bold; margin-bottom:4px;">' + p.subtitulo + '</p>' : '';
+        const optsTalle = listaTalles.map(t => '<option value="' + t + '">' + t + '</option>').join('');
+        const optsColor = listaColoresInicial.map(c => '<option value="' + c + '">' + c + '</option>').join('');
 
-        return `
-        <div class="producto">
-          <div>
-            <div class="galeria-box">
-              <div class="cartel-agotado" id="agotado-${p.id}">AGOTADO</div>
-              <span class="tip-ampliar">🔍 Tocar para ampliar</span>
-              ${tieneVarias ? `<button type="button" class="btn-foto-nav btn-foto-izq" onclick="cambiarFotoTarjeta(${p.id}, -1)">❮</button>` : ''}
-              <img id="img-prod-${p.id}" src="${p.fotos.at(0)}" alt="${p.nombre}" onclick="abrirVisor(${p.id})" onerror="this.style.display='none'">
-              ${tieneVarias ? `<button type="button" class="btn-foto-nav btn-foto-der" onclick="cambiarFotoTarjeta(${p.id}, 1)">❯</button>` : ''}
-              ${tieneVarias ? `<span class="contador-fotos" id="cont-foto-${p.id}">1 / ${p.fotos.length}</span>` : ''}
-            </div>
-            <h3>${p.nombre}</h3>
-            ${p.subtitulo ? `<p style="font-size:0.83rem; color:#666; font-weight:bold; margin-bottom:4px;">${p.subtitulo}</p>` : ''}
-            <p class="precio">$${p.precio.toLocaleString('es-AR')}</p>
-            <div class="badge-stock" id="stock-badge-${p.id}">Disponibles: ${p.stockDefault} unid.</div>
-          </div>
-          <div>
-            <div class="fila-doble">
-              <div class="campo" style="flex:2;">
-                <label>Talle:</label>
-                <select id="tal-${p.id}" onchange="actualizarColoresPorTalle(${p.id})">
-                  ${listaTalles.map(t => `<option value="${t}">${t}</option>`).join('')}
-                </select>
-              </div>
-              <div class="campo" style="flex:1;">
-                <label>Cant.:</label>
-                <input type="number" id="can-${p.id}" value="1" min="1" max="50">
-              </div>
-            </div>
-            <div class="campo">
-              <label>Color:</label>
-              <select id="col-${p.id}" onchange="actualizarEstadoStockTarjeta(${p.id})">${listaColoresInicial.map(c => `<option value="${c}">${c}</option>`).join('')}</select>
-            </div>
-            <button type="button" id="btn-add-${p.id}" class="btn-agregar" onclick="agregar(${p.id})">Agregar al carrito</button>
-          </div>
-        </div>
-      `}).join('');
-
+        return '<div class="producto">' +
+          '<div>' +
+            '<div class="galeria-box">' +
+              '<div class="cartel-agotado" id="agotado-' + p.id + '">AGOTADO</div>' +
+              '<span class="tip-ampliar">🔍 Tocar para ampliar</span>' +
+              btnIzq +
+              '<img id="img-prod-' + p.id + '" src="' + p.fotos.at(0) + '" alt="' + p.nombre + '" onclick="abrirVisor(' + p.id + ')" onerror="this.style.display=\'none\'">' +
+              btnDer + badgeFotos +
+            '</div>' +
+            '<h3>' + p.nombre + '</h3>' +
+            subHtml +
+            '<p class="precio">$' + p.precio.toLocaleString('es-AR') + '</p>' +
+            '<div class="badge-stock" id="stock-badge-' + p.id + '">Disponibles: ' + p.stockDefault + ' unid.</div>' +
+          '</div>' +
+          '<div>' +
+            '<div class="fila-doble">' +
+              '<div class="campo" style="flex:2;"><label>Talle:</label><select id="tal-' + p.id + '" onchange="actualizarColoresPorTalle(' + p.id + ')">' + optsTalle + '</select></div>' +
+              '<div class="campo" style="flex:1;"><label>Cant.:</label><input type="number" id="can-' + p.id + '" value="1" min="1" max="50"></div>' +
+            '</div>' +
+            '<div class="campo"><label>Color:</label><select id="col-' + p.id + '" onchange="actualizarEstadoStockTarjeta(' + p.id + ')">' + optsColor + '</select></div>' +
+            '<button type="button" id="btn-add-' + p.id + '" class="btn-agregar" onclick="agregar(' + p.id + ')">Agregar al carrito</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
       actualizarTodasLasTarjetas();
     }
-
     function cambiarFotoTarjeta(id, direccion) {
       const prod = PRODUCTOS.find(p => p.id === id);
       if (!prod || prod.fotos.length <= 1) return;
@@ -847,8 +568,7 @@
       const panel = document.getElementById("panel-lateral");
       const btnFlecha = document.getElementById("btn-flecha-carrito");
       panel.classList.toggle("abierto");
-      const abierto = panel.classList.contains("abierto");
-      btnFlecha.style.display = abierto ? "none" : "flex";
+      btnFlecha.style.display = panel.classList.contains("abierto") ? "none" : "flex";
     }
 
     function verOtroTransporte() {
@@ -862,26 +582,18 @@
       const talle = document.getElementById("tal-" + id).value;
       const cant = parseInt(document.getElementById("can-" + id).value);
       const disponible = obtenerStockDisponible(id, talle, color);
-
-      if (disponible <= 0) {
-        alert("Este modelo en " + talle + " y color " + color + " está AGOTADO.");
-        return;
-      }
+      if (disponible <= 0) { alert("Este modelo en " + talle + " y color " + color + " está AGOTADO."); return; }
       if (isNaN(cant) || cant <= 0) return;
-
       if (cant > disponible) {
         alert("Solo quedan " + disponible + " unidades disponibles de " + prod.nombre + " (" + talle + " - " + color + ").");
         document.getElementById("can-" + id).value = disponible;
         return;
       }
-
       const igual = carrito.find(i => i.id === id && i.color === color && i.talle === talle);
       if (igual) igual.cant += cant;
       else carrito.push({ id: prod.id, nombre: prod.nombre, precio: prod.precio, color, talle, cant });
-
       actualizarCarrito();
       actualizarEstadoStockTarjeta(id);
-
       const aviso = document.getElementById("aviso-flotante");
       aviso.textContent = "✓ Agregaste " + cant + "x " + prod.nombre;
       aviso.style.display = "block";
@@ -904,101 +616,73 @@
       const badgeTotal = document.getElementById("badge-total");
       const avisoMin = document.getElementById("aviso-minimo");
       const btnEnviar = document.getElementById("btn-enviar");
-
-      let subtotal = 0;
-      let totalPrendas = 0;
-
+      let subtotal = 0; let totalPrendas = 0;
       if (carrito.length === 0) {
         lista.innerHTML = '<li style="color:#777; justify-content:center;">Tu carrito está vacío</li>';
       } else {
         lista.innerHTML = carrito.map((item, idx) => {
           const sub = item.precio * item.cant;
-          subtotal += sub;
-          totalPrendas += item.cant;
-          return `<li><div><strong>${item.cant}x ${item.nombre}</strong><br><span style="color:#666; font-size:0.78rem;">${item.color} | ${item.talle}</span><br><span style="color:#C2185B; font-weight:bold;">$${sub.toLocaleString('es-AR')}</span></div><button type="button" class="btn-x" onclick="quitar(${idx})">X</button></li>`;
+          subtotal += sub; totalPrendas += item.cant;
+          return '<li><div><strong>' + item.cant + 'x ' + item.nombre + '</strong><br><span style="color:#666; font-size:0.78rem;">' + item.color + ' | ' + item.talle + '</span><br><span style="color:#C2185B; font-weight:bold;">$' + sub.toLocaleString('es-AR') + '</span></div><button type="button" class="btn-x" onclick="quitar(' + idx + ')">X</button></li>';
         }).join('');
       }
-
       const cobraEmbalaje = (tipoEntrega === "Envío");
       filaEmbalaje.style.display = cobraEmbalaje ? "flex" : "none";
       const totalFinal = subtotal + (cobraEmbalaje ? EMBALAJE : 0);
-
       cantPrendasTxt.textContent = totalPrendas;
       subtotalTxt.textContent = "$" + subtotal.toLocaleString('es-AR');
       totalTxt.textContent = "$" + (subtotal > 0 ? totalFinal.toLocaleString('es-AR') : "0");
       badgeTotal.textContent = "$" + (subtotal > 0 ? totalFinal.toLocaleString('es-AR') : "0");
-
       if (!tipoEntrega) {
         avisoMin.textContent = "Seleccioná arriba: Envío o Retiro por Local";
         avisoMin.classList.remove("ok");
-        btnEnviar.disabled = true;
-        btnEnviar.textContent = "Seleccioná Envío o Retiro";
+        btnEnviar.disabled = true; btnEnviar.textContent = "Seleccioná Envío o Retiro";
         return;
       }
-
       if (tipoEntrega === "Envío") {
         if (subtotal >= MINIMO_ENVIO) {
           avisoMin.textContent = "¡Mínimo de $80.000 alcanzado! Ya podés enviar.";
           avisoMin.classList.add("ok");
-          btnEnviar.disabled = false;
-          btnEnviar.textContent = "Enviar Pedido por WhatsApp";
+          btnEnviar.disabled = false; btnEnviar.textContent = "Enviar Pedido por WhatsApp";
         } else {
           const falta = MINIMO_ENVIO - subtotal;
           avisoMin.textContent = "Compra mínima Envío: $80.000 (Faltan $" + falta.toLocaleString('es-AR') + ")";
           avisoMin.classList.remove("ok");
-          btnEnviar.disabled = true;
-          btnEnviar.textContent = "Faltan $" + falta.toLocaleString('es-AR') + " para enviar";
+          btnEnviar.disabled = true; btnEnviar.textContent = "Faltan $" + falta.toLocaleString('es-AR') + " para enviar";
         }
       } else {
         if (totalPrendas >= MINIMO_PRENDAS_RETIRO) {
           avisoMin.textContent = "¡Mínimo de 5 prendas alcanzado! Ya podés enviar.";
           avisoMin.classList.add("ok");
-          btnEnviar.disabled = false;
-          btnEnviar.textContent = "Enviar Pedido por WhatsApp";
+          btnEnviar.disabled = false; btnEnviar.textContent = "Enviar Pedido por WhatsApp";
         } else {
           const faltanUnidades = MINIMO_PRENDAS_RETIRO - totalPrendas;
           avisoMin.textContent = "Mínimo Retiro por Local: 5 artículos (Faltan " + faltanUnidades + ")";
           avisoMin.classList.remove("ok");
-          btnEnviar.disabled = true;
-          btnEnviar.textContent = "Faltan " + faltanUnidades + " artículo(s) para enviar";
+          btnEnviar.disabled = true; btnEnviar.textContent = "Faltan " + faltanUnidades + " artículo(s) para enviar";
         }
       }
     }
-
     function enviarPedido() {
       if (!tipoEntrega) { alert("Por favor seleccioná Envío o Retiro por Local."); return; }
-
       const ahora = new Date();
       const fechaStr = ahora.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
       const horaStr = ahora.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
-
-      let subtotal = 0;
-      let itemsCortos = [];
-      let detalleWsp = "";
-
+      let subtotal = 0; let itemsCortos = []; let detalleWsp = "";
       carrito.forEach(item => {
         const sub = item.precio * item.cant;
         subtotal += sub;
-        itemsCortos.push({
-          c: item.cant, n: item.nombre, col: item.color, t: item.talle,
-          p: item.precio.toLocaleString('es-AR'), s: sub.toLocaleString('es-AR')
-        });
-        detalleWsp += `• ${item.cant}x ${item.nombre} | Color: ${item.color} | ${item.talle} - $${sub.toLocaleString('es-AR')}\n`;
+        itemsCortos.push({ c: item.cant, n: item.nombre, col: item.color, t: item.talle, p: item.precio.toLocaleString('es-AR'), s: sub.toLocaleString('es-AR') });
+        detalleWsp += "• " + item.cant + "x " + item.nombre + " | Color: " + item.color + " | " + item.talle + " - $" + sub.toLocaleString('es-AR') + "\n";
       });
-
       const urlBase = window.location.origin + window.location.pathname;
-      let msg = "¡Hola *BELLA Indumentaria*! 👋 Quiero realizar el siguiente pedido:\n\n";
-      msg += "*ORDEN DE COMPRA (" + fechaStr + " " + horaStr + "):*\n";
-      msg += detalleWsp;
-
+      let msg = "¡Hola *BELLA Indumentaria*! 👋 Quiero realizar el siguiente pedido:\n\n*ORDEN DE COMPRA (" + fechaStr + " " + horaStr + "):*\n" + detalleWsp;
       if (tipoEntrega === "Envío") {
         const transpSel = document.getElementById("transporte").value;
         const transpOtro = document.getElementById("transporte-otro").value.trim();
-
         if (!transpSel) { alert("Falta rellenar el casillero: Forma de Envío / Transporte"); document.getElementById("transporte").focus(); return; }
         if (transpSel === "Otro" && !transpOtro) { alert("Falta rellenar el casillero: Escribí el transporte"); document.getElementById("transporte-otro").focus(); return; }
         if (!modalidadSeleccionada) { alert("Por favor marcá A Domicilio o A Sucursal."); return; }
-
         const campos = [
           { id: "nombre", nombre: "Nombre" }, { id: "apellido", nombre: "Apellido" },
           { id: "celular", nombre: "Teléfono / Celular" }, { id: "dni", nombre: "DNI" },
@@ -1019,64 +703,26 @@
         const provincia = document.getElementById("provincia").value.trim();
         const localidad = document.getElementById("localidad").value.trim();
         const totalFinal = subtotal + EMBALAJE;
-
-        const paqueteOrden = {
-          tipo: "Envío", f: fechaStr, h: horaStr, nom: nombre, ape: apellido, dni: dni, cel: celular,
-          dir: direccion, loc: localidad, prov: provincia, cp: cp, tr: transpFinal,
-          mod: modalidadSeleccionada, items: itemsCortos, tot: totalFinal.toLocaleString('es-AR')
-        };
-
+        const paqueteOrden = { tipo: "Envío", f: fechaStr, h: horaStr, nom: nombre, ape: apellido, dni: dni, cel: celular, dir: direccion, loc: localidad, prov: provincia, cp: cp, tr: transpFinal, mod: modalidadSeleccionada, items: itemsCortos, tot: totalFinal.toLocaleString('es-AR') };
         const linkPdfComprobante = urlBase + "?orden=" + codificarDatos(paqueteOrden);
-
-        msg += "• Embalaje y traslado: $4.000\n";
-        msg += "\n*TOTAL FINAL A PAGAR: $" + totalFinal.toLocaleString('es-AR') + "*\n\n";
-        msg += "*FORMA DE ENVÍO:*\n";
-        msg += "• Transporte: " + transpFinal + "\n";
-        msg += "• Modalidad: " + modalidadSeleccionada + "\n\n";
-        msg += "*DATOS DEL CLIENTE:*\n";
-        msg += "• Nombre: " + nombre + " " + apellido + "\n";
-        msg += "• DNI: " + dni + "\n";
-        msg += "• Teléfono: " + celular + "\n";
-        msg += "• Dirección: " + direccion + "\n";
-        msg += "• Localidad: " + localidad + " (CP: " + cp + ")\n";
-        msg += "• Provincia: " + provincia + "\n\n";
-        msg += "📄 *ABRIR TALÓN DE ENVÍO Y ORDEN (PDF 2 HOJAS):*\n";
-        msg += linkPdfComprobante;
-
+        msg += "• Embalaje y traslado: $4.000\n\n*TOTAL FINAL A PAGAR: $" + totalFinal.toLocaleString('es-AR') + "*\n\n*FORMA DE ENVÍO:*\n• Transporte: " + transpFinal + "\n• Modalidad: " + modalidadSeleccionada + "\n\n*DATOS DEL CLIENTE:*\n• Nombre: " + nombre + " " + apellido + "\n• DNI: " + dni + "\n• Teléfono: " + celular + "\n• Dirección: " + direccion + "\n• Localidad: " + localidad + " (CP: " + cp + ")\n• Provincia: " + provincia + "\n\n📄 *ABRIR TALÓN DE ENVÍO Y ORDEN (PDF 2 HOJAS):*\n" + linkPdfComprobante;
       } else {
         const camposRetiro = [
-          { id: "retiro-nombre", nombre: "Nombre del que retira" },
-          { id: "retiro-apellido", nombre: "Apellido" },
-          { id: "retiro-celular", nombre: "Celular" },
-          { id: "retiro-dni", nombre: "DNI" }
+          { id: "retiro-nombre", nombre: "Nombre del que retira" }, { id: "retiro-apellido", nombre: "Apellido" },
+          { id: "retiro-celular", nombre: "Celular" }, { id: "retiro-dni", nombre: "DNI" }
         ];
         for (let c of camposRetiro) {
           const el = document.getElementById(c.id);
           if (!el.value.trim()) { alert("Falta rellenar el casillero: " + c.nombre); el.focus(); return; }
         }
-
         const rNombre = document.getElementById("retiro-nombre").value.trim();
         const rApellido = document.getElementById("retiro-apellido").value.trim();
         const rCelular = document.getElementById("retiro-celular").value.trim();
         const rDni = document.getElementById("retiro-dni").value.trim();
-
-        const paqueteRetiro = {
-          tipo: "Retiro por Local", f: fechaStr, h: horaStr,
-          nom: rNombre, ape: rApellido, cel: rCelular, dni: rDni,
-          items: itemsCortos, tot: subtotal.toLocaleString('es-AR')
-        };
-
+        const paqueteRetiro = { tipo: "Retiro por Local", f: fechaStr, h: horaStr, nom: rNombre, ape: rApellido, cel: rCelular, dni: rDni, items: itemsCortos, tot: subtotal.toLocaleString('es-AR') };
         const linkPdfRetiro = urlBase + "?orden=" + codificarDatos(paqueteRetiro);
-
-        msg += "\n*TOTAL FINAL A PAGAR: $" + subtotal.toLocaleString('es-AR') + "*\n\n";
-        msg += "*MODALIDAD: RETIRO POR LOCAL*\n";
-        msg += "• Retira: " + rNombre + " " + rApellido + "\n";
-        msg += "• DNI: " + rDni + "\n";
-        msg += "• Celular: " + rCelular + "\n\n";
-        msg += "📄 *ABRIR ORDEN DE COMPRA (PDF):*\n";
-        msg += linkPdfRetiro;
+        msg += "\n*TOTAL FINAL A PAGAR: $" + subtotal.toLocaleString('es-AR') + "*\n\n*MODALIDAD: RETIRO POR LOCAL*\n• Retira: " + rNombre + " " + rApellido + "\n• DNI: " + rDni + "\n• Celular: " + rCelular + "\n\n📄 *ABRIR ORDEN DE COMPRA (PDF):*\n" + linkPdfRetiro;
       }
-
       descontarStockDefinitivo(carrito);
       const urlWsp = ["https:/", "/api.", "whatsapp", ".com/send?phone="].join("") + TELEFONO + "&text=" + encodeURIComponent(msg);
       window.location.href = urlWsp;
