@@ -247,6 +247,7 @@
     const MINIMO_ENVIO = 80000;
     const MINIMO_PRENDAS_RETIRO = 5;
     const EMBALAJE = 4000;
+    const FIREBASE_URL = "https://firebaseio.com";
 
     const PRODUCTOS = [
       { id: 1, nombre: "Vestido Franchesca", precio: 15000, stockDefault: 20, fotos: ["franchesca.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Blanco", "Uva"] },
@@ -273,7 +274,6 @@
       { id: 23, nombre: "Reme Tokio", precio: 7000, stockDefault: 10, stockEspecialColor: { "Uva": 5 }, fotos: ["tokio1.jpg", "tokio2.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Blanco", "Uva", "Celeste", "Rosa", "Lila"] }
     ];
 
-        const FIREBASE_URL = "https://firebaseio.com";
     let stockGlobal = {};
     let carrito = [];
     let indiceFotoActual = {};
@@ -334,7 +334,6 @@
         });
       } catch (e) {}
     }
-
     function actualizarEstadoStockTarjeta(id) {
       const selTal = document.getElementById("tal-" + id);
       const selCol = document.getElementById("col-" + id);
@@ -359,10 +358,9 @@
         if (parseInt(inpCan.value) > disp || parseInt(inpCan.value) <= 0) inpCan.value = 1;
       }
     }
-    function actualizarTodasLasTarjetas() {
-      PRODUCTOS.forEach(p => actualizarEstadoStockTarjeta(p.id));
-    }
-     
+
+    function actualizarTodasLasTarjetas() { PRODUCTOS.forEach(p => actualizarEstadoStockTarjeta(p.id)); }
+
     function codificarDatos(obj) {
       const jsonStr = JSON.stringify(obj);
       const bytes = new TextEncoder().encode(jsonStr);
@@ -390,7 +388,12 @@
     function verificarModoComprobante() {
       const params = new URLSearchParams(window.location.search);
       const codigoOrden = params.get("orden");
-      if (!codigoOrden) { cargarCatalogo(); return; }
+      if (!codigoOrden) {
+        cargarCatalogo();
+        sincronizarStockDesdeNube();
+        setInterval(sincronizarStockDesdeNube, 4000);
+        return;
+      }
       try {
         const d = decodificarDatos(codigoOrden);
         document.getElementById("vista-tienda").style.display = "none";
@@ -555,7 +558,6 @@
       const contEl = document.getElementById("cont-foto-" + id);
       if (contEl) contEl.textContent = (nuevoIdx + 1) + " / " + prod.fotos.length;
     }
-
     function abrirVisor(id) {
       const prod = PRODUCTOS.find(p => p.id === id);
       if (!prod) return;
@@ -628,7 +630,6 @@
       actualizarCarrito();
       if (itemQuitado) actualizarEstadoStockTarjeta(itemQuitado.id);
     }
-
     function actualizarCarrito() {
       const lista = document.getElementById("lista-carrito");
       const subtotalTxt = document.getElementById("subtotal-texto");
@@ -685,7 +686,7 @@
         }
       }
     }
-    function enviarPedido() {
+    async function enviarPedido() {
       if (!tipoEntrega) { alert("Por favor seleccioná Envío o Retiro por Local."); return; }
       const ahora = new Date();
       const fechaStr = ahora.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
@@ -745,12 +746,14 @@
         const linkPdfRetiro = urlBase + "?orden=" + codificarDatos(paqueteRetiro);
         msg += "\n*TOTAL FINAL A PAGAR: $" + subtotal.toLocaleString('es-AR') + "*\n\n*MODALIDAD: RETIRO POR LOCAL*\n• Retira: " + rNombre + " " + rApellido + "\n• DNI: " + rDni + "\n• Celular: " + rCelular + "\n\n📄 *ABRIR ORDEN DE COMPRA (PDF):*\n" + linkPdfRetiro;
       }
-      descontarStockDefinitivo(carrito);
+      const btnEnviar = document.getElementById("btn-enviar");
+      btnEnviar.disabled = true;
+      btnEnviar.textContent = "Guardando stock y abriendo WhatsApp...";
+      await descontarStockDefinitivo(carrito);
       const urlWsp = ["https:/", "/api.", "whatsapp", ".com/send?phone="].join("") + TELEFONO + "&text=" + encodeURIComponent(msg);
       window.location.href = urlWsp;
     }
-    sincronizarStockDesdeNube();
-    setInterval(sincronizarStockDesdeNube, 5000);
+
     verificarModoComprobante();
   </script>
 </body>
