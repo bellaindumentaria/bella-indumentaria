@@ -260,8 +260,17 @@
     @media print {
       .no-imprimir { display: none !important; }
       #vista-comprobante { margin: 0; padding: 0; max-width: 100%; }
-      .hoja-pdf { border: none; padding: 0; margin: 0; }
+      .hoja-pdf { border: none; padding: 0; margin: 0; page-break-inside: avoid; }
       .salto-pagina { page-break-before: always; }
+      .hoja-orden .pdf-header { margin-bottom: 4px !important; }
+      .hoja-orden .pdf-header td { padding: 3px 4px !important; font-size: 8px !important; line-height: 1.15 !important; }
+      .hoja-orden .pdf-logo { font-size: 18px !important; }
+      .hoja-orden .caja-orden-cliente { padding: 4px 6px !important; margin-bottom: 4px !important; font-size: 8.5px !important; line-height: 1.2 !important; }
+      .hoja-orden .pdf-tabla { margin-top: 3px !important; }
+      .hoja-orden .pdf-tabla th { padding: 2.5px 4px !important; font-size: 8px !important; }
+      .hoja-orden .pdf-tabla td { padding: 2px 4px !important; font-size: 8px !important; line-height: 1.12 !important; }
+      .hoja-orden .pdf-total { margin-top: 4px !important; padding: 3px 10px !important; font-size: 10.5px !important; }
+      .hoja-orden .pie-orden { padding-top: 4px !important; font-size: 7.5px !important; }
     }
 
     @media (max-width: 950px) { .contenedor-catalogo { grid-template-columns: repeat(2, 1fr); } }
@@ -626,7 +635,7 @@
             <button type="button" class="btn-volver-tienda" onclick="window.location.href=window.location.pathname">Ir a la Tienda</button>
           </div>
           ${hojaEnvioHtml}
-          <div class="hoja-pdf ${esRetiroLocal ? '' : 'salto-pagina'}">
+          <div class="hoja-pdf hoja-orden ${esRetiroLocal ? '' : 'salto-pagina'}">
             <table class="pdf-header">
               <tr>
                 <td style="width: 35%;"><div class="pdf-logo">BELLA</div><div style="font-family: Georgia, serif; font-style: italic; font-size: 17px;">Indumentaria</div></td>
@@ -634,7 +643,7 @@
                 <td style="width: 28%; font-size: 10px;"><b>Dany: 11-2574-8687<br>Isa: 11-6735-3960</b><br>FB: BELLA Indumentaria<br>TK: bella.indumentaria<br>IG: bella.indumentariadama</td>
               </tr>
             </table>
-            <div style="border: 2px solid #1A1A1A; padding: 12px; margin-bottom: 12px; font-size: 12px; line-height: 1.5;">
+            <div class="caja-orden-cliente" style="border: 2px solid #1A1A1A; padding: 12px; margin-bottom: 12px; font-size: 12px; line-height: 1.5;">
               <b>ORDEN DE COMPRA</b> &nbsp;|&nbsp; <b>Fecha:</b> ${d.f} &nbsp;|&nbsp; <b>Hora:</b> ${d.h}<br>
               ${datosClienteOrdenPdf}
             </div>
@@ -646,7 +655,7 @@
               </tbody>
             </table>
             <div class="pdf-total">TOTAL FINAL: $${d.tot}</div>
-            <div style="clear: both; padding-top: 18px; font-size: 10px; color: #555;">Documento no válido como factura - BELLA Indumentaria</div>
+            <div class="pie-orden" style="clear: both; padding-top: 18px; font-size: 10px; color: #555;">Documento no válido como factura - BELLA Indumentaria</div>
           </div>
         `;
       } catch (err) { cargarCatalogo(); }
@@ -700,7 +709,6 @@
         chkSuc.textContent = "X"; chkDom.textContent = "";
       }
     }
-
     function cargarCatalogo() {
       const cont = document.getElementById("catalogo");
       cont.innerHTML = PRODUCTOS.map(p => {
@@ -792,6 +800,7 @@
 
     function cerrarVisor() { document.getElementById("visor-modal").classList.remove("activo"); }
     function cerrarVisorFondo(e) { if (e.target.id === "visor-modal") cerrarVisor(); }
+
     function togglePanel() {
       const panel = document.getElementById("panel-lateral");
       const flecha = document.getElementById("flecha-icono");
@@ -912,6 +921,7 @@
         }
       }
     }
+
     function enviarPedido() {
       if (!tipoEntrega) { alert("Por favor seleccioná Envío o Retiro por Local."); return; }
 
@@ -956,7 +966,6 @@
           const el = document.getElementById(c.id);
           if (!el.value.trim()) { alert("Falta rellenar el casillero: " + c.nombre); el.focus(); return; }
         }
-
         const transpFinal = transpSel === "Otro" ? transpOtro : transpSel;
         const nombre = document.getElementById("nombre").value.trim();
         const apellido = document.getElementById("apellido").value.trim();
