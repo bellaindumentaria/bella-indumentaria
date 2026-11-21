@@ -273,6 +273,8 @@
       { id: 23, nombre: "Reme Tokio", precio: 7000, stockDefault: 10, stockEspecialColor: { "Uva": 5 }, fotos: ["tokio1.jpg", "tokio2.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Blanco", "Uva", "Celeste", "Rosa", "Lila"] }
     ];
 
+        const FIREBASE_URL = "https://firebaseio.com";
+    let stockGlobal = {};
     let carrito = [];
     let indiceFotoActual = {};
     let visorProdId = null;
@@ -290,30 +292,49 @@
       return prod.stockDefault || 10;
     }
 
-    function obtenerClaveStock(id, talle, color) { return id + "|" + talle + "|" + color; }
-    function cargarStockGuardado() { try { const raw = localStorage.getItem("bella_stock_v5"); return raw ? JSON.parse(raw) : {}; } catch (e) { return {}; } }
-    function guardarStock(mapaStock) { try { localStorage.setItem("bella_stock_v5", JSON.stringify(mapaStock)); } catch (e) {} }
+    function obtenerClaveStock(id, talle, color) {
+      return id + "_" + talle.replace(/\s+/g, '') + "_" + color.replace(/\s+/g, '');
+    }
+
+    async function sincronizarStockDesdeNube() {
+      try {
+        const resp = await fetch(FIREBASE_URL + "?t=" + Date.now());
+        const datos = await resp.json();
+        stockGlobal = datos || {};
+        actualizarTodasLasTarjetas();
+      } catch (e) {}
+    }
 
     function obtenerStockDisponible(id, talle, color) {
-      const mapa = cargarStockGuardado();
       const clave = obtenerClaveStock(id, talle, color);
       const inicial = obtenerStockInicialVariante(id, color);
-      const base = mapa.hasOwnProperty(clave) ? Object.entries(mapa).find(x => x.at(0) === clave).at(1) : inicial;
+      const base = stockGlobal.hasOwnProperty(clave) ? Object.entries(stockGlobal).find(x => x.at(0) === clave).at(1) : inicial;
       const enCarrito = carrito.find(i => i.id === id && i.talle === talle && i.color === color);
       const reservado = enCarrito ? enCarrito.cant : 0;
       return Math.max(0, base - reservado);
     }
 
-    function descontarStockDefinitivo(itemsComprados) {
-      const mapa = cargarStockGuardado();
-      itemsComprados.forEach(it => {
-        const clave = obtenerClaveStock(it.id, it.talle, it.color);
-        const inicial = obtenerStockInicialVariante(it.id, it.color);
-        const actual = mapa.hasOwnProperty(clave) ? Object.entries(mapa).find(x => x.at(0) === clave).at(1) : inicial;
-        mapa[clave] = Math.max(0, actual - it.cant);
-      });
-      guardarStock(mapa);
+    async function descontarStockDefinitivo(itemsComprados) {
+      try {
+        const resp = await fetch(FIREBASE_URL + "?t=" + Date.now());
+        const actualEnNube = (await resp.json()) || {};
+        const cambios = {};
+        itemsComprados.forEach(it => {
+          const clave = obtenerClaveStock(it.id, it.talle, it.color);
+          const inicial = obtenerStockInicialVariante(it.id, it.color);
+          const actual = actualEnNube.hasOwnProperty(clave) ? Object.entries(actualEnNube).find(x => x.at(0) === clave).at(1) : inicial;
+          const nuevoValor = Math.max(0, actual - it.cant);
+          cambios[clave] = nuevoValor;
+          stockGlobal[clave] = nuevoValor;
+        });
+        await fetch(FIREBASE_URL, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(cambios)
+        });
+      } catch (e) {}
     }
+
     function actualizarEstadoStockTarjeta(id) {
       const selTal = document.getElementById("tal-" + id);
       const selCol = document.getElementById("col-" + id);
@@ -338,9 +359,10 @@
         if (parseInt(inpCan.value) > disp || parseInt(inpCan.value) <= 0) inpCan.value = 1;
       }
     }
-
-    function actualizarTodasLasTarjetas() { PRODUCTOS.forEach(p => actualizarEstadoStockTarjeta(p.id)); }
-
+    function actualizarTodasLasTarjetas() {
+      PRODUCTOS.forEach(p => actualizarEstadoStockTarjeta(p.id));
+    }
+     
     function codificarDatos(obj) {
       const jsonStr = JSON.stringify(obj);
       const bytes = new TextEncoder().encode(jsonStr);
@@ -727,7 +749,8 @@
       const urlWsp = ["https:/", "/api.", "whatsapp", ".com/send?phone="].join("") + TELEFONO + "&text=" + encodeURIComponent(msg);
       window.location.href = urlWsp;
     }
-
+    sincronizarStockDesdeNube();
+    setInterval(sincronizarStockDesdeNube, 5000);
     verificarModoComprobante();
   </script>
 </body>
