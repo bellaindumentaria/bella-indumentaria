@@ -247,7 +247,7 @@
     const MINIMO_ENVIO = 80000;
     const MINIMO_PRENDAS_RETIRO = 5;
     const EMBALAJE = 4000;
-    const FIREBASE_URL = "https://firebaseio.com";
+    const FIREBASE_BASE = "https://firebaseio.com";
 
     const PRODUCTOS = [
       { id: 1, nombre: "Vestido Franchesca", precio: 15000, stockDefault: 20, fotos: ["franchesca.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Blanco", "Uva"] },
@@ -273,7 +273,6 @@
       { id: 22, nombre: "Palazzo Kheyla", precio: 9000, stockDefault: 15, fotos: ["kheyla.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
       { id: 23, nombre: "Reme Tokio", precio: 7000, stockDefault: 10, stockEspecialColor: { "Uva": 5 }, fotos: ["tokio1.jpg", "tokio2.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Blanco", "Uva", "Celeste", "Rosa", "Lila"] }
     ];
-
     let stockGlobal = {};
     let carrito = [];
     let indiceFotoActual = {};
@@ -298,7 +297,7 @@
 
     async function sincronizarStockDesdeNube() {
       try {
-        const resp = await fetch(FIREBASE_URL + "?t=" + Date.now());
+        const resp = await fetch(FIREBASE_BASE + ".json?t=" + Date.now());
         const datos = await resp.json();
         stockGlobal = datos || {};
         actualizarTodasLasTarjetas();
@@ -308,7 +307,7 @@
     function obtenerStockDisponible(id, talle, color) {
       const clave = obtenerClaveStock(id, talle, color);
       const inicial = obtenerStockInicialVariante(id, color);
-      const base = stockGlobal.hasOwnProperty(clave) ? Object.entries(stockGlobal).find(x => x.at(0) === clave).at(1) : inicial;
+      const base = stockGlobal.hasOwnProperty(clave) ? Number(Object.entries(stockGlobal).find(x => x.at(0) === clave).at(1)) : inicial;
       const enCarrito = carrito.find(i => i.id === id && i.talle === talle && i.color === color);
       const reservado = enCarrito ? enCarrito.cant : 0;
       return Math.max(0, base - reservado);
@@ -316,22 +315,20 @@
 
     async function descontarStockDefinitivo(itemsComprados) {
       try {
-        const resp = await fetch(FIREBASE_URL + "?t=" + Date.now());
+        const resp = await fetch(FIREBASE_BASE + ".json?t=" + Date.now());
         const actualEnNube = (await resp.json()) || {};
-        const cambios = {};
-        itemsComprados.forEach(it => {
+        for (const it of itemsComprados) {
           const clave = obtenerClaveStock(it.id, it.talle, it.color);
           const inicial = obtenerStockInicialVariante(it.id, it.color);
-          const actual = actualEnNube.hasOwnProperty(clave) ? Object.entries(actualEnNube).find(x => x.at(0) === clave).at(1) : inicial;
+          const actual = actualEnNube.hasOwnProperty(clave) ? Number(Object.entries(actualEnNube).find(x => x.at(0) === clave).at(1)) : inicial;
           const nuevoValor = Math.max(0, actual - it.cant);
-          cambios[clave] = nuevoValor;
           stockGlobal[clave] = nuevoValor;
-        });
-        await fetch(FIREBASE_URL, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(cambios)
-        });
+          await fetch(FIREBASE_BASE + "/" + clave + ".json", {
+            method: "PUT",
+            keepalive: true,
+            body: JSON.stringify(nuevoValor)
+          });
+        }
       } catch (e) {}
     }
     function actualizarEstadoStockTarjeta(id) {
@@ -558,6 +555,7 @@
       const contEl = document.getElementById("cont-foto-" + id);
       if (contEl) contEl.textContent = (nuevoIdx + 1) + " / " + prod.fotos.length;
     }
+
     function abrirVisor(id) {
       const prod = PRODUCTOS.find(p => p.id === id);
       if (!prod) return;
@@ -686,6 +684,7 @@
         }
       }
     }
+
     async function enviarPedido() {
       if (!tipoEntrega) { alert("Por favor seleccioná Envío o Retiro por Local."); return; }
       const ahora = new Date();
@@ -748,7 +747,7 @@
       }
       const btnEnviar = document.getElementById("btn-enviar");
       btnEnviar.disabled = true;
-      btnEnviar.textContent = "Guardando stock y abriendo WhatsApp...";
+      btnEnviar.textContent = "Guardando stock...";
       await descontarStockDefinitivo(carrito);
       const urlWsp = ["https:/", "/api.", "whatsapp", ".com/send?phone="].join("") + TELEFONO + "&text=" + encodeURIComponent(msg);
       window.location.href = urlWsp;
