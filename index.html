@@ -32,34 +32,12 @@
     .caja-titulo-header { background-color: #F8BBD0 !important; border: 3px solid #1A1A1A; border-radius: 16px; padding: 18px 34px; text-align: center; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22); max-width: 760px; width: 100%; }
     .caja-titulo-header h1 { font-size: 2.1rem; letter-spacing: 3px; color: #1A1A1A !important; text-transform: uppercase; font-weight: 900; line-height: 1.15; }
     .caja-titulo-header p { color: #C2185B !important; font-weight: bold; font-size: 0.88rem; margin-top: 8px; letter-spacing: 0.6px; }
-    .barra-categorias {
-      max-width: 1280px;
-      margin: 16px auto 4px auto;
-      padding: 6px 20px;
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      white-space: nowrap;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
-      scrollbar-color: #E91E63 #FCE4EC;
-    }
-    .barra-categorias::-webkit-scrollbar { height: 5px; }
+    .barra-categorias { display: flex; gap: 10px; overflow-x: auto; padding: 14px 16px; background-color: #FFF0F5 !important; border-bottom: 2px solid #F8BBD0; white-space: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: #E91E63 #FCE4EC; }
+    .barra-categorias::-webkit-scrollbar { height: 6px; }
     .barra-categorias::-webkit-scrollbar-thumb { background: #E91E63; border-radius: 4px; }
-    .btn-cat {
-      background-color: #FFF0F5;
-      color: #1A1A1A;
-      border: 2px solid #F8BBD0;
-      border-radius: 20px;
-      padding: 8px 16px;
-      font-size: 0.88rem;
-      font-weight: bold;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: all 0.2s ease;
-    }
-    .btn-cat.activa { background-color: #E91E63; color: #FFFFFF; border-color: #1A1A1A; }
-    .contenedor-catalogo { max-width: 1280px; margin: 16px auto; padding: 0 20px 60px 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; background-color: #FFFFFF !important; }
+    .btn-cat { background-color: #FFFFFF !important; color: #1A1A1A !important; border: 2px solid #F48FB1; border-radius: 20px; padding: 8px 18px; font-size: 0.88rem; font-weight: bold; cursor: pointer; flex-shrink: 0; transition: all 0.2s; }
+    .btn-cat.activo { background-color: #E91E63 !important; color: #FFFFFF !important; border-color: #1A1A1A; box-shadow: 0 3px 8px rgba(233, 30, 99, 0.3); }
+    .contenedor-catalogo { max-width: 1280px; margin: 22px auto; padding: 0 20px 60px 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; background-color: #FFFFFF !important; }
     .producto { background-color: #FFFFFF !important; border: 2px solid #F8BBD0; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 14px rgba(233, 30, 99, 0.1); }
     .galeria-box { position: relative; width: 100%; height: 310px; background-color: #FFF9FB; border-radius: 10px; margin-bottom: 10px; border: 1px solid #F8BBD0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
     .galeria-box img { width: 100%; height: 100%; object-fit: contain; cursor: zoom-in; }
@@ -128,10 +106,8 @@
     .pdf-logo { font-family: Georgia, serif; font-size: 30px; font-weight: bold; }
     .pdf-envios { width: 100%; border-collapse: collapse; }
     .pdf-vertical { width: 45px; border: 2px solid #1A1A1A; text-align: center; font-size: 20px; font-weight: bold; line-height: 1.5; }
-    .pdf-vertical-retiro { width: 52px; border: 2px solid #1A1A1A; text-align: center; font-size: 13px; font-weight: 900; line-height: 1.18; padding: 6px 2px; }
     .pdf-datos { border: 2px solid #1A1A1A; padding: 16px; }
     .pdf-linea { margin-bottom: 14px; font-size: 13px; border-bottom: 1px solid #1A1A1A; padding-bottom: 3px; }
-    .pdf-linea-gigante { margin-bottom: 16px; font-size: 34px; font-weight: 900; border-bottom: 2px solid #1A1A1A; padding-bottom: 6px; line-height: 1.2; }
     .pdf-casilla { display: inline-block; width: 24px; height: 20px; border: 2px solid #1A1A1A; text-align: center; font-weight: bold; font-size: 15px; margin-left: 6px; vertical-align: middle; }
     .pdf-tabla { width: 100%; border-collapse: collapse; margin-top: 12px; }
     .pdf-tabla th { background: #F8BBD0; border: 1.5px solid #1A1A1A; padding: 8px; font-size: 12px; }
@@ -148,10 +124,8 @@
       .hoja-envio .pdf-header td { padding: 4px 6px !important; font-size: 9px !important; line-height: 1.15 !important; }
       .hoja-envio .pdf-logo { font-size: 22px !important; }
       .hoja-envio .pdf-vertical { width: 34px !important; font-size: 15px !important; line-height: 1.25 !important; }
-      .hoja-envio .pdf-vertical-retiro { width: 42px !important; font-size: 10px !important; line-height: 1.1 !important; }
       .hoja-envio .pdf-datos { padding: 7px 10px !important; }
       .hoja-envio .pdf-linea { margin-bottom: 6px !important; font-size: 11px !important; padding-bottom: 2px !important; }
-      .hoja-envio .pdf-linea-gigante { margin-bottom: 8px !important; font-size: 26px !important; padding-bottom: 4px !important; }
       .hoja-envio .fila-casillas-envio { margin-top: 8px !important; font-size: 11px !important; }
       .hoja-envio .pdf-casilla { width: 20px !important; height: 17px !important; font-size: 12px !important; }
       .hoja-envio .pie-envio { margin-top: 5px !important; font-size: 8.5px !important; }
@@ -195,14 +169,15 @@
       </div>
     </header>
     <nav class="barra-categorias" id="barra-categorias">
-      <button type="button" class="btn-cat activa" onclick="filtrarPorCategoria('Todos', this)">Todos</button>
-      <button type="button" class="btn-cat" onclick="filtrarPorCategoria('Vestidos', this)">Vestidos</button>
-      <button type="button" class="btn-cat" onclick="filtrarPorCategoria('Polleras', this)">Polleras</button>
-      <button type="button" class="btn-cat" onclick="filtrarPorCategoria('Remes', this)">Remes</button>
-      <button type="button" class="btn-cat" onclick="filtrarPorCategoria('Pantalones', this)">Pantalones</button>
-      <button type="button" class="btn-cat" onclick="filtrarPorCategoria('Catsuit', this)">Catsuit</button>
-      <button type="button" class="btn-cat" onclick="filtrarPorCategoria('Top', this)">Top</button>
-      <button type="button" class="btn-cat" onclick="filtrarPorCategoria('Cintos', this)">Cintos</button>
+      <button type="button" class="btn-cat activo" onclick="filtrarCategoria('Todos', this)">Todos</button>
+      <button type="button" class="btn-cat" onclick="filtrarCategoria('Vestidos', this)">Vestidos</button>
+      <button type="button" class="btn-cat" onclick="filtrarCategoria('Polleras', this)">Polleras</button>
+      <button type="button" class="btn-cat" onclick="filtrarCategoria('Remes', this)">Remes</button>
+      <button type="button" class="btn-cat" onclick="filtrarCategoria('Body', this)">Body</button>
+      <button type="button" class="btn-cat" onclick="filtrarCategoria('Pantalones', this)">Pantalones</button>
+      <button type="button" class="btn-cat" onclick="filtrarCategoria('Catsuit', this)">Catsuit</button>
+      <button type="button" class="btn-cat" onclick="filtrarCategoria('Top', this)">Top</button>
+      <button type="button" class="btn-cat" onclick="filtrarCategoria('Cintos', this)">Cintos</button>
     </nav>
     <button type="button" class="btn-flecha-carrito" id="btn-flecha-carrito" onclick="togglePanel()">
       <span class="icono-flecha" id="flecha-icono">◀</span>
@@ -267,26 +242,17 @@
           <div class="campo" style="flex:1;"><input type="text" id="dni" placeholder="DNI *"></div>
         </div>
         <div class="campo"><input type="text" id="direccion" placeholder="Dirección (Calle y Altura) *"></div>
-        <div class="fila-doble">
-          <div class="campo" style="flex:1;"><input type="text" id="cp" placeholder="Código Postal *"></div>
-          <div class="campo" style="flex:1.5;">
-            <input type="text" id="provincia" list="lista-provincias" placeholder="Provincia *" oninput="actualizarLocalidadesPorProvincia()">
-            <datalist id="lista-provincias"></datalist>
-          </div>
-        </div>
-        <div class="campo">
-          <input type="text" id="localidad" list="lista-localidades" placeholder="Localidad *">
-          <datalist id="lista-localidades"></datalist>
-        </div>
+        <div class="campo"><select id="provincia" onchange="cargarLocalidades()"><option value="">-- Seleccioná Provincia * --</option></select></div>
+        <div class="campo"><select id="localidad" onchange="verOtraLocalidad()"><option value="">-- Primero elegí Provincia * --</option></select></div>
+        <div class="caja-otro" id="caja-otra-localidad"><input type="text" id="localidad-otra" placeholder="Escribí tu localidad *" style="width:100%; padding:8px; border:1px solid #E91E63; border-radius:6px;"></div>
+        <div class="campo"><input type="text" id="cp" placeholder="Código Postal *"></div>
       </div>
       <div id="bloque-form-retiro" style="display:none;">
-        <div class="titulo-seccion">Datos para Retiro por Local</div>
-        <div class="fila-doble">
-          <div class="campo" style="flex:1;"><input type="text" id="retiro-nombre" placeholder="Nombre *"></div>
-          <div class="campo" style="flex:1;"><input type="text" id="retiro-apellido" placeholder="Apellido *"></div>
-        </div>
-        <div class="campo"><input type="tel" id="retiro-celular" placeholder="Celular *"></div>
-        <div class="campo"><input type="text" id="retiro-por" placeholder="Retirado por (Nombre del que retira) *"></div>
+        <div class="titulo-seccion">Datos de Retiro por Local (Todos obligatorios *)</div>
+        <div class="campo"><label>Nombre *:</label><input type="text" id="retiro-nombre" placeholder="Escribí el nombre *"></div>
+        <div class="campo"><label>Apellido *:</label><input type="text" id="retiro-apellido" placeholder="Escribí el apellido *"></div>
+        <div class="campo"><label>Celular *:</label><input type="tel" id="retiro-celular" placeholder="Escribí el celular *"></div>
+        <div class="campo"><label>Retirado por *:</label><input type="text" id="retiro-por" placeholder="Nombre completo de quien retira *"></div>
       </div>
       <button type="button" id="btn-enviar" class="btn-wsp" onclick="enviarPedido()" disabled>Seleccioná Envío o Retiro</button>
     </aside>
@@ -299,56 +265,59 @@
     const FIREBASE_BASE = "https://firebaseio.com";
 
     const PROVINCIAS_ARG = {
-      "Buenos Aires": ["La Plata", "Mar del Plata", "Bahía Blanca", "Tandil", "Quilmes", "Lanús", "Lomas de Zamora", "Avellaneda", "Morón", "Merlo", "Moreno", "San Justo", "San Martín", "Tigre", "San Isidro", "Vicente López", "Pilar", "Escobar", "Zárate", "Campana", "Luján", "Mercedes", "Junín", "Pergamino", "San Nicolás", "Olavarría", "Azul", "Necochea", "Tres Arroyos", "Chivilcoy"],
-      "CABA": ["Flores", "Palermo", "Belgrano", "Caballito", "Recoleta", "Almagro", "Balvanera", "Once", "Villa Crespo", "Villa Urquiza", "Devoto", "Liniers", "Mataderos", "Boedo", "San Telmo", "Barracas", "La Boca"],
-      "Catamarca": ["San Fernando del Valle de Catamarca", "Valle Viejo", "Andalgalá", "Belén", "Tinogasta", "Santa María"],
-      "Chaco": ["Resistencia", "Presidencia Roque Sáenz Peña", "Villa Ángela", "Charata", "General José de San Martín", "Castelli"],
-      "Chubut": ["Rawson", "Comodoro Rivadavia", "Trelew", "Puerto Madryn", "Esquel", "Sarmiento"],
-      "Córdoba": ["Córdoba Capital", "Villa Carlos Paz", "Río Cuarto", "Villa María", "San Francisco", "Alta Gracia", "Río Tercero", "Bell Ville", "Jesús María", "La Falda", "Cosquín", "Mina Clavero"],
-      "Corrientes": ["Corrientes Capital", "Goya", "Paso de los Libres", "Curuzú Cuatiá", "Mercedes", "Bella Vista", "Esquina"],
-      "Entre Ríos": ["Paraná", "Concordia", "Gualeguaychú", "Concepción del Uruguay", "Gualeguay", "Villaguay", "Chajarí", "Victoria"],
-      "Formosa": ["Formosa Capital", "Clorinda", "Pirané", "El Colorado", "Las Lomitas"],
-      "Jujuy": ["San Salvador de Jujuy", "San Pedro de Jujuy", "Libertador General San Martín", "Palpalá", "Perico", "Humahuaca", "Tilcara"],
-      "La Pampa": ["Santa Rosa", "General Pico", "Toay", "General Acha", "Eduardo Castex"],
-      "La Rioja": ["La Rioja Capital", "Chilecito", "Aimogasta", "Chamical", "Chepes"],
-      "Mendoza": ["Mendoza Capital", "Godoy Cruz", "Guaymallén", "Las Heras", "Luján de Cuyo", "Maipú", "San Rafael", "General Alvear", "Malargüe", "Tunuyán", "San Martín"],
-      "Misiones": ["Posadas", "Oberá", "Eldorado", "Puerto Iguazú", "Apóstoles", "Leandro N. Alem", "San Vicente"],
-      "Neuquén": ["Neuquén Capital", "San Martín de los Andes", "Villa La Angostura", "Zapala", "Cutral Có", "Plottier", "Centenario", "Chos Malal"],
-      "Río Negro": ["Viedma", "San Carlos de Bariloche", "General Roca", "Cipolletti", "Villa Regina", "El Bolsón", "Las Grutas"],
-      "Salta": ["Salta Capital", "San Ramón de la Nueva Orán", "Tartagal", "General Güemes", "Metán", "Cafayate", "Rosario de la Frontera"],
-      "San Juan": ["San Juan Capital", "Rawson", "Rivadavia", "Chimbas", "Santa Lucía", "Pocito", "Caucete", "Jáchal"],
-      "San Luis": ["San Luis Capital", "Villa Mercedes", "Merlo", "La Punta", "Juana Koslay"],
-      "Santa Cruz": ["Río Gallegos", "Caleta Olivia", "El Calafate", "Pico Truncado", "Puerto Deseado", "Las Heras"],
-      "Santa Fe": ["Santa Fe Capital", "Rosario", "Rafaela", "Venado Tuerto", "Reconquista", "Villa Gobernador Gálvez", "San Lorenzo", "Santo Tomé", "Esperanza", "Casilda"],
-      "Santiago del Estero": ["Santiago del Estero Capital", "La Banda", "Termas de Río Hondo", "Añatuya", "Frías"],
+      "Ciudad Autónoma de Buenos Aires": ["Agronomía", "Almagro", "Balvanera", "Barracas", "Belgrano", "Boedo", "Caballito", "Chacarita", "Coghlan", "Colegiales", "Constitución", "Flores", "Floresta", "La Boca", "La Paternal", "Liniers", "Mataderos", "Monte Castro", "Monserrat", "Nueva Pompeya", "Núñez", "Palermo", "Parque Avellaneda", "Parque Chacabuco", "Parque Chas", "Parque Patricios", "Puerto Madero", "Recoleta", "Retiro", "Saavedra", "San Cristóbal", "San Nicolás", "San Telmo", "Vélez Sársfield", "Versalles", "Villa Crespo", "Villa del Parque", "Villa Devoto", "Villa General Mitre", "Villa Lugano", "Villa Luro", "Villa Ortúzar", "Villa Pueyrredón", "Villa Real", "Villa Riachuelo", "Villa Santa Rita", "Villa Soldati", "Villa Urquiza"],
+      "Buenos Aires": ["Avellaneda", "Bahía Blanca", "Berazategui", "Campana", "Castelar", "Ezeiza", "Florencio Varela", "General San Martín", "Hurlingham", "Ituzaingó", "José C. Paz", "Junín", "La Matanza", "La Plata", "Lanús", "Lomas de Zamora", "Luján", "Mar del Plata", "Merlo", "Moreno", "Morón", "Necochea", "Olavarría", "Pergamino", "Pilar", "Quilmes", "Ramos Mejía", "San Fernando", "San Isidro", "San Miguel", "San Nicolás", "Tandil", "Tigre", "Tres de Febrero", "Vicente López", "Zárate"],
+      "Catamarca": ["San Fernando del Valle de Catamarca", "Andalgalá", "Belén", "Fiambalá", "Santa María", "Tinogasta"],
+      "Chaco": ["Resistencia", "Barranqueras", "Charata", "Fontana", "General José de San Martín", "Presidencia Roque Sáenz Peña", "Villa Ángela"],
+      "Chubut": ["Rawson", "Comodoro Rivadavia", "Esquel", "Puerto Madryn", "Sarmiento", "Trelew"],
+      "Córdoba": ["Córdoba Capital", "Alta Gracia", "Bell Ville", "Carlos Paz", "Cosquín", "Jesús María", "La Falda", "Río Cuarto", "Río Tercero", "San Francisco", "Villa Dolores", "Villa María"],
+      "Corrientes": ["Corrientes Capital", "Bella Vista", "Curuzú Cuatiá", "Esquina", "Goya", "Mercedes", "Monte Caseros", "Paso de los Libres", "Santo Tomé"],
+      "Entre Ríos": ["Paraná", "Chajarí", "Colón", "Concepción del Uruguay", "Concordia", "Gualeguay", "Gualeguaychú", "La Paz", "Victoria", "Villaguay"],
+      "Formosa": ["Formosa Capital", "Clorinda", "El Colorado", "Ingeniero Juárez", "Las Lomitas", "Pirané"],
+      "Jujuy": ["San Salvador de Jujuy", "El Carmen", "Humahuaca", "La Quiaca", "Libertador General San Martín", "Palpalá", "Perico", "San Pedro de Jujuy", "Tilcara"],
+      "La Pampa": ["Santa Rosa", "Eduardo Castex", "General Acha", "General Pico", "Intendente Alvear", "Toay"],
+      "La Rioja": ["La Rioja Capital", "Aimogasta", "Chamical", "Chepes", "Chilecito", "Villa Unión"],
+      "Mendoza": ["Mendoza Capital", "General Alvear", "Godoy Cruz", "Guaymallén", "Las Heras", "Luján de Cuyo", "Maipú", "Malargüe", "Rivadavia", "San Martín", "San Rafael", "Tunuyán"],
+      "Misiones": ["Posadas", "Apóstoles", "Aristóbulo del Valle", "Eldorado", "Jardín América", "Leandro N. Alem", "Montecarlo", "Oberá", "Puerto Iguazú", "San Vicente"],
+      "Neuquén": ["Neuquén Capital", "Centenario", "Chos Malal", "Cutral Có", "Junín de los Andes", "Plaza Huincul", "Plottier", "San Martín de los Andes", "Villa La Angostura", "Zapala"],
+      "Río Negro": ["Viedma", "Allen", "Choele Choel", "Cipolletti", "El Bolsón", "General Roca", "Las Grutas", "San Antonio Oeste", "San Carlos de Bariloche", "Villa Regina"],
+      "Salta": ["Salta Capital", "Cafayate", "Embarcación", "General Güemes", "Joaquín V. González", "Metán", "Orán", "Rosario de la Frontera", "Tartagal"],
+      "San Juan": ["San Juan Capital", "Albardón", "Caucete", "Chimbas", "Jáchal", "Pocito", "Rawson", "Rivadavia", "Santa Lucía"],
+      "San Luis": ["San Luis Capital", "Justo Daract", "La Punta", "Merlo", "Quines", "Santa Rosa del Conlara", "Villa Mercedes"],
+      "Santa Cruz": ["Río Gallegos", "Caleta Olivia", "El Calafate", "El Chaltén", "Las Heras", "Pico Truncado", "Puerto Deseado", "Puerto San Julián"],
+      "Santa Fe": ["Santa Fe Capital", "Cañada de Gómez", "Casilda", "Esperanza", "Firmat", "Granadero Baigorria", "Rafaela", "Reconquista", "Rosario", "San Lorenzo", "Santo Tomé", "Venado Tuerto", "Villa Constitución"],
+      "Santiago del Estero": ["Santiago del Estero Capital", "Añatuya", "Frías", "La Banda", "Las Termas de Río Hondo", "Monte Quemado", "Quimilí"],
       "Tierra del Fuego": ["Ushuaia", "Río Grande", "Tolhuin"],
-      "Tucumán": ["San Miguel de Tucumán", "Yerba Buena", "Tafí Viejo", "Banda del Río Salí", "Concepción", "Aguilares", "Monteros"]
+      "Tucumán": ["San Miguel de Tucumán", "Aguilares", "Alderetes", "Banda del Río Salí", "Concepción", "Famaillá", "Monteros", "Tafí Viejo", "Yerba Buena"]
     };
     const PRODUCTOS = [
       { id: 1, categoria: "Vestidos", nombre: "Vestido Franchesca", precio: 15000, stockDefault: 20, fotos: ["franchesca.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Blanco", "Uva"] },
-      { id: 2, categoria: "Vestidos", nombre: "Marilyn Lunares", precio: 6000, stockDefault: 5, fotos: ["marilyn.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Bordó", "Choco"] },
+      { id: 2, categoria: "Top", nombre: "Marilyn Lunares", precio: 6000, stockDefault: 10, stockEspecialVariante: { "Talle 4|Choco": 5 }, fotos: ["marilyn.jpg"], coloresPorTalle: { "Talle 2": ["Negro", "Choco"], "Talle 4": ["Choco"] } },
       { id: 3, categoria: "Polleras", nombre: "Pollera Lunares", precio: 5500, stockDefault: 8, fotos: ["pollera.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva"] },
-      { id: 4, categoria: "Vestidos", nombre: "Vestido Isa", precio: 13500, stockDefault: 10, fotos: ["isa.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco"] },
+      { id: 4, categoria: "Vestidos", nombre: "Vestido Isa", precio: 13500, stockDefault: 15, stockEspecialVariante: { "Talle 2|Negro": 5, "Talle 2|Choco": 5 }, fotos: ["isa.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco"] },
       { id: 5, categoria: "Polleras", nombre: "Pollera Volado de Tul", subtitulo: "Con lentejuela y short interno", precio: 9000, stockDefault: 8, fotos: ["tul1.jpg.jpg", "tul2.jpg.jpg", "tul3.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Plateado", "Blanco"] },
       { id: 6, categoria: "Polleras", nombre: "Pollera Glitter", precio: 5000, stockDefault: 6, fotos: ["glitter1.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Rojo", "Plateado"] },
-      { id: 7, categoria: "Top", nombre: "Body Carla", precio: 8000, stockDefault: 10, fotos: ["carla1.jpg.jpg", "carla2.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
+      { id: 7, categoria: "Body", nombre: "Body Carla", precio: 8000, stockDefault: 10, fotos: ["carla1.jpg.jpg", "carla2.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
       { id: 8, categoria: "Polleras", nombre: "Pollera Mini Print", precio: 7000, stockDefault: 10, fotos: ["mini1.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Print Clarito", "Print Oscurito"] },
-      { id: 9, categoria: "Top", nombre: "Body Melisa Print", precio: 8000, stockDefault: 15, fotos: ["melisaprint.jpg.jpg"], talles: ["Talle Único"], colores: ["Print Amarillito", "Print Manchas Grandes", "Print Manchas Chicas"] },
-      { id: 11, categoria: "Polleras", nombre: "Short Camila", precio: 4500, stockDefault: 8, fotos: ["camila.jpg.jpg"], coloresPorTalle: { "Talle 2": ["Negro", "Choco", "Uva", "Blanco"], "Talle 4": ["Negro", "Choco", "Uva"] } },
+      { id: 9, categoria: "Body", nombre: "Body Melisa Print", precio: 8000, stockDefault: 15, fotos: ["melisaprint.jpg.jpg"], talles: ["Talle Único"], colores: ["Print Amarillito", "Print Manchas Grandes", "Print Manchas Chicas"] },
+      { id: 11, categoria: "Polleras", nombre: "Short Camila", precio: 4500, stockDefault: 8, fotos: ["camila.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Uva"] },
       { id: 12, categoria: "Polleras", nombre: "Polleras Voladas con Diseño", precio: 4000, stockDefault: 4, fotos: ["voladas.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro Floreado", "Bordó Floreado", "Vaquita"] },
       { id: 13, categoria: "Vestidos", nombre: "Vestido Anahi", subtitulo: "Satén elastizado premium", precio: 15000, stockDefault: 10, fotos: ["anahi1.jpg.jpg", "anahi2.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Chocolate"] },
-      { id: 14, categoria: "Vestidos", nombre: "Vestido Isa con Strass", precio: 16000, stockDefault: 15, fotos: ["isastrass1.jpg", "isastrass2.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
+      { id: 14, categoria: "Vestidos", nombre: "Vestido Isa con Strass", precio: 16000, stockDefault: 15, fotos: ["isastrass1.jpg", "isastrass2.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco"] },
       { id: 15, categoria: "Vestidos", nombre: "Vestido Straple", precio: 13500, stockDefault: 15, fotos: ["straple.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
       { id: 16, categoria: "Polleras", nombre: "Short con Strass", precio: 5000, stockDefault: 15, fotos: ["shortstrass.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
       { id: 17, categoria: "Vestidos", nombre: "Vestido Oriana con Strass", precio: 11500, stockDefault: 10, fotos: ["oriana1.jpg", "oriana2.jpg", "oriana3.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
-      { id: 18, categoria: "Catsuit", nombre: "Catsuit Brisa", precio: 8500, stockDefault: 15, fotos: ["brisa.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva"] },
+      { id: 18, categoria: "Catsuit", nombre: "Catsuit Brisa", precio: 8500, stockDefault: 8, fotos: ["brisa.jpg"], talles: ["Talle Único"], colores: ["Choco", "Uva"] },
       { id: 19, categoria: "Top", nombre: "Top Buche Strass", precio: 6500, stockDefault: 15, fotos: ["topbuche1.jpg", "topbuche2.jpg"], talles: ["Talle Único"], colores: ["Negro", "Uva"] },
-      { id: 20, categoria: "Top", nombre: "Top Corazón", precio: 5000, stockDefault: 15, fotos: ["topcorazon.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Celeste", "Blanco", "Rosa", "Lila"] },
+      { id: 20, categoria: "Top", nombre: "Top Corazón", precio: 5000, stockDefault: 15, fotos: ["topcorazon.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Celeste", "Rosa", "Lila"] },
       { id: 21, categoria: "Remes", nombre: "Reme Tokio Print", precio: 8000, stockDefault: 10, fotos: ["tokioprint.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Print Manchas Grandes", "Print Amarillito"] },
       { id: 22, categoria: "Pantalones", nombre: "Palazzo Kheyla", precio: 9000, stockDefault: 15, fotos: ["kheyla.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
-      { id: 23, categoria: "Remes", nombre: "Reme Tokio", precio: 7000, stockDefault: 10, stockEspecialColor: { "Uva": 5 }, fotos: ["tokio1.jpg", "tokio2.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Blanco", "Uva", "Celeste", "Rosa", "Lila"] }
+      { id: 23, categoria: "Remes", nombre: "Reme Tokio", precio: 7000, stockDefault: 10, stockEspecialColor: { "Uva": 5 }, fotos: ["tokio1.jpg", "tokio2.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Blanco", "Uva", "Celeste", "Rosa", "Lila"] },
+      { id: 24, categoria: "Vestidos", nombre: "Vestido Straple Lia", precio: 13500, stockDefault: 20, fotos: ["straplelia1.jpg", "straplelia2.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
+      { id: 25, categoria: "Vestidos", nombre: "Vestido Straple c/ Strass", precio: 15000, stockDefault: 20, fotos: ["straplestrass1.jpg", "straplestrass2.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
+      { id: 26, categoria: "Polleras", nombre: "Pollera Frida", precio: 8000, stockDefault: 12, fotos: ["frida1.jpg", "frida2.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Choco", "Uva"] },
+      { id: 27, categoria: "Polleras", nombre: "Pollera Frunce Corto", precio: 5500, stockDefault: 15, fotos: ["frunce1.jpg", "frunce2.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Choco", "Negro", "Uva"] }
     ];
-
     let stockGlobal = {};
     let carrito = [];
     let indiceFotoActual = {};
@@ -357,32 +326,46 @@
     let tipoEntrega = "";
     let modalidadSeleccionada = "";
     let categoriaActual = "Todos";
-    function cargarListasGeograficas() {
-      const dlProv = document.getElementById("lista-provincias");
-      if (dlProv) dlProv.innerHTML = Object.keys(PROVINCIAS_ARG).map(p => '<option value="' + p + '">').join('');
+
+    function cargarProvincias() {
+      const selProv = document.getElementById("provincia");
+      if (!selProv) return;
+      const nombres = Object.keys(PROVINCIAS_ARG);
+      selProv.innerHTML = '<option value="">-- Seleccioná Provincia * --</option>' +
+        nombres.map(p => '<option value="' + p + '">' + p + '</option>').join('');
     }
 
-    function actualizarLocalidadesPorProvincia() {
-      const provEscrita = document.getElementById("provincia").value.trim().toLowerCase();
-      const dlLoc = document.getElementById("lista-localidades");
-      const entrada = Object.entries(PROVINCIAS_ARG).find(par => par.at(0).toLowerCase() === provEscrita);
-      const locs = entrada ? entrada.at(1) : [];
-      dlLoc.innerHTML = locs.map(l => '<option value="' + l + '">').join('');
+    function cargarLocalidades() {
+      const prov = document.getElementById("provincia").value;
+      const selLoc = document.getElementById("localidad");
+      const cajaOtra = document.getElementById("caja-otra-localidad");
+      cajaOtra.style.display = "none";
+      if (!prov) {
+        selLoc.innerHTML = '<option value="">-- Primero elegí Provincia * --</option>';
+        return;
+      }
+      const lista = Object.entries(PROVINCIAS_ARG).find(x => x.at(0) === prov)?.at(1) || [];
+      selLoc.innerHTML = '<option value="">-- Seleccioná Localidad * --</option>' +
+        lista.map(l => '<option value="' + l + '">' + l + '</option>').join('') +
+        '<option value="Otra">Otra localidad (Escribir)</option>';
     }
 
-    function filtrarPorCategoria(cat, btn) {
-      categoriaActual = cat;
-      document.querySelectorAll(".btn-cat").forEach(b => b.classList.remove("activa"));
-      if (btn) btn.classList.add("activa");
-      cargarCatalogo();
+    function verOtraLocalidad() {
+      const val = document.getElementById("localidad").value;
+      document.getElementById("caja-otra-localidad").style.display = (val === "Otra") ? "block" : "none";
     }
 
-    function obtenerStockInicialVariante(id, color) {
+    function obtenerStockInicialVariante(id, talle, color) {
       const prod = PRODUCTOS.find(p => p.id === id);
       if (!prod) return 0;
+      const claveVariante = talle + "|" + color;
+      if (prod.stockEspecialVariante && prod.stockEspecialVariante.hasOwnProperty(claveVariante)) {
+        const parVar = Object.entries(prod.stockEspecialVariante).find(x => x.at(0) === claveVariante);
+        if (parVar) return parVar.at(1);
+      }
       if (prod.stockEspecialColor && prod.stockEspecialColor.hasOwnProperty(color)) {
-        const par = Object.entries(prod.stockEspecialColor).find(x => x.at(0) === color);
-        if (par) return par.at(1);
+        const parCol = Object.entries(prod.stockEspecialColor).find(x => x.at(0) === color);
+        if (parCol) return parCol.at(1);
       }
       return prod.stockDefault || 10;
     }
@@ -402,7 +385,7 @@
 
     function obtenerStockDisponible(id, talle, color) {
       const clave = obtenerClaveStock(id, talle, color);
-      const inicial = obtenerStockInicialVariante(id, color);
+      const inicial = obtenerStockInicialVariante(id, talle, color);
       const base = stockGlobal.hasOwnProperty(clave) ? Number(Object.entries(stockGlobal).find(x => x.at(0) === clave).at(1)) : inicial;
       const enCarrito = carrito.find(i => i.id === id && i.talle === talle && i.color === color);
       const reservado = enCarrito ? enCarrito.cant : 0;
@@ -415,7 +398,7 @@
         const actualEnNube = (await resp.json()) || {};
         for (const it of itemsComprados) {
           const clave = obtenerClaveStock(it.id, it.talle, it.color);
-          const inicial = obtenerStockInicialVariante(it.id, it.color);
+          const inicial = obtenerStockInicialVariante(it.id, it.talle, it.color);
           const actual = actualEnNube.hasOwnProperty(clave) ? Number(Object.entries(actualEnNube).find(x => x.at(0) === clave).at(1)) : inicial;
           const nuevoValor = Math.max(0, actual - it.cant);
           stockGlobal[clave] = nuevoValor;
@@ -453,9 +436,7 @@
       }
     }
 
-    function actualizarTodasLasTarjetas() {
-      PRODUCTOS.forEach(p => actualizarEstadoStockTarjeta(p.id));
-    }
+    function actualizarTodasLasTarjetas() { PRODUCTOS.forEach(p => actualizarEstadoStockTarjeta(p.id)); }
     function codificarDatos(obj) {
       const jsonStr = JSON.stringify(obj);
       const bytes = new TextEncoder().encode(jsonStr);
@@ -683,7 +664,6 @@
       }).join('');
       actualizarTodasLasTarjetas();
     }
-
     function cambiarFotoTarjeta(id, direccion) {
       const prod = PRODUCTOS.find(p => p.id === id);
       if (!prod || prod.fotos.length <= 1) return;
@@ -769,6 +749,7 @@
       actualizarCarrito();
       if (itemQuitado) actualizarEstadoStockTarjeta(itemQuitado.id);
     }
+
     function actualizarCarrito() {
       const lista = document.getElementById("lista-carrito");
       const subtotalTxt = document.getElementById("subtotal-texto");
@@ -849,14 +830,10 @@
         if (!modalidadSeleccionada) { alert("Por favor marcá A Domicilio o A Sucursal."); return; }
 
         const campos = [
-          { id: "nombre", nombre: "Nombre" },
-          { id: "apellido", nombre: "Apellido" },
-          { id: "celular", nombre: "Teléfono / Celular" },
-          { id: "dni", nombre: "DNI" },
-          { id: "direccion", nombre: "Dirección" },
-          { id: "cp", nombre: "Código Postal" },
-          { id: "provincia", nombre: "Provincia" },
-          { id: "localidad", nombre: "Localidad" }
+          { id: "nombre", nombre: "Nombre" }, { id: "apellido", nombre: "Apellido" },
+          { id: "celular", nombre: "Teléfono / Celular" }, { id: "dni", nombre: "DNI" },
+          { id: "direccion", nombre: "Dirección" }, { id: "cp", nombre: "Código Postal" },
+          { id: "provincia", nombre: "Provincia" }, { id: "localidad", nombre: "Localidad" }
         ];
         for (let c of campos) {
           const el = document.getElementById(c.id);
@@ -884,10 +861,8 @@
 
       } else {
         const camposRetiro = [
-          { id: "retiro-nombre", nombre: "Nombre" },
-          { id: "retiro-apellido", nombre: "Apellido" },
-          { id: "retiro-celular", nombre: "Celular" },
-          { id: "retiro-por", nombre: "Retirado por" }
+          { id: "retiro-nombre", nombre: "Nombre" }, { id: "retiro-apellido", nombre: "Apellido" },
+          { id: "retiro-celular", nombre: "Celular" }, { id: "retiro-por", nombre: "Retirado por" }
         ];
         for (let c of camposRetiro) {
           const el = document.getElementById(c.id);
