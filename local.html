@@ -250,7 +250,6 @@
       "Tierra del Fuego": ["Ushuaia", "Río Grande", "Tolhuin"],
       "Tucumán": ["San Miguel de Tucumán", "Yerba Buena", "Tafí Viejo", "Banda del Río Salí", "Concepción", "Aguilares", "Monteros"]
     };
-
     const PRODUCTOS = [
       { id: 1, nombre: "Vestido Franchesca", precio: 15000, talles: ["Talle Único"], colores: ["Negro", "Choco", "Blanco", "Uva"] },
       { id: 2, nombre: "Marilyn Lunares", precio: 6000, talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Bordó", "Choco"] },
@@ -292,6 +291,7 @@
       const locs = entrada ? entrada.at(1) : [];
       dlLoc.innerHTML = locs.map(l => '<option value="' + l + '">').join('');
     }
+
     function codificarDatos(obj) {
       const jsonStr = JSON.stringify(obj);
       const bytes = new TextEncoder().encode(jsonStr);
@@ -321,7 +321,6 @@
       document.body.classList.remove("solo-envio", "solo-orden");
       window.print();
     }
-
     function mostrarComprobanteEnPantalla(d) {
       document.getElementById("vista-tienda").style.display = "none";
       const cont = document.getElementById("vista-comprobante");
@@ -381,7 +380,6 @@
             '</div>';
         }
       }
-
       const filaEmbalajePdf = (d.tipo === "Envío") ? '<tr><td style="text-align:center;">1</td><td><b>Embalaje y Traslado</b></td><td style="text-align:right;">$4.000</td><td style="text-align:right;">$4.000</td></tr>' : '';
       const nombreCompleto = (d.nom + " " + d.ape).trim() || "Cliente Mostrador";
       const infoDni = d.dni ? ' &nbsp;|&nbsp; <b>DNI:</b> ' + d.dni : "";
@@ -423,11 +421,9 @@
             '<tbody>' + filasHtml + filaEmbalajePdf + '</tbody>' +
           '</table>' +
           '<div class="pdf-total">TOTAL FINAL: $' + d.tot + '</div>' +
----
-
-### BLOQUE 7 (Pegalo debajo del Bloque 6)
-
-```html
+          '<div class="pie-orden" style="clear: both; padding-top: 18px; font-size: 10px; color: #555;">Documento no válido como factura - BELLA Indumentaria</div>' +
+        '</div>';
+    }
     function volverAlMostrador() {
       carrito = [];
       actualizarCarrito();
@@ -508,7 +504,8 @@
           '</div>' +
         '</div>';
       }).join('');
-        function togglePanel() {
+    }
+    function togglePanel() {
       const panel = document.getElementById("panel-lateral");
       const btnFlecha = document.getElementById("btn-flecha-carrito");
       panel.classList.toggle("abierto");
@@ -660,5 +657,3 @@
   </script>
 </body>
 </html>
-
-  
