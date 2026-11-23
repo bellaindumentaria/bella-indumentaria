@@ -32,7 +32,34 @@
     .caja-titulo-header { background-color: #F8BBD0 !important; border: 3px solid #1A1A1A; border-radius: 16px; padding: 18px 34px; text-align: center; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22); max-width: 760px; width: 100%; }
     .caja-titulo-header h1 { font-size: 2.1rem; letter-spacing: 3px; color: #1A1A1A !important; text-transform: uppercase; font-weight: 900; line-height: 1.15; }
     .caja-titulo-header p { color: #C2185B !important; font-weight: bold; font-size: 0.88rem; margin-top: 8px; letter-spacing: 0.6px; }
-    .contenedor-catalogo { max-width: 1280px; margin: 25px auto; padding: 0 20px 60px 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; background-color: #FFFFFF !important; }
+    .barra-categorias {
+      max-width: 1280px;
+      margin: 16px auto 4px auto;
+      padding: 6px 20px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: #E91E63 #FCE4EC;
+    }
+    .barra-categorias::-webkit-scrollbar { height: 5px; }
+    .barra-categorias::-webkit-scrollbar-thumb { background: #E91E63; border-radius: 4px; }
+    .btn-cat {
+      background-color: #FFF0F5;
+      color: #1A1A1A;
+      border: 2px solid #F8BBD0;
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 0.88rem;
+      font-weight: bold;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+    .btn-cat.activa { background-color: #E91E63; color: #FFFFFF; border-color: #1A1A1A; }
+    .contenedor-catalogo { max-width: 1280px; margin: 16px auto; padding: 0 20px 60px 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; background-color: #FFFFFF !important; }
     .producto { background-color: #FFFFFF !important; border: 2px solid #F8BBD0; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 14px rgba(233, 30, 99, 0.1); }
     .galeria-box { position: relative; width: 100%; height: 310px; background-color: #FFF9FB; border-radius: 10px; margin-bottom: 10px; border: 1px solid #F8BBD0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
     .galeria-box img { width: 100%; height: 100%; object-fit: contain; cursor: zoom-in; }
@@ -101,8 +128,10 @@
     .pdf-logo { font-family: Georgia, serif; font-size: 30px; font-weight: bold; }
     .pdf-envios { width: 100%; border-collapse: collapse; }
     .pdf-vertical { width: 45px; border: 2px solid #1A1A1A; text-align: center; font-size: 20px; font-weight: bold; line-height: 1.5; }
+    .pdf-vertical-retiro { width: 52px; border: 2px solid #1A1A1A; text-align: center; font-size: 13px; font-weight: 900; line-height: 1.18; padding: 6px 2px; }
     .pdf-datos { border: 2px solid #1A1A1A; padding: 16px; }
     .pdf-linea { margin-bottom: 14px; font-size: 13px; border-bottom: 1px solid #1A1A1A; padding-bottom: 3px; }
+    .pdf-linea-gigante { margin-bottom: 16px; font-size: 34px; font-weight: 900; border-bottom: 2px solid #1A1A1A; padding-bottom: 6px; line-height: 1.2; }
     .pdf-casilla { display: inline-block; width: 24px; height: 20px; border: 2px solid #1A1A1A; text-align: center; font-weight: bold; font-size: 15px; margin-left: 6px; vertical-align: middle; }
     .pdf-tabla { width: 100%; border-collapse: collapse; margin-top: 12px; }
     .pdf-tabla th { background: #F8BBD0; border: 1.5px solid #1A1A1A; padding: 8px; font-size: 12px; }
@@ -119,8 +148,10 @@
       .hoja-envio .pdf-header td { padding: 4px 6px !important; font-size: 9px !important; line-height: 1.15 !important; }
       .hoja-envio .pdf-logo { font-size: 22px !important; }
       .hoja-envio .pdf-vertical { width: 34px !important; font-size: 15px !important; line-height: 1.25 !important; }
+      .hoja-envio .pdf-vertical-retiro { width: 42px !important; font-size: 10px !important; line-height: 1.1 !important; }
       .hoja-envio .pdf-datos { padding: 7px 10px !important; }
       .hoja-envio .pdf-linea { margin-bottom: 6px !important; font-size: 11px !important; padding-bottom: 2px !important; }
+      .hoja-envio .pdf-linea-gigante { margin-bottom: 8px !important; font-size: 26px !important; padding-bottom: 4px !important; }
       .hoja-envio .fila-casillas-envio { margin-top: 8px !important; font-size: 11px !important; }
       .hoja-envio .pdf-casilla { width: 20px !important; height: 17px !important; font-size: 12px !important; }
       .hoja-envio .pie-envio { margin-top: 5px !important; font-size: 8.5px !important; }
@@ -163,6 +194,16 @@
         <p>FABRICANTE DIRECTO • MÍNIMO $80.000 (ENVÍO) • 5 PRENDAS (RETIRO LOCAL)</p>
       </div>
     </header>
+    <nav class="barra-categorias" id="barra-categorias">
+      <button type="button" class="btn-cat activa" onclick="filtrarPorCategoria('Todos', this)">Todos</button>
+      <button type="button" class="btn-cat" onclick="filtrarPorCategoria('Vestidos', this)">Vestidos</button>
+      <button type="button" class="btn-cat" onclick="filtrarPorCategoria('Polleras', this)">Polleras</button>
+      <button type="button" class="btn-cat" onclick="filtrarPorCategoria('Remes', this)">Remes</button>
+      <button type="button" class="btn-cat" onclick="filtrarPorCategoria('Pantalones', this)">Pantalones</button>
+      <button type="button" class="btn-cat" onclick="filtrarPorCategoria('Catsuit', this)">Catsuit</button>
+      <button type="button" class="btn-cat" onclick="filtrarPorCategoria('Top', this)">Top</button>
+      <button type="button" class="btn-cat" onclick="filtrarPorCategoria('Cintos', this)">Cintos</button>
+    </nav>
     <button type="button" class="btn-flecha-carrito" id="btn-flecha-carrito" onclick="togglePanel()">
       <span class="icono-flecha" id="flecha-icono">◀</span>
       <span>Pedido</span>
@@ -228,16 +269,24 @@
         <div class="campo"><input type="text" id="direccion" placeholder="Dirección (Calle y Altura) *"></div>
         <div class="fila-doble">
           <div class="campo" style="flex:1;"><input type="text" id="cp" placeholder="Código Postal *"></div>
-          <div class="campo" style="flex:1.5;"><input type="text" id="provincia" placeholder="Provincia *"></div>
+          <div class="campo" style="flex:1.5;">
+            <input type="text" id="provincia" list="lista-provincias" placeholder="Provincia *" oninput="actualizarLocalidadesPorProvincia()">
+            <datalist id="lista-provincias"></datalist>
+          </div>
         </div>
-        <div class="campo"><input type="text" id="localidad" placeholder="Localidad *"></div>
+        <div class="campo">
+          <input type="text" id="localidad" list="lista-localidades" placeholder="Localidad *">
+          <datalist id="lista-localidades"></datalist>
+        </div>
       </div>
       <div id="bloque-form-retiro" style="display:none;">
-        <div class="titulo-seccion">Datos de quien retira en el local</div>
-        <div class="campo"><label>Nombre del que retira:</label><input type="text" id="retiro-nombre" placeholder="Escribí tu nombre *"></div>
-        <div class="campo"><label>Apellido:</label><input type="text" id="retiro-apellido" placeholder="Escribí tu apellido *"></div>
-        <div class="campo"><label>Celular:</label><input type="tel" id="retiro-celular" placeholder="Escribí tu celular *"></div>
-        <div class="campo"><label>DNI:</label><input type="text" id="retiro-dni" placeholder="Escribí tu DNI *"></div>
+        <div class="titulo-seccion">Datos para Retiro por Local</div>
+        <div class="fila-doble">
+          <div class="campo" style="flex:1;"><input type="text" id="retiro-nombre" placeholder="Nombre *"></div>
+          <div class="campo" style="flex:1;"><input type="text" id="retiro-apellido" placeholder="Apellido *"></div>
+        </div>
+        <div class="campo"><input type="tel" id="retiro-celular" placeholder="Celular *"></div>
+        <div class="campo"><input type="text" id="retiro-por" placeholder="Retirado por (Nombre del que retira) *"></div>
       </div>
       <button type="button" id="btn-enviar" class="btn-wsp" onclick="enviarPedido()" disabled>Seleccioná Envío o Retiro</button>
     </aside>
@@ -247,31 +296,59 @@
     const MINIMO_ENVIO = 80000;
     const MINIMO_PRENDAS_RETIRO = 5;
     const EMBALAJE = 4000;
-    const FIREBASE_BASE = "https://bella-indumentaria-default-rtdb.firebaseio.com/stock";
+    const FIREBASE_BASE = "https://firebaseio.com";
+
+    const PROVINCIAS_ARG = {
+      "Buenos Aires": ["La Plata", "Mar del Plata", "Bahía Blanca", "Tandil", "Quilmes", "Lanús", "Lomas de Zamora", "Avellaneda", "Morón", "Merlo", "Moreno", "San Justo", "San Martín", "Tigre", "San Isidro", "Vicente López", "Pilar", "Escobar", "Zárate", "Campana", "Luján", "Mercedes", "Junín", "Pergamino", "San Nicolás", "Olavarría", "Azul", "Necochea", "Tres Arroyos", "Chivilcoy"],
+      "CABA": ["Flores", "Palermo", "Belgrano", "Caballito", "Recoleta", "Almagro", "Balvanera", "Once", "Villa Crespo", "Villa Urquiza", "Devoto", "Liniers", "Mataderos", "Boedo", "San Telmo", "Barracas", "La Boca"],
+      "Catamarca": ["San Fernando del Valle de Catamarca", "Valle Viejo", "Andalgalá", "Belén", "Tinogasta", "Santa María"],
+      "Chaco": ["Resistencia", "Presidencia Roque Sáenz Peña", "Villa Ángela", "Charata", "General José de San Martín", "Castelli"],
+      "Chubut": ["Rawson", "Comodoro Rivadavia", "Trelew", "Puerto Madryn", "Esquel", "Sarmiento"],
+      "Córdoba": ["Córdoba Capital", "Villa Carlos Paz", "Río Cuarto", "Villa María", "San Francisco", "Alta Gracia", "Río Tercero", "Bell Ville", "Jesús María", "La Falda", "Cosquín", "Mina Clavero"],
+      "Corrientes": ["Corrientes Capital", "Goya", "Paso de los Libres", "Curuzú Cuatiá", "Mercedes", "Bella Vista", "Esquina"],
+      "Entre Ríos": ["Paraná", "Concordia", "Gualeguaychú", "Concepción del Uruguay", "Gualeguay", "Villaguay", "Chajarí", "Victoria"],
+      "Formosa": ["Formosa Capital", "Clorinda", "Pirané", "El Colorado", "Las Lomitas"],
+      "Jujuy": ["San Salvador de Jujuy", "San Pedro de Jujuy", "Libertador General San Martín", "Palpalá", "Perico", "Humahuaca", "Tilcara"],
+      "La Pampa": ["Santa Rosa", "General Pico", "Toay", "General Acha", "Eduardo Castex"],
+      "La Rioja": ["La Rioja Capital", "Chilecito", "Aimogasta", "Chamical", "Chepes"],
+      "Mendoza": ["Mendoza Capital", "Godoy Cruz", "Guaymallén", "Las Heras", "Luján de Cuyo", "Maipú", "San Rafael", "General Alvear", "Malargüe", "Tunuyán", "San Martín"],
+      "Misiones": ["Posadas", "Oberá", "Eldorado", "Puerto Iguazú", "Apóstoles", "Leandro N. Alem", "San Vicente"],
+      "Neuquén": ["Neuquén Capital", "San Martín de los Andes", "Villa La Angostura", "Zapala", "Cutral Có", "Plottier", "Centenario", "Chos Malal"],
+      "Río Negro": ["Viedma", "San Carlos de Bariloche", "General Roca", "Cipolletti", "Villa Regina", "El Bolsón", "Las Grutas"],
+      "Salta": ["Salta Capital", "San Ramón de la Nueva Orán", "Tartagal", "General Güemes", "Metán", "Cafayate", "Rosario de la Frontera"],
+      "San Juan": ["San Juan Capital", "Rawson", "Rivadavia", "Chimbas", "Santa Lucía", "Pocito", "Caucete", "Jáchal"],
+      "San Luis": ["San Luis Capital", "Villa Mercedes", "Merlo", "La Punta", "Juana Koslay"],
+      "Santa Cruz": ["Río Gallegos", "Caleta Olivia", "El Calafate", "Pico Truncado", "Puerto Deseado", "Las Heras"],
+      "Santa Fe": ["Santa Fe Capital", "Rosario", "Rafaela", "Venado Tuerto", "Reconquista", "Villa Gobernador Gálvez", "San Lorenzo", "Santo Tomé", "Esperanza", "Casilda"],
+      "Santiago del Estero": ["Santiago del Estero Capital", "La Banda", "Termas de Río Hondo", "Añatuya", "Frías"],
+      "Tierra del Fuego": ["Ushuaia", "Río Grande", "Tolhuin"],
+      "Tucumán": ["San Miguel de Tucumán", "Yerba Buena", "Tafí Viejo", "Banda del Río Salí", "Concepción", "Aguilares", "Monteros"]
+    };
     const PRODUCTOS = [
-      { id: 1, nombre: "Vestido Franchesca", precio: 15000, stockDefault: 20, fotos: ["franchesca.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Blanco", "Uva"] },
-      { id: 2, nombre: "Marilyn Lunares", precio: 6000, stockDefault: 5, fotos: ["marilyn.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Bordó", "Choco"] },
-      { id: 3, nombre: "Pollera Lunares", precio: 5500, stockDefault: 8, fotos: ["pollera.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva"] },
-      { id: 4, nombre: "Vestido Isa", precio: 13500, stockDefault: 10, fotos: ["isa.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco"] },
-      { id: 5, nombre: "Pollera Volado de Tul", subtitulo: "Con lentejuela y short interno", precio: 9000, stockDefault: 8, fotos: ["tul1.jpg.jpg", "tul2.jpg.jpg", "tul3.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Plateado", "Blanco"] },
-      { id: 6, nombre: "Pollera Glitter", precio: 5000, stockDefault: 6, fotos: ["glitter1.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Rojo", "Plateado"] },
-      { id: 7, nombre: "Body Carla", precio: 8000, stockDefault: 10, fotos: ["carla1.jpg.jpg", "carla2.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
-      { id: 8, nombre: "Pollera Mini Print", precio: 7000, stockDefault: 10, fotos: ["mini1.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Print Clarito", "Print Oscurito"] },
-      { id: 9, nombre: "Body Melisa Print", precio: 8000, stockDefault: 15, fotos: ["melisaprint.jpg.jpg"], talles: ["Talle Único"], colores: ["Print Amarillito", "Print Manchas Grandes", "Print Manchas Chicas"] },
-      { id: 11, nombre: "Short Camila", precio: 4500, stockDefault: 8, fotos: ["camila.jpg.jpg"], coloresPorTalle: { "Talle 2": ["Negro", "Choco", "Uva", "Blanco"], "Talle 4": ["Negro", "Choco", "Uva"] } },
-      { id: 12, nombre: "Polleras Voladas con Diseño", precio: 4000, stockDefault: 4, fotos: ["voladas.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro Floreado", "Bordó Floreado", "Vaquita"] },
-      { id: 13, nombre: "Vestido Anahi", subtitulo: "Satén elastizado premium", precio: 15000, stockDefault: 10, fotos: ["anahi1.jpg.jpg", "anahi2.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Chocolate"] },
-      { id: 14, nombre: "Vestido Isa con Strass", precio: 16000, stockDefault: 15, fotos: ["isastrass1.jpg", "isastrass2.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
-      { id: 15, nombre: "Vestido Straple", precio: 13500, stockDefault: 15, fotos: ["straple.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
-      { id: 16, nombre: "Short con Strass", precio: 5000, stockDefault: 15, fotos: ["shortstrass.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
-      { id: 17, nombre: "Vestido Oriana con Strass", precio: 11500, stockDefault: 10, fotos: ["oriana1.jpg", "oriana2.jpg", "oriana3.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
-      { id: 18, nombre: "Catsuit Brisa", precio: 8500, stockDefault: 15, fotos: ["brisa.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva"] },
-      { id: 19, nombre: "Top Buche Strass", precio: 6500, stockDefault: 15, fotos: ["topbuche1.jpg", "topbuche2.jpg"], talles: ["Talle Único"], colores: ["Negro", "Uva"] },
-      { id: 20, nombre: "Top Corazón", precio: 5000, stockDefault: 15, fotos: ["topcorazon.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Celeste", "Blanco", "Rosa", "Lila"] },
-      { id: 21, nombre: "Reme Tokio Print", precio: 8000, stockDefault: 10, fotos: ["tokioprint.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Print Manchas Grandes", "Print Amarillito"] },
-      { id: 22, nombre: "Palazzo Kheyla", precio: 9000, stockDefault: 15, fotos: ["kheyla.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
-      { id: 23, nombre: "Reme Tokio", precio: 7000, stockDefault: 10, stockEspecialColor: { "Uva": 5 }, fotos: ["tokio1.jpg", "tokio2.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Blanco", "Uva", "Celeste", "Rosa", "Lila"] }
+      { id: 1, categoria: "Vestidos", nombre: "Vestido Franchesca", precio: 15000, stockDefault: 20, fotos: ["franchesca.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Blanco", "Uva"] },
+      { id: 2, categoria: "Vestidos", nombre: "Marilyn Lunares", precio: 6000, stockDefault: 5, fotos: ["marilyn.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Bordó", "Choco"] },
+      { id: 3, categoria: "Polleras", nombre: "Pollera Lunares", precio: 5500, stockDefault: 8, fotos: ["pollera.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva"] },
+      { id: 4, categoria: "Vestidos", nombre: "Vestido Isa", precio: 13500, stockDefault: 10, fotos: ["isa.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco"] },
+      { id: 5, categoria: "Polleras", nombre: "Pollera Volado de Tul", subtitulo: "Con lentejuela y short interno", precio: 9000, stockDefault: 8, fotos: ["tul1.jpg.jpg", "tul2.jpg.jpg", "tul3.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Plateado", "Blanco"] },
+      { id: 6, categoria: "Polleras", nombre: "Pollera Glitter", precio: 5000, stockDefault: 6, fotos: ["glitter1.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Rojo", "Plateado"] },
+      { id: 7, categoria: "Top", nombre: "Body Carla", precio: 8000, stockDefault: 10, fotos: ["carla1.jpg.jpg", "carla2.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
+      { id: 8, categoria: "Polleras", nombre: "Pollera Mini Print", precio: 7000, stockDefault: 10, fotos: ["mini1.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Print Clarito", "Print Oscurito"] },
+      { id: 9, categoria: "Top", nombre: "Body Melisa Print", precio: 8000, stockDefault: 15, fotos: ["melisaprint.jpg.jpg"], talles: ["Talle Único"], colores: ["Print Amarillito", "Print Manchas Grandes", "Print Manchas Chicas"] },
+      { id: 11, categoria: "Polleras", nombre: "Short Camila", precio: 4500, stockDefault: 8, fotos: ["camila.jpg.jpg"], coloresPorTalle: { "Talle 2": ["Negro", "Choco", "Uva", "Blanco"], "Talle 4": ["Negro", "Choco", "Uva"] } },
+      { id: 12, categoria: "Polleras", nombre: "Polleras Voladas con Diseño", precio: 4000, stockDefault: 4, fotos: ["voladas.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro Floreado", "Bordó Floreado", "Vaquita"] },
+      { id: 13, categoria: "Vestidos", nombre: "Vestido Anahi", subtitulo: "Satén elastizado premium", precio: 15000, stockDefault: 10, fotos: ["anahi1.jpg.jpg", "anahi2.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Chocolate"] },
+      { id: 14, categoria: "Vestidos", nombre: "Vestido Isa con Strass", precio: 16000, stockDefault: 15, fotos: ["isastrass1.jpg", "isastrass2.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
+      { id: 15, categoria: "Vestidos", nombre: "Vestido Straple", precio: 13500, stockDefault: 15, fotos: ["straple.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
+      { id: 16, categoria: "Polleras", nombre: "Short con Strass", precio: 5000, stockDefault: 15, fotos: ["shortstrass.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
+      { id: 17, categoria: "Vestidos", nombre: "Vestido Oriana con Strass", precio: 11500, stockDefault: 10, fotos: ["oriana1.jpg", "oriana2.jpg", "oriana3.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
+      { id: 18, categoria: "Catsuit", nombre: "Catsuit Brisa", precio: 8500, stockDefault: 15, fotos: ["brisa.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva"] },
+      { id: 19, categoria: "Top", nombre: "Top Buche Strass", precio: 6500, stockDefault: 15, fotos: ["topbuche1.jpg", "topbuche2.jpg"], talles: ["Talle Único"], colores: ["Negro", "Uva"] },
+      { id: 20, categoria: "Top", nombre: "Top Corazón", precio: 5000, stockDefault: 15, fotos: ["topcorazon.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Celeste", "Blanco", "Rosa", "Lila"] },
+      { id: 21, categoria: "Remes", nombre: "Reme Tokio Print", precio: 8000, stockDefault: 10, fotos: ["tokioprint.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Print Manchas Grandes", "Print Amarillito"] },
+      { id: 22, categoria: "Pantalones", nombre: "Palazzo Kheyla", precio: 9000, stockDefault: 15, fotos: ["kheyla.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
+      { id: 23, categoria: "Remes", nombre: "Reme Tokio", precio: 7000, stockDefault: 10, stockEspecialColor: { "Uva": 5 }, fotos: ["tokio1.jpg", "tokio2.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Blanco", "Uva", "Celeste", "Rosa", "Lila"] }
     ];
+
     let stockGlobal = {};
     let carrito = [];
     let indiceFotoActual = {};
@@ -279,6 +356,26 @@
     let visorFotoIdx = 0;
     let tipoEntrega = "";
     let modalidadSeleccionada = "";
+    let categoriaActual = "Todos";
+    function cargarListasGeograficas() {
+      const dlProv = document.getElementById("lista-provincias");
+      if (dlProv) dlProv.innerHTML = Object.keys(PROVINCIAS_ARG).map(p => '<option value="' + p + '">').join('');
+    }
+
+    function actualizarLocalidadesPorProvincia() {
+      const provEscrita = document.getElementById("provincia").value.trim().toLowerCase();
+      const dlLoc = document.getElementById("lista-localidades");
+      const entrada = Object.entries(PROVINCIAS_ARG).find(par => par.at(0).toLowerCase() === provEscrita);
+      const locs = entrada ? entrada.at(1) : [];
+      dlLoc.innerHTML = locs.map(l => '<option value="' + l + '">').join('');
+    }
+
+    function filtrarPorCategoria(cat, btn) {
+      categoriaActual = cat;
+      document.querySelectorAll(".btn-cat").forEach(b => b.classList.remove("activa"));
+      if (btn) btn.classList.add("activa");
+      cargarCatalogo();
+    }
 
     function obtenerStockInicialVariante(id, color) {
       const prod = PRODUCTOS.find(p => p.id === id);
@@ -330,6 +427,7 @@
         }
       } catch (e) {}
     }
+
     function actualizarEstadoStockTarjeta(id) {
       const selTal = document.getElementById("tal-" + id);
       const selCol = document.getElementById("col-" + id);
@@ -355,8 +453,9 @@
       }
     }
 
-    function actualizarTodasLasTarjetas() { PRODUCTOS.forEach(p => actualizarEstadoStockTarjeta(p.id)); }
-
+    function actualizarTodasLasTarjetas() {
+      PRODUCTOS.forEach(p => actualizarEstadoStockTarjeta(p.id));
+    }
     function codificarDatos(obj) {
       const jsonStr = JSON.stringify(obj);
       const bytes = new TextEncoder().encode(jsonStr);
@@ -381,10 +480,12 @@
       window.print();
       setTimeout(() => { document.body.classList.remove("solo-envio", "solo-orden"); }, 500);
     }
+
     function verificarModoComprobante() {
       const params = new URLSearchParams(window.location.search);
       const codigoOrden = params.get("orden");
       if (!codigoOrden) {
+        cargarProvincias();
         cargarCatalogo();
         sincronizarStockDesdeNube();
         setInterval(sincronizarStockDesdeNube, 4000);
@@ -399,11 +500,12 @@
         const filasHtml = d.items.map(it =>
           '<tr><td style="text-align:center;">' + it.c + '</td><td>' + it.n + ' (Color: ' + it.col + ' - ' + it.t + ')</td><td style="text-align:right;">$' + it.p + '</td><td style="text-align:right;">$' + it.s + '</td></tr>'
         ).join("");
-        let hojaEnvioHtml = "";
+
+        let hojaTalonHtml = "";
         if (!esRetiroLocal) {
           const marcaDom = (d.mod === "A Domicilio") ? "X" : "&nbsp;";
           const marcaSuc = (d.mod === "Retira en Sucursal") ? "X" : "&nbsp;";
-          hojaEnvioHtml =
+          hojaTalonHtml =
             '<div class="hoja-pdf hoja-envio">' +
               '<table class="pdf-header"><tr>' +
                 '<td style="width: 38%;"><div class="pdf-logo">BELLA</div><div style="font-size:11px; font-weight:bold;">FABRICANTE DIRECTO</div><div style="font-size:10px;">Campana 378 - Local A6<br>Galería Smart Campana - Flores</div></td>' +
@@ -426,17 +528,40 @@
                 '</td>' +
               '</tr></table>' +
             '</div>';
+        } else {
+          hojaTalonHtml =
+            '<div class="hoja-pdf hoja-envio">' +
+              '<table class="pdf-header"><tr>' +
+                '<td style="width: 38%;"><div class="pdf-logo">BELLA</div><div style="font-size:11px; font-weight:bold;">FABRICANTE DIRECTO</div><div style="font-size:10px;">Campana 378 - Local A6<br>Galería Smart Campana - Flores</div></td>' +
+                '<td style="width: 34%; text-align: center;"><div style="font-weight:bold; font-size:13px;">Venta por Mayor y Menor<br>Retiro por Local</div><div style="font-size:11px; margin-top:4px;">Fecha: ' + d.f + ' | Hora: ' + d.h + '</div></td>' +
+                '<td style="width: 28%; font-size: 10px;"><b>Dany: 11-2574-8687<br>Isa: 11-6735-3960</b><br>FB: BELLA Indumentaria<br>TK: bella.indumentaria<br>IG: bella.indumentariadama</td>' +
+              '</tr></table>' +
+              '<table class="pdf-envios"><tr>' +
+                '<td class="pdf-vertical" style="font-size:13px; line-height:1.15;">R<br>E<br>T<br>I<br>R<br>O<br><br>L<br>O<br>C<br>A<br>L</td>' +
+                '<td style="width: 10px;"></td>' +
+                '<td class="pdf-datos">' +
+                  '<div class="pdf-linea"><b>Nombre:</b> ' + d.nom + ' &nbsp;&nbsp;&nbsp;&nbsp; <b>Apellido:</b> ' + d.ape + '</div>' +
+                  '<div class="pdf-linea"><b>Celular:</b> ' + d.cel + '</div>' +
+                  '<div class="pdf-linea"><b>Retirado por:</b> ' + d.retPor + '</div>' +
+                  '<div class="pdf-linea"><b>Modalidad:</b> RETIRO POR LOCAL (Campana 378 - Local A6)</div>' +
+                  '<div class="pie-envio" style="margin-top: 14px; font-size: 10px; color: #555;">Documento no válido como factura</div>' +
+                '</td>' +
+              '</tr></table>' +
+            '</div>';
         }
+
         const filaEmbalajePdf = esRetiroLocal ? "" : '<tr><td style="text-align:center;">1</td><td><b>Embalaje y Traslado</b></td><td style="text-align:right;">$4.000</td><td style="text-align:right;">$4.000</td></tr>';
         const datosClienteOrdenPdf = esRetiroLocal
-          ? '<b>Modalidad:</b> RETIRO POR LOCAL<br><b>Retira:</b> ' + d.nom + ' ' + d.ape + ' &nbsp;|&nbsp; <b>DNI:</b> ' + d.dni + ' &nbsp;|&nbsp; <b>Cel:</b> ' + d.cel
+          ? '<b>Modalidad:</b> RETIRO POR LOCAL &nbsp;|&nbsp; <b>Cliente:</b> ' + d.nom + ' ' + d.ape + '<br><b>Celular:</b> ' + d.cel + ' &nbsp;|&nbsp; <b>Retirado por:</b> ' + d.retPor
           : '<b>Señor/es:</b> ' + d.nom + ' ' + d.ape + ' &nbsp;|&nbsp; <b>DNI:</b> ' + d.dni + '<br><b>Domicilio:</b> ' + d.dir + ' (' + d.loc + ', ' + d.prov + ')';
-        const botonesImprimirHtml = esRetiroLocal
-          ? '<button type="button" class="btn-imprimir-orden" onclick="imprimirHojaIndividual(\'orden\')">🖨️ Imprimir Hoja 1 de Detalle de Compra</button>'
-          : '<button type="button" class="btn-imprimir-pdf" onclick="imprimirHojaIndividual(\'envio\')">🖨️ Imprimir Hoja 1 de Envío</button><button type="button" class="btn-imprimir-orden" onclick="imprimirHojaIndividual(\'orden\')">🖨️ Imprimir Hoja 1 de Detalle de Compra</button>';
+        const textoBoton1 = esRetiroLocal ? '🖨️ Imprimir Hoja 1 de Retiro por Local' : '🖨️ Imprimir Hoja 1 de Envío';
+        const botonesImprimirHtml =
+          '<button type="button" class="btn-imprimir-pdf" onclick="imprimirHojaIndividual(\'envio\')">' + textoBoton1 + '</button>' +
+          '<button type="button" class="btn-imprimir-orden" onclick="imprimirHojaIndividual(\'orden\')">🖨️ Imprimir Hoja 1 de Detalle de Compra</button>';
+
         cont.innerHTML =
           '<div class="barra-imprimir no-imprimir">' + botonesImprimirHtml + '<button type="button" class="btn-volver-tienda" onclick="window.location.href=window.location.pathname">Ir a la Tienda</button></div>' +
-          hojaEnvioHtml +
+          hojaTalonHtml +
           '<div class="hoja-pdf hoja-orden">' +
             '<table class="pdf-header"><tr>' +
               '<td style="width: 35%;"><div class="pdf-logo">BELLA</div><div style="font-family: Georgia, serif; font-style: italic; font-size: 17px;">Indumentaria</div></td>' +
@@ -455,6 +580,13 @@
           '</div>';
       } catch (err) { cargarCatalogo(); }
     }
+    function filtrarCategoria(cat, btn) {
+      categoriaActual = cat;
+      document.querySelectorAll(".btn-cat").forEach(b => b.classList.remove("activo"));
+      if (btn) btn.classList.add("activo");
+      cargarCatalogo();
+    }
+
     function elegirTipoEntrega(tipo) {
       tipoEntrega = tipo;
       const boxEnvio = document.getElementById("tipo-envio");
@@ -504,7 +636,16 @@
 
     function cargarCatalogo() {
       const cont = document.getElementById("catalogo");
-      cont.innerHTML = PRODUCTOS.map(p => {
+      const filtrados = (categoriaActual === "Todos")
+        ? PRODUCTOS
+        : PRODUCTOS.filter(p => p.categoria === categoriaActual);
+
+      if (filtrados.length === 0) {
+        cont.innerHTML = '<div style="grid-column: 1 / -1; text-align:center; padding: 40px 15px; color:#C2185B; font-weight:bold; font-size:1.05rem;">Próximamente cargaremos artículos en la sección ' + categoriaActual + ' 💕</div>';
+        return;
+      }
+
+      cont.innerHTML = filtrados.map(p => {
         indiceFotoActual[p.id] = 0;
         const tieneVarias = p.fotos.length > 1;
         const listaTalles = p.coloresPorTalle ? Object.keys(p.coloresPorTalle) : p.talles;
@@ -542,6 +683,7 @@
       }).join('');
       actualizarTodasLasTarjetas();
     }
+
     function cambiarFotoTarjeta(id, direccion) {
       const prod = PRODUCTOS.find(p => p.id === id);
       if (!prod || prod.fotos.length <= 1) return;
@@ -698,23 +840,34 @@
       });
       const urlBase = window.location.origin + window.location.pathname;
       let msg = "¡Hola *BELLA Indumentaria*! 👋 Quiero realizar el siguiente pedido:\n\n*ORDEN DE COMPRA (" + fechaStr + " " + horaStr + "):*\n" + detalleWsp;
+
       if (tipoEntrega === "Envío") {
         const transpSel = document.getElementById("transporte").value;
         const transpOtro = document.getElementById("transporte-otro").value.trim();
         if (!transpSel) { alert("Falta rellenar el casillero: Forma de Envío / Transporte"); document.getElementById("transporte").focus(); return; }
         if (transpSel === "Otro" && !transpOtro) { alert("Falta rellenar el casillero: Escribí el transporte"); document.getElementById("transporte-otro").focus(); return; }
         if (!modalidadSeleccionada) { alert("Por favor marcá A Domicilio o A Sucursal."); return; }
+
         const campos = [
-          { id: "nombre", nombre: "Nombre" }, { id: "apellido", nombre: "Apellido" },
-          { id: "celular", nombre: "Teléfono / Celular" }, { id: "dni", nombre: "DNI" },
-          { id: "direccion", nombre: "Dirección" }, { id: "cp", nombre: "Código Postal" },
-          { id: "provincia", nombre: "Provincia" }, { id: "localidad", nombre: "Localidad" }
+          { id: "nombre", nombre: "Nombre" },
+          { id: "apellido", nombre: "Apellido" },
+          { id: "celular", nombre: "Teléfono / Celular" },
+          { id: "dni", nombre: "DNI" },
+          { id: "direccion", nombre: "Dirección" },
+          { id: "cp", nombre: "Código Postal" },
+          { id: "provincia", nombre: "Provincia" },
+          { id: "localidad", nombre: "Localidad" }
         ];
         for (let c of campos) {
           const el = document.getElementById(c.id);
-          if (!el.value.trim()) { alert("Falta rellenar el casillero: " + c.nombre); el.focus(); return; }
+          if (!el || !el.value.trim()) { alert("Falta rellenar el casillero: " + c.nombre); if (el) el.focus(); return; }
         }
+        const locSel = document.getElementById("localidad").value;
+        const locOtra = document.getElementById("localidad-otra").value.trim();
+        if (locSel === "Otra" && !locOtra) { alert("Falta escribir el nombre de tu localidad"); document.getElementById("localidad-otra").focus(); return; }
+
         const transpFinal = transpSel === "Otro" ? transpOtro : transpSel;
+        const localidadFinal = (locSel === "Otra") ? locOtra : locSel;
         const nombre = document.getElementById("nombre").value.trim();
         const apellido = document.getElementById("apellido").value.trim();
         const celular = document.getElementById("celular").value.trim();
@@ -722,28 +875,36 @@
         const direccion = document.getElementById("direccion").value.trim();
         const cp = document.getElementById("cp").value.trim();
         const provincia = document.getElementById("provincia").value.trim();
-        const localidad = document.getElementById("localidad").value.trim();
         const totalFinal = subtotal + EMBALAJE;
-        const paqueteOrden = { tipo: "Envío", f: fechaStr, h: horaStr, nom: nombre, ape: apellido, dni: dni, cel: celular, dir: direccion, loc: localidad, prov: provincia, cp: cp, tr: transpFinal, mod: modalidadSeleccionada, items: itemsCortos, tot: totalFinal.toLocaleString('es-AR') };
+
+        const paqueteOrden = { tipo: "Envío", f: fechaStr, h: horaStr, nom: nombre, ape: apellido, dni: dni, cel: celular, dir: direccion, loc: localidadFinal, prov: provincia, cp: cp, tr: transpFinal, mod: modalidadSeleccionada, items: itemsCortos, tot: totalFinal.toLocaleString('es-AR') };
         const linkPdfComprobante = urlBase + "?orden=" + codificarDatos(paqueteOrden);
-        msg += "• Embalaje y traslado: $4.000\n\n*TOTAL FINAL A PAGAR: $" + totalFinal.toLocaleString('es-AR') + "*\n\n*FORMA DE ENVÍO:*\n• Transporte: " + transpFinal + "\n• Modalidad: " + modalidadSeleccionada + "\n\n*DATOS DEL CLIENTE:*\n• Nombre: " + nombre + " " + apellido + "\n• DNI: " + dni + "\n• Teléfono: " + celular + "\n• Dirección: " + direccion + "\n• Localidad: " + localidad + " (CP: " + cp + ")\n• Provincia: " + provincia + "\n\n📄 *ABRIR TALÓN DE ENVÍO Y ORDEN (PDF 2 HOJAS):*\n" + linkPdfComprobante;
+
+        msg += "• Embalaje y traslado: $4.000\n\n*TOTAL FINAL A PAGAR: $" + totalFinal.toLocaleString('es-AR') + "*\n\n*FORMA DE ENVÍO:*\n• Transporte: " + transpFinal + "\n• Modalidad: " + modalidadSeleccionada + "\n\n*DATOS DEL CLIENTE:*\n• Nombre: " + nombre + " " + apellido + "\n• DNI: " + dni + "\n• Teléfono: " + celular + "\n• Dirección: " + direccion + "\n• Localidad: " + localidadFinal + " (CP: " + cp + ")\n• Provincia: " + provincia + "\n\n📄 *ABRIR TALÓN DE ENVÍO Y ORDEN (PDF 2 HOJAS):*\n" + linkPdfComprobante;
+
       } else {
         const camposRetiro = [
-          { id: "retiro-nombre", nombre: "Nombre del que retira" }, { id: "retiro-apellido", nombre: "Apellido" },
-          { id: "retiro-celular", nombre: "Celular" }, { id: "retiro-dni", nombre: "DNI" }
+          { id: "retiro-nombre", nombre: "Nombre" },
+          { id: "retiro-apellido", nombre: "Apellido" },
+          { id: "retiro-celular", nombre: "Celular" },
+          { id: "retiro-por", nombre: "Retirado por" }
         ];
         for (let c of camposRetiro) {
           const el = document.getElementById(c.id);
-          if (!el.value.trim()) { alert("Falta rellenar el casillero: " + c.nombre); el.focus(); return; }
+          if (!el || !el.value.trim()) { alert("Falta rellenar el casillero obligatorio: " + c.nombre); if (el) el.focus(); return; }
         }
+
         const rNombre = document.getElementById("retiro-nombre").value.trim();
         const rApellido = document.getElementById("retiro-apellido").value.trim();
         const rCelular = document.getElementById("retiro-celular").value.trim();
-        const rDni = document.getElementById("retiro-dni").value.trim();
-        const paqueteRetiro = { tipo: "Retiro por Local", f: fechaStr, h: horaStr, nom: rNombre, ape: rApellido, cel: rCelular, dni: rDni, items: itemsCortos, tot: subtotal.toLocaleString('es-AR') };
+        const rRetPor = document.getElementById("retiro-por").value.trim();
+
+        const paqueteRetiro = { tipo: "Retiro por Local", f: fechaStr, h: horaStr, nom: rNombre, ape: rApellido, cel: rCelular, retPor: rRetPor, items: itemsCortos, tot: subtotal.toLocaleString('es-AR') };
         const linkPdfRetiro = urlBase + "?orden=" + codificarDatos(paqueteRetiro);
-        msg += "\n*TOTAL FINAL A PAGAR: $" + subtotal.toLocaleString('es-AR') + "*\n\n*MODALIDAD: RETIRO POR LOCAL*\n• Retira: " + rNombre + " " + rApellido + "\n• DNI: " + rDni + "\n• Celular: " + rCelular + "\n\n📄 *ABRIR ORDEN DE COMPRA (PDF):*\n" + linkPdfRetiro;
+
+        msg += "\n*TOTAL FINAL A PAGAR: $" + subtotal.toLocaleString('es-AR') + "*\n\n*MODALIDAD: RETIRO POR LOCAL*\n• Nombre y Apellido: " + rNombre + " " + rApellido + "\n• Celular: " + rCelular + "\n• Retirado por: " + rRetPor + "\n\n📄 *ABRIR TALÓN DE RETIRO Y ORDEN (PDF 2 HOJAS):*\n" + linkPdfRetiro;
       }
+
       const btnEnviar = document.getElementById("btn-enviar");
       btnEnviar.disabled = true;
       btnEnviar.textContent = "Guardando stock...";
