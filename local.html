@@ -9,30 +9,24 @@
     :root { color-scheme: light only; }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
     body { background-color: #F7F7F9 !important; color: #1A1A1A !important; overflow-x: hidden; overflow-y: auto; }
-
     header { background-color: #1A1A1A !important; border-bottom: 4px solid #E91E63; padding: 14px; text-align: center; }
     header h1 { font-size: 1.45rem; letter-spacing: 2px; color: #F8BBD0 !important; text-transform: uppercase; font-weight: 900; }
     header p { color: #FFFFFF !important; font-size: 0.78rem; margin-top: 3px; }
-
     .barra-categorias { display: flex; gap: 8px; overflow-x: auto; padding: 10px 14px; background-color: #FFF0F5 !important; border-bottom: 2px solid #F8BBD0; white-space: nowrap; -webkit-overflow-scrolling: touch; }
     .btn-cat { background-color: #FFFFFF !important; color: #1A1A1A !important; border: 2px solid #F48FB1; border-radius: 18px; padding: 7px 15px; font-size: 0.85rem; font-weight: bold; cursor: pointer; flex-shrink: 0; }
     .btn-cat.activo { background-color: #E91E63 !important; color: #FFFFFF !important; border-color: #1A1A1A; }
-
     .buscador-box { max-width: 1280px; margin: 12px auto 0 auto; padding: 0 16px; }
     .buscador-box input { width: 100%; padding: 10px 14px; border: 2px solid #E91E63; border-radius: 10px; font-size: 0.95rem; background: #FFF; }
-
     .contenedor-catalogo { max-width: 1280px; margin: 14px auto; padding: 0 16px 80px 16px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
     .tarjeta-rapida { background-color: #FFFFFF !important; border: 2px solid #F8BBD0; border-radius: 12px; padding: 12px; box-shadow: 0 3px 8px rgba(0,0,0,0.06); display: flex; flex-direction: column; justify-content: space-between; }
     .cabecera-tarjeta { border-bottom: 1.5px solid #FCE4EC; padding-bottom: 8px; margin-bottom: 8px; }
     .cabecera-tarjeta h3 { font-size: 1.08rem; color: #1A1A1A !important; font-weight: 800; line-height: 1.2; }
     .cabecera-tarjeta .sub { font-size: 0.78rem; color: #666; font-weight: bold; margin-top: 2px; }
     .cabecera-tarjeta .precio { font-size: 1.22rem; font-weight: 900; color: #E91E63 !important; margin-top: 4px; }
-
     .fila-talle { margin-bottom: 9px; }
     .fila-talle label { font-size: 0.78rem; font-weight: bold; color: #444; display: block; margin-bottom: 3px; }
     .fila-talle select { width: 100%; padding: 7px 9px; border: 1.5px solid #1A1A1A; border-radius: 8px; font-size: 0.9rem; font-weight: bold; background-color: #FFF9FB !important; color: #1A1A1A !important; }
     .talle-fijo-badge { display: inline-block; background-color: #FCE4EC; color: #C2185B; border: 1px solid #F48FB1; padding: 4px 10px; border-radius: 6px; font-size: 0.82rem; font-weight: bold; }
-
     .lista-colores-filas { display: flex; flex-direction: column; gap: 6px; }
     .fila-color-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; background-color: #FFF9FB; border: 1.5px solid #F8BBD0; border-radius: 8px; padding: 6px 8px; }
     .nombre-color-fila { flex: 1; font-size: 0.9rem; font-weight: 700; color: #1A1A1A; }
@@ -67,14 +61,11 @@
     .btn-generar-ticket { background-color: #E91E63 !important; color: #FFF !important; border: none; padding: 14px; width: 100%; border-radius: 8px; font-size: 0.96rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
     .btn-generar-ticket:disabled { background-color: #9E9E9E !important; cursor: not-allowed; }
     .aviso-flotante { position: fixed; top: 15px; left: 50%; transform: translateX(-50%); background-color: #1A1A1A; color: #FFF; border: 2px solid #E91E63; padding: 8px 18px; border-radius: 20px; font-size: 0.88rem; font-weight: bold; z-index: 3000; display: none; }
-
-    /* TICKET TÉRMICO 80MM CONTINUO (1 SOLA HOJA SIN CORTES) */
     #vista-ticket { max-width: 340px; margin: 15px auto; padding: 10px; background: #FFF; }
     .barra-imprimir { display: flex; flex-direction: column; gap: 8px; background: #FCE4EC; border: 2px solid #E91E63; padding: 12px; border-radius: 10px; margin-bottom: 16px; }
     .btn-imp-80 { background: #E91E63; color: #FFF; border: none; padding: 11px; border-radius: 8px; font-weight: bold; font-size: 0.92rem; cursor: pointer; width: 100%; }
     .btn-imp-80.sec { background: #1A1A1A; }
     .btn-imp-80.vol { background: #555; }
-
     .ticket-80mm { width: 74mm; margin: 0 auto 18px auto; padding: 6px; border: 1.5px solid #000; color: #000; font-family: 'Arial', sans-serif; background: #FFF; break-inside: avoid; page-break-inside: avoid; }
     .t80-cabecera { text-align: center; border-bottom: 1.5px dashed #000; padding-bottom: 6px; margin-bottom: 6px; }
     .t80-logo { font-family: Georgia, serif; font-size: 22px; font-weight: 900; letter-spacing: 1px; }
@@ -88,7 +79,6 @@
     .t80-tabla thead { display: table-row-group; }
     .t80-total-box { border-top: 2px solid #000; border-bottom: 2px solid #000; margin-top: 8px; padding: 6px 2px; font-size: 14px; font-weight: 900; display: flex; justify-content: space-between; }
     .t80-pie { text-align: center; font-size: 8.5px; margin-top: 8px; padding-top: 4px; border-top: 1px dashed #000; }
-
     @media print {
       .no-imprimir { display: none !important; }
       body { margin: 0 !important; padding: 0 !important; width: 76mm !important; background: #FFF !important; }
@@ -98,22 +88,18 @@
       body.solo-orden .ticket-talon { display: none !important; }
       .t80-titulo-caja { background: #000 !important; color: #FFF !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     }
-
     @media (max-width: 950px) { .contenedor-catalogo { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 650px) { .contenedor-catalogo { grid-template-columns: 1fr; } .panel-lateral { width: 92%; min-width: 280px; } }
   </style>
 </head>
 <body>
   <div id="vista-ticket" style="display:none;"></div>
-
   <div id="vista-mostrador">
     <div id="aviso-flotante" class="aviso-flotante">✓ Agregado</div>
-
     <header>
       <h1>BELLA INDUMENTARIA • MOSTRADOR</h1>
       <p>CARGA RÁPIDA POR COLOR • TICKET CONTINUO 80MM</p>
     </header>
-
     <nav class="barra-categorias" id="barra-categorias">
       <button type="button" class="btn-cat activo" onclick="filtrarCategoria('Todos', this)">Todos</button>
       <button type="button" class="btn-cat" onclick="filtrarCategoria('Vestidos', this)">Vestidos</button>
@@ -125,24 +111,19 @@
       <button type="button" class="btn-cat" onclick="filtrarCategoria('Top', this)">Top</button>
       <button type="button" class="btn-cat" onclick="filtrarCategoria('Cintos', this)">Cintos</button>
     </nav>
-
     <div class="buscador-box">
       <input type="text" id="buscador" placeholder="🔍 Buscar prenda por nombre..." oninput="cargarCatalogo()">
     </div>
-
     <button type="button" class="btn-flecha-carrito" id="btn-flecha-carrito" onclick="togglePanel()">
       <span>◀ Venta</span>
       <span id="badge-total" style="font-size:0.85rem;">$0</span>
     </button>
-
     <main class="contenedor-catalogo" id="catalogo"></main>
-
     <aside class="panel-lateral" id="panel-lateral">
       <div class="panel-header">
         <h2>Detalle de Venta 🧾</h2>
         <button type="button" class="btn-cerrar-panel" onclick="togglePanel()">Cerrar ▶</button>
       </div>
-
       <div class="grupo-cuadraditos">
         <div class="opcion-cuadradito" id="tipo-mostrador" onclick="elegirTipoVenta('Mostrador')">
           <span class="texto-opcion">Mostrador</span>
@@ -157,15 +138,12 @@
           <div class="cajita-x" id="check-tipo-envio"></div>
         </div>
       </div>
-
       <ul id="lista-carrito"><li style="color:#777; justify-content:center;">No hay prendas cargadas</li></ul>
-
       <div class="resumen-costos">
         <div class="fila-costo"><span>Prendas (<span id="cant-prendas-txt">0</span>):</span><span id="subtotal-texto">$0</span></div>
         <div class="fila-costo" id="fila-embalaje" style="display:none;"><span>Embalaje y traslado:</span><span>$4.000</span></div>
         <div class="fila-costo total-final"><span>Total Final:</span><span id="total-texto">$0</span></div>
       </div>
-
       <div class="campo">
         <label>Forma de Pago:</label>
         <select id="forma-pago">
@@ -174,11 +152,9 @@
           <option value="Mixto (Efectivo + Transf.)">Mixto (Efectivo + Transf.)</option>
         </select>
       </div>
-
       <div id="bloque-mostrador" style="display:none;">
         <div class="campo"><label>Cliente (Opcional):</label><input type="text" id="mostrador-cliente" placeholder="Consumidor Final"></div>
       </div>
-
       <div id="bloque-retiro" style="display:none;">
         <div class="titulo-seccion">Datos de Retiro por Local (Obligatorios *)</div>
         <div class="campo"><input type="text" id="retiro-nombre" placeholder="Nombre *"></div>
@@ -186,7 +162,6 @@
         <div class="campo"><input type="tel" id="retiro-celular" placeholder="Celular *"></div>
         <div class="campo"><input type="text" id="retiro-por" placeholder="Retirado por *"></div>
       </div>
-
       <div id="bloque-envio" style="display:none;">
         <div class="titulo-seccion">Datos de Envío (Obligatorios *)</div>
         <div class="campo">
@@ -225,7 +200,6 @@
         <div class="caja-otro" id="caja-otra-localidad"><input type="text" id="localidad-otra" placeholder="Escribí localidad *" style="width:100%; padding:7px; border:1px solid #E91E63; border-radius:6px;"></div>
         <div class="campo"><input type="text" id="cp" placeholder="Código Postal *"></div>
       </div>
-
       <button type="button" id="btn-generar" class="btn-generar-ticket" onclick="generarTicket80mm()" disabled>Cargá prendas y elegí tipo</button>
     </aside>
   </div>
@@ -258,7 +232,6 @@
       "Tierra del Fuego": ["Ushuaia", "Río Grande", "Tolhuin"],
       "Tucumán": ["San Miguel de Tucumán", "Aguilares", "Alderetes", "Banda del Río Salí", "Concepción", "Famaillá", "Monteros", "Tafí Viejo", "Yerba Buena"]
     };
-
     const PRODUCTOS = [
       { id: 1, categoria: "Vestidos", nombre: "Vestido Franchesca", precio: 15000, talles: ["Talle Único"], colores: ["Negro", "Choco", "Blanco", "Uva"] },
       { id: 2, categoria: "Top", nombre: "Marilyn Lunares", precio: 6000, coloresPorTalle: { "Talle 2": ["Negro", "Choco"], "Talle 4": ["Choco"] } },
@@ -346,7 +319,6 @@
         '</div>';
       }).join('');
     }
-
     function cargarCatalogo() {
       const cont = document.getElementById("catalogo");
       const textoBusq = (document.getElementById("buscador")?.value || "").toLowerCase().trim();
@@ -607,7 +579,6 @@
         return '<tr><td><b>' + it.cant + '</b></td><td>' + it.nombre + '<br><span style="font-size:8.5px;">' + it.color + ' | ' + it.talle + '</span></td><td style="text-align:right;">$' + sub.toLocaleString('es-AR') + '</td></tr>';
       }).join('');
 
-      const ordenHtml =
       const ordenHtml =
         '<div class="ticket-80mm ticket-orden">' +
           '<div class="t80-cabecera"><div class="t80-logo">BELLA</div><div class="t80-sub">Indumentaria • Fabricante Directo</div><div class="t80-info">Campana 378 - Local A6 • Galería Smart Campana<br>Dany: 11-2574-8687 | Isa: 11-6735-3960</div></div>' +
