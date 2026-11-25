@@ -4,185 +4,218 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="light only">
-  <title>BELLA - Panel Mostrador Local</title>
+  <title>BELLA Indumentaria - SISTEMA LOCAL</title>
   <style>
     :root { color-scheme: light only; }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
-    body { background-color: #FFF5F8 !important; color: #1A1A1A !important; overflow-x: hidden; overflow-y: auto; }
-    header { background-color: #1A1A1A !important; border-bottom: 5px solid #E91E63; padding: 18px 15px; text-align: center; color: #FFF; }
-    header h1 { font-size: 1.65rem; letter-spacing: 2px; color: #F8BBD0 !important; text-transform: uppercase; font-weight: 900; }
-    header p { color: #FFF !important; font-size: 0.85rem; margin-top: 4px; }
-    .barra-buscador { max-width: 1280px; margin: 18px auto 0 auto; padding: 0 20px; }
-    .barra-buscador input { width: 100%; padding: 13px 16px; border: 2px solid #E91E63; border-radius: 12px; font-size: 1rem; background: #FFF; font-weight: bold; }
-    .contenedor-catalogo { max-width: 1280px; margin: 18px auto; padding: 0 20px 80px 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-    .producto { background-color: #FFFFFF !important; border: 2px solid #F8BBD0; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06); }
-    .producto h3 { font-size: 1.05rem; color: #1A1A1A !important; margin-bottom: 3px; }
-    .producto .precio { font-size: 1.25rem; font-weight: 900; color: #E91E63 !important; margin-bottom: 10px; }
-    .campo { margin-bottom: 8px; }
+    body { background-color: #FFFFFF !important; color: #1A1A1A !important; overflow-x: hidden; overflow-y: auto; }
+
+    header {
+      background-color: #1A1A1A !important;
+      border-bottom: 5px solid #E91E63;
+      padding: 18px 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .caja-titulo-header { background-color: #F8BBD0 !important; border: 3px solid #E91E63; border-radius: 14px; padding: 12px 26px; text-align: center; max-width: 760px; width: 100%; }
+    .caja-titulo-header h1 { font-size: 1.7rem; letter-spacing: 2px; color: #1A1A1A !important; text-transform: uppercase; font-weight: 900; }
+    .caja-titulo-header p { color: #C2185B !important; font-weight: bold; font-size: 0.85rem; margin-top: 4px; }
+
+    .barra-categorias { display: flex; gap: 10px; overflow-x: auto; padding: 12px 16px; background-color: #FFF0F5 !important; border-bottom: 2px solid #F8BBD0; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+    .btn-cat { background-color: #FFFFFF !important; color: #1A1A1A !important; border: 2px solid #F48FB1; border-radius: 20px; padding: 8px 16px; font-size: 0.86rem; font-weight: bold; cursor: pointer; flex-shrink: 0; }
+    .btn-cat.activo { background-color: #E91E63 !important; color: #FFFFFF !important; border-color: #1A1A1A; }
+
+    .buscador-box { max-width: 1280px; margin: 14px auto 0 auto; padding: 0 20px; }
+    .buscador-box input { width: 100%; padding: 11px 14px; border: 2px solid #E91E63; border-radius: 10px; font-size: 0.95rem; }
+
+    .contenedor-catalogo { max-width: 1280px; margin: 18px auto; padding: 0 20px 60px 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .producto { background-color: #FFFFFF !important; border: 2px solid #F8BBD0; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; }
+    .galeria-box { position: relative; width: 100%; height: 220px; background-color: #FFF9FB; border-radius: 8px; margin-bottom: 8px; border: 1px solid #F8BBD0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .galeria-box img { width: 100%; height: 100%; object-fit: contain; }
+    .cartel-agotado { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-8deg); background-color: #D50000 !important; color: #FFFFFF !important; border: 2px solid #FFFFFF; padding: 6px 18px; font-size: 1.2rem; font-weight: 900; border-radius: 8px; z-index: 20; }
+    .cartel-agotado.visible { display: block; }
+    .badge-stock { font-size: 0.78rem; font-weight: bold; color: #2E7D32; background-color: #E8F5E9; border: 1px solid #A5D6A7; padding: 3px 8px; border-radius: 6px; display: inline-block; margin-bottom: 6px; }
+    .badge-stock.sin-stock { color: #D50000; background-color: #FFEBEE; border-color: #EF9A9A; }
+    .producto h3 { font-size: 1.08rem; color: #1A1A1A !important; margin-bottom: 3px; }
+    .producto .precio { font-size: 1.2rem; font-weight: bold; color: #E91E63 !important; margin-bottom: 6px; }
+    .campo { margin-bottom: 7px; }
     .campo label { display: block; font-size: 0.78rem; font-weight: bold; color: #444 !important; margin-bottom: 2px; }
-    .campo select, .campo input { width: 100%; padding: 8px; border: 1px solid #CCC; border-radius: 8px; font-size: 0.9rem; background-color: #FFF !important; color: #1A1A1A !important; }
+    .campo select, .campo input { width: 100%; padding: 7px; border: 1px solid #CCC; border-radius: 7px; font-size: 0.88rem; background-color: #FFF !important; color: #1A1A1A !important; }
     .fila-doble { display: flex; gap: 8px; }
     .btn-agregar { background-color: #1A1A1A !important; color: #FFF !important; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 4px; font-size: 0.92rem; }
     .btn-agregar:active { background-color: #E91E63 !important; }
-    .btn-flecha-carrito { position: fixed; right: 0; top: 50%; transform: translateY(-50%); background-color: #E91E63 !important; color: #FFFFFF !important; border: 2px solid #1A1A1A; border-right: none; border-radius: 12px 0 0 12px; padding: 14px 12px; cursor: pointer; z-index: 2500; font-weight: bold; font-size: 0.92rem; box-shadow: -3px 3px 10px rgba(0,0,0,0.25); display: flex; flex-direction: column; align-items: center; gap: 4px; }
-    .panel-lateral { position: fixed; top: 0; right: 0; width: 32%; min-width: 360px; max-width: 460px; height: 100dvh; max-height: 100vh; background-color: #FFFFFF !important; border-left: 3px solid #1A1A1A; box-shadow: -5px 0 20px rgba(0,0,0,0.25); z-index: 2600; padding: 16px 14px 120px 16px; overflow-y: scroll; -webkit-overflow-scrolling: touch; scrollbar-width: auto; scrollbar-color: #E91E63 #FCE4EC; transform: translateX(100%); transition: transform 0.3s ease; }
+    .btn-agregar:disabled { background-color: #B0BEC5 !important; cursor: not-allowed; }
+    .btn-flecha-carrito { position: fixed; right: 0; top: 50%; transform: translateY(-50%); background-color: #E91E63 !important; color: #FFFFFF !important; border: 2px solid #1A1A1A; border-right: none; border-radius: 12px 0 0 12px; padding: 14px 10px; cursor: pointer; z-index: 2500; font-weight: bold; font-size: 0.9rem; box-shadow: -3px 3px 10px rgba(0,0,0,0.3); display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .panel-lateral { position: fixed; top: 0; right: 0; width: 32%; min-width: 350px; max-width: 450px; height: 100dvh; background-color: #FFFFFF !important; border-left: 3px solid #1A1A1A; box-shadow: -5px 0 20px rgba(0,0,0,0.25); z-index: 2600; padding: 16px 14px 120px 16px; overflow-y: scroll; scrollbar-width: auto; scrollbar-color: #E91E63 #FCE4EC; transform: translateX(100%); transition: transform 0.3s ease; }
     .panel-lateral::-webkit-scrollbar { width: 10px; }
     .panel-lateral::-webkit-scrollbar-track { background: #FCE4EC; }
     .panel-lateral::-webkit-scrollbar-thumb { background: #E91E63; border-radius: 6px; }
     .panel-lateral.abierto { transform: translateX(0); }
     .panel-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #F8BBD0; padding-bottom: 8px; margin-bottom: 10px; }
-    .panel-header h2 { font-size: 1.15rem; color: #1A1A1A !important; }
-    .btn-cerrar-panel { background-color: #1A1A1A; color: #FFF; border: none; border-radius: 6px; padding: 6px 12px; font-weight: bold; cursor: pointer; }
-    #lista-carrito { list-style: none; max-height: 155px; overflow-y: auto; margin-bottom: 10px; border-bottom: 1px solid #E0E0E0; padding-bottom: 6px; }
+    .btn-cerrar-panel { background-color: #E91E63; color: #FFF; border: none; border-radius: 6px; padding: 6px 12px; font-weight: bold; cursor: pointer; }
+    #lista-carrito { list-style: none; max-height: 160px; overflow-y: auto; margin-bottom: 10px; border-bottom: 1px solid #E0E0E0; padding-bottom: 6px; }
     #lista-carrito li { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #F2F2F2; font-size: 0.84rem; }
     .btn-x { background-color: #FF4D4D; color: #FFF; border: none; border-radius: 4px; padding: 3px 7px; cursor: pointer; font-weight: bold; }
     .resumen-costos { background-color: #FCE4EC !important; padding: 9px; border-radius: 8px; margin-bottom: 10px; font-size: 0.88rem; }
     .fila-costo { display: flex; justify-content: space-between; margin-bottom: 4px; }
     .fila-costo.total-final { font-size: 1.15rem; font-weight: bold; border-top: 1px solid #F48FB1; padding-top: 5px; margin-top: 4px; margin-bottom: 0; }
-    .fila-costo.total-final span:last-child { color: #C2185B !important; }
-    .titulo-seccion { font-size: 0.88rem; font-weight: bold; margin: 8px 0 6px 0; border-top: 1px solid #EEE; padding-top: 8px; }
+    .titulo-seccion { font-size: 0.86rem; font-weight: bold; margin: 8px 0 6px 0; border-top: 1px solid #EEE; padding-top: 8px; }
     .caja-otro { display: none; background-color: #FFF0F5; padding: 8px; border-radius: 8px; border: 1px solid #E91E63; margin-bottom: 8px; }
     .grupo-cuadraditos { display: flex; gap: 6px; margin-bottom: 10px; }
     .opcion-cuadradito { flex: 1; display: flex; align-items: center; justify-content: space-between; background-color: #FFF5F8; border: 2px solid #F8BBD0; border-radius: 8px; padding: 8px 7px; cursor: pointer; user-select: none; }
     .opcion-cuadradito.seleccionado { border-color: #E91E63; background-color: #FCE4EC; }
-    .opcion-cuadradito span.texto-opcion { font-size: 0.75rem; font-weight: bold; color: #1A1A1A; line-height: 1.15; }
-    .cajita-x { width: 20px; height: 20px; border: 2px solid #1A1A1A; background-color: #FFFFFF; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.9rem; color: #E91E63; flex-shrink: 0; margin-left: 4px; }
-    .btn-pdf-directo { background-color: #E91E63 !important; color: #FFF !important; border: none; padding: 14px; width: 100%; border-radius: 8px; font-size: 0.98rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
-    .btn-pdf-directo:disabled { background-color: #9E9E9E !important; cursor: not-allowed; }
-    .btn-wsp { background-color: #25D366 !important; color: #FFF !important; border: none; padding: 11px; width: 100%; border-radius: 8px; font-size: 0.88rem; font-weight: bold; cursor: pointer; margin-top: 8px; }
-    .btn-wsp:disabled { background-color: #BDBDBD !important; cursor: not-allowed; }
+    .opcion-cuadradito span.texto-opcion { font-size: 0.76rem; font-weight: bold; color: #1A1A1A; }
+    .cajita-x { width: 20px; height: 20px; border: 2px solid #1A1A1A; background-color: #FFFFFF; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.9rem; color: #E91E63; flex-shrink: 0; }
+    .btn-generar-ticket { background-color: #E91E63 !important; color: #FFF !important; border: none; padding: 14px; width: 100%; border-radius: 8px; font-size: 0.96rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
+    .btn-generar-ticket:disabled { background-color: #9E9E9E !important; cursor: not-allowed; }
     .aviso-flotante { position: fixed; top: 15px; left: 50%; transform: translateX(-50%); background-color: #1A1A1A; color: #FFF; border: 2px solid #E91E63; padding: 9px 18px; border-radius: 20px; font-size: 0.88rem; font-weight: bold; z-index: 3000; display: none; }
-    #vista-comprobante { max-width: 820px; margin: 20px auto; padding: 20px; background: #FFF; }
-    .barra-imprimir { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; align-items: center; background: #FCE4EC; border: 2px solid #E91E63; padding: 12px 14px; border-radius: 10px; margin-bottom: 20px; }
-    .btn-imprimir-pdf { background: #E91E63; color: #FFF; border: none; padding: 10px 13px; border-radius: 8px; font-weight: bold; font-size: 0.88rem; cursor: pointer; }
-    .btn-imprimir-orden { background: #C2185B; color: #FFF; border: none; padding: 10px 13px; border-radius: 8px; font-weight: bold; font-size: 0.88rem; cursor: pointer; }
-    .btn-descargar-pdf { background: #00897B; color: #FFF; border: none; padding: 10px 13px; border-radius: 8px; font-weight: bold; font-size: 0.88rem; cursor: pointer; }
-    .btn-volver-tienda { background: #1A1A1A; color: #FFF; border: none; padding: 10px 13px; border-radius: 8px; font-weight: bold; font-size: 0.88rem; cursor: pointer; }
-    .hoja-pdf { border: 2px solid #1A1A1A; padding: 18px; margin-bottom: 25px; background: #FFF; }
-    .pdf-header { width: 100%; border-collapse: collapse; border: 2px solid #1A1A1A; margin-bottom: 14px; }
-    .pdf-header td { padding: 8px; vertical-align: middle; }
-    .pdf-logo { font-family: Georgia, serif; font-size: 30px; font-weight: bold; }
-    .pdf-envios { width: 100%; border-collapse: collapse; }
-    .pdf-vertical { width: 45px; border: 2px solid #1A1A1A; text-align: center; font-size: 20px; font-weight: bold; line-height: 1.5; }
-    .pdf-vertical-retiro { width: 52px; border: 2px solid #1A1A1A; text-align: center; font-size: 13px; font-weight: 900; line-height: 1.18; padding: 6px 2px; }
-    .pdf-datos { border: 2px solid #1A1A1A; padding: 16px; }
-    .pdf-linea { margin-bottom: 14px; font-size: 13px; border-bottom: 1px solid #1A1A1A; padding-bottom: 3px; }
-    .pdf-linea-gigante { margin-bottom: 16px; font-size: 34px; font-weight: 900; border-bottom: 2px solid #1A1A1A; padding-bottom: 6px; line-height: 1.2; }
-    .pdf-casilla { display: inline-block; width: 24px; height: 20px; border: 2px solid #1A1A1A; text-align: center; font-weight: bold; font-size: 15px; margin-left: 6px; vertical-align: middle; }
-    .pdf-tabla { width: 100%; border-collapse: collapse; margin-top: 12px; }
-    .pdf-tabla th { background: #F8BBD0; border: 1.5px solid #1A1A1A; padding: 8px; font-size: 12px; }
-    .pdf-tabla td { border: 1.5px solid #1A1A1A; padding: 8px; font-size: 12px; }
-    .pdf-total { margin-top: 14px; float: right; border: 2px solid #1A1A1A; background: #FCE4EC; padding: 8px 18px; font-size: 15px; font-weight: bold; }
-    @page { margin: 3mm; }
+
+    /* VISTA DE TICKETS TÉRMICOS 80MM CONTINUO */
+    #vista-ticket { max-width: 340px; margin: 15px auto; padding: 10px; background: #FFF; }
+    .barra-imprimir { display: flex; flex-direction: column; gap: 8px; background: #FCE4EC; border: 2px solid #E91E63; padding: 12px; border-radius: 10px; margin-bottom: 16px; }
+    .btn-imp-80 { background: #E91E63; color: #FFF; border: none; padding: 11px; border-radius: 8px; font-weight: bold; font-size: 0.92rem; cursor: pointer; width: 100%; }
+    .btn-imp-80.sec { background: #1A1A1A; }
+    .btn-imp-80.vol { background: #555; }
+
+    .ticket-80mm {
+      width: 74mm;
+      margin: 0 auto 18px auto;
+      padding: 6px;
+      border: 1.5px solid #000;
+      color: #000;
+      font-family: 'Arial', sans-serif;
+      background: #FFF;
+    }
+    .t80-cabecera { text-align: center; border-bottom: 1.5px dashed #000; padding-bottom: 6px; margin-bottom: 6px; }
+    .t80-logo { font-family: Georgia, serif; font-size: 22px; font-weight: 900; letter-spacing: 1px; }
+    .t80-sub { font-size: 9.5px; font-weight: bold; }
+    .t80-info { font-size: 9px; line-height: 1.25; margin-top: 2px; }
+    .t80-titulo-caja { background: #000; color: #FFF; text-align: center; font-weight: 900; font-size: 12px; padding: 4px; letter-spacing: 1.5px; margin: 6px 0; }
+    .t80-dato { font-size: 11px; line-height: 1.35; border-bottom: 1px solid #CCC; padding: 3px 0; }
+    .t80-tabla { width: 100%; border-collapse: collapse; margin-top: 6px; font-size: 10px; }
+    .t80-tabla th { border-top: 1.5px solid #000; border-bottom: 1.5px solid #000; padding: 4px 2px; text-align: left; font-size: 9.5px; }
+    .t80-tabla td { border-bottom: 1px dashed #999; padding: 4px 2px; vertical-align: top; }
+    .t80-total-box { border-top: 2px solid #000; border-bottom: 2px solid #000; margin-top: 8px; padding: 6px 2px; font-size: 14px; font-weight: 900; display: flex; justify-content: space-between; }
+    .t80-pie { text-align: center; font-size: 8.5px; margin-top: 8px; padding-top: 4px; border-top: 1px dashed #000; }
+
+    @page {
+      size: 80mm auto;
+      margin: 2mm;
+    }
     @media print {
       .no-imprimir { display: none !important; }
-      #vista-comprobante { margin: 0 !important; padding: 0 !important; max-width: 100% !important; }
-      .hoja-pdf { border: none !important; padding: 0 !important; margin: 0 !important; page-break-inside: avoid !important; }
-      body.solo-envio .hoja-orden { display: none !important; }
-      body.solo-orden .hoja-envio { display: none !important; }
-      .hoja-envio .pdf-header { margin-bottom: 4px !important; }
-      .hoja-envio .pdf-header td { padding: 4px 6px !important; font-size: 9px !important; line-height: 1.15 !important; }
-      .hoja-envio .pdf-logo { font-size: 22px !important; }
-      .hoja-envio .pdf-vertical { width: 34px !important; font-size: 15px !important; line-height: 1.25 !important; }
-      .hoja-envio .pdf-vertical-retiro { width: 42px !important; font-size: 10px !important; line-height: 1.1 !important; }
-      .hoja-envio .pdf-datos { padding: 7px 10px !important; }
-      .hoja-envio .pdf-linea { margin-bottom: 6px !important; font-size: 11px !important; padding-bottom: 2px !important; }
-      .hoja-envio .pdf-linea-gigante { margin-bottom: 8px !important; font-size: 26px !important; padding-bottom: 4px !important; }
-      .hoja-envio .fila-casillas-envio { margin-top: 8px !important; font-size: 11px !important; }
-      .hoja-envio .pdf-casilla { width: 20px !important; height: 17px !important; font-size: 12px !important; }
-      .hoja-envio .pie-envio { margin-top: 5px !important; font-size: 8.5px !important; }
-      .hoja-orden .pdf-header { margin-bottom: 3px !important; }
-      .hoja-orden .pdf-header td { padding: 2px 4px !important; font-size: 7.5px !important; line-height: 1.1 !important; }
-      .hoja-orden .pdf-logo { font-size: 16px !important; }
-      .hoja-orden .caja-orden-cliente { padding: 3px 5px !important; margin-bottom: 3px !important; font-size: 8px !important; line-height: 1.15 !important; }
-      .hoja-orden .pdf-tabla { margin-top: 2px !important; }
-      .hoja-orden .pdf-tabla th { padding: 2px 3px !important; font-size: 7.5px !important; }
-      .hoja-orden .pdf-tabla td { padding: 1.5px 3px !important; font-size: 7.5px !important; line-height: 1.08 !important; }
-      .hoja-orden .pdf-total { margin-top: 3px !important; padding: 2.5px 8px !important; font-size: 10px !important; }
-      .hoja-orden .pie-orden { padding-top: 3px !important; font-size: 7px !important; }
+      body { margin: 0 !important; padding: 0 !important; width: 76mm !important; }
+      #vista-ticket { margin: 0 !important; padding: 0 !important; max-width: 76mm !important; width: 76mm !important; }
+      .ticket-80mm { width: 74mm !important; border: none !important; margin: 0 !important; padding: 2mm 1mm !important; }
+      body.solo-talon .ticket-orden { display: none !important; }
+      body.solo-orden .ticket-talon { display: none !important; }
+      .t80-titulo-caja { background: #000 !important; color: #FFF !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     }
-    @media (max-width: 1000px) { .contenedor-catalogo { grid-template-columns: repeat(2, 1fr); } }
+
+    @media (max-width: 950px) { .contenedor-catalogo { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 650px) { .contenedor-catalogo { grid-template-columns: 1fr; } .panel-lateral { width: 92%; min-width: 280px; } }
   </style>
 </head>
 <body>
-  <div id="vista-comprobante" style="display:none;"></div>
-  <div id="vista-tienda">
-    <div id="aviso-flotante" class="aviso-flotante">✓ Agregado</div>
+  <div id="vista-ticket" style="display:none;"></div>
+
+  <div id="vista-mostrador">
+    <div id="aviso-flotante" class="aviso-flotante">✓ Agregado a la venta</div>
+
     <header>
-      <h1>BELLA INDUMENTARIA • MOSTRADOR LOCAL</h1>
-      <p>Uso interno exclusivo • Sin límite de stock ni mínimos de compra</p>
+      <div class="caja-titulo-header">
+        <h1>BELLA INDUMENTARIA • LOCAL</h1>
+        <p>SISTEMA DE MOSTRADOR • TICKET CONTINUO 80MM • STOCK EN VIVO</p>
+      </div>
     </header>
-    <div class="barra-buscador">
-      <input type="text" id="buscador" placeholder="🔍 Escribí el nombre de la prenda para filtrar rápido..." oninput="filtrarCatalogo()">
+
+    <nav class="barra-categorias" id="barra-categorias">
+      <button type="button" class="btn-cat activo" onclick="filtrarCategoria('Todos', this)">Todos</button>
+      <button type="button" class="btn-cat" onclick="filtrarCategoria('Vestidos', this)">Vestidos</button>
+      <button type="button" class="btn-cat" onclick="filtrarCategoria('Polleras', this)">Polleras</button>
+      <button type="button" class="btn-cat" onclick="filtrarCategoria('Remes', this)">Remes</button>
+      <button type="button" class="btn-cat" onclick="filtrarCategoria('Body', this)">Body</button>
+      <button type="button" class="btn-cat" onclick="filtrarCategoria('Pantalones', this)">Pantalones</button>
+      <button type="button" class="btn-cat" onclick="filtrarCategoria('Catsuit', this)">Catsuit</button>
+      <button type="button" class="btn-cat" onclick="filtrarCategoria('Top', this)">Top</button>
+      <button type="button" class="btn-cat" onclick="filtrarCategoria('Cintos', this)">Cintos</button>
+    </nav>
+
+    <div class="buscador-box">
+      <input type="text" id="buscador" placeholder="🔍 Buscar prenda por nombre..." oninput="cargarCatalogo()">
     </div>
+
     <button type="button" class="btn-flecha-carrito" id="btn-flecha-carrito" onclick="togglePanel()">
-      <span>◀</span>
-      <span>Ticket</span>
+      <span>◀ Venta</span>
       <span id="badge-total" style="font-size:0.82rem;">$0</span>
     </button>
+
     <main class="contenedor-catalogo" id="catalogo"></main>
+
     <aside class="panel-lateral" id="panel-lateral">
       <div class="panel-header">
-        <h2>Comprobante Local 🧾</h2>
+        <h2>Venta Mostrador 🧾</h2>
         <button type="button" class="btn-cerrar-panel" onclick="togglePanel()">Cerrar ▶</button>
       </div>
+
       <div class="grupo-cuadraditos">
-        <div class="opcion-cuadradito" id="tipo-local" onclick="elegirTipoEntrega('Compra por el Local')">
-          <span class="texto-opcion">Compra por Local</span>
-          <div class="cajita-x" id="check-tipo-local"></div>
+        <div class="opcion-cuadradito" id="tipo-mostrador" onclick="elegirTipoVenta('Mostrador')">
+          <span class="texto-opcion">Mostrador</span>
+          <div class="cajita-x" id="check-tipo-mostrador"></div>
         </div>
-        <div class="opcion-cuadradito" id="tipo-retiro" onclick="elegirTipoEntrega('Retira por Local')">
-          <span class="texto-opcion">Retira por Local</span>
+        <div class="opcion-cuadradito" id="tipo-retiro" onclick="elegirTipoVenta('Retiro por Local')">
+          <span class="texto-opcion">Retiro Local</span>
           <div class="cajita-x" id="check-tipo-retiro"></div>
         </div>
-        <div class="opcion-cuadradito" id="tipo-envio" onclick="elegirTipoEntrega('Envío')">
+        <div class="opcion-cuadradito" id="tipo-envio" onclick="elegirTipoVenta('Envío')">
           <span class="texto-opcion">Envío</span>
           <div class="cajita-x" id="check-tipo-envio"></div>
         </div>
       </div>
-      <ul id="lista-carrito"><li style="color:#777; justify-content:center;">Agregá prendas del catálogo</li></ul>
+
+      <ul id="lista-carrito"><li style="color:#777; justify-content:center;">No hay prendas cargadas</li></ul>
+
       <div class="resumen-costos">
         <div class="fila-costo"><span>Prendas (<span id="cant-prendas-txt">0</span>):</span><span id="subtotal-texto">$0</span></div>
         <div class="fila-costo" id="fila-embalaje" style="display:none;"><span>Embalaje y traslado:</span><span>$4.000</span></div>
         <div class="fila-costo total-final"><span>Total Final:</span><span id="total-texto">$0</span></div>
       </div>
-      <div id="bloque-form-local" style="display:none;">
-        <div class="titulo-seccion">Datos del Cliente (Todo Opcional)</div>
-        <div class="fila-doble">
-          <div class="campo" style="flex:1;"><input type="text" id="local-nombre" placeholder="Nombre (opcional)"></div>
-          <div class="campo" style="flex:1;"><input type="text" id="local-apellido" placeholder="Apellido (opcional)"></div>
-        </div>
-        <div class="fila-doble">
-          <div class="campo" style="flex:1;"><input type="tel" id="local-celular" placeholder="Celular (opcional)"></div>
-          <div class="campo" style="flex:1;"><input type="text" id="local-dni" placeholder="DNI (opcional)"></div>
-        </div>
+
+      <div class="campo">
+        <label>Forma de Pago:</label>
+        <select id="forma-pago">
+          <option value="Efectivo">Efectivo</option>
+          <option value="Transferencia">Transferencia</option>
+          <option value="Mixto (Efectivo + Transf.)">Mixto (Efectivo + Transf.)</option>
+        </select>
       </div>
-      <div id="bloque-form-retiro" style="display:none;">
-        <div class="titulo-seccion">Datos para Retiro por Local</div>
-        <div class="fila-doble">
-          <div class="campo" style="flex:1;"><input type="text" id="retiro-nombre" placeholder="Nombre *"></div>
-          <div class="campo" style="flex:1;"><input type="text" id="retiro-apellido" placeholder="Apellido *"></div>
-        </div>
-        <div class="fila-doble">
-          <div class="campo" style="flex:1;"><input type="tel" id="retiro-celular" placeholder="Celular *"></div>
-          <div class="campo" style="flex:1;"><input type="text" id="retiro-dni" placeholder="DNI"></div>
-        </div>
-        <div class="campo"><input type="text" id="retiro-por" placeholder="Retirado por (Nombre de quien retira)"></div>
+
+      <div id="bloque-mostrador" style="display:none;">
+        <div class="campo"><label>Cliente (Opcional):</label><input type="text" id="mostrador-cliente" placeholder="Consumidor Final"></div>
       </div>
-      <div id="bloque-form-envio" style="display:none;">
-        <div class="titulo-seccion">1. Forma de Envío / Transporte</div>
+
+      <div id="bloque-retiro" style="display:none;">
+        <div class="titulo-seccion">Datos de Retiro por Local (Obligatorios *)</div>
+        <div class="campo"><input type="text" id="retiro-nombre" placeholder="Nombre *"></div>
+        <div class="campo"><input type="text" id="retiro-apellido" placeholder="Apellido *"></div>
+        <div class="campo"><input type="tel" id="retiro-celular" placeholder="Celular *"></div>
+        <div class="campo"><input type="text" id="retiro-por" placeholder="Retirado por *"></div>
+      </div>
+
+      <div id="bloque-envio" style="display:none;">
+        <div class="titulo-seccion">Datos de Envío (Obligatorios *)</div>
         <div class="campo">
           <select id="transporte" onchange="verOtroTransporte()">
-            <option value="">-- Seleccioná transporte --</option>
+            <option value="">-- Seleccioná transporte * --</option>
             <option value="Vía Cargo">Vía Cargo</option>
             <option value="Correo Argentino">Correo Argentino</option>
             <option value="Micro">Micro</option>
-            <option value="Otro">Opcional (Escribir transporte)</option>
+            <option value="Otro">Otro (Escribir transporte)</option>
           </select>
         </div>
         <div class="caja-otro" id="caja-otro">
-          <input type="text" id="transporte-otro" placeholder="Escribí el transporte..." style="width:100%; padding:8px; border:1px solid #E91E63; border-radius:6px;">
+          <input type="text" id="transporte-otro" placeholder="Escribí el transporte *" style="width:100%; padding:7px; border:1px solid #E91E63; border-radius:6px;">
         </div>
         <div class="grupo-cuadraditos">
           <div class="opcion-cuadradito" id="opt-domicilio" onclick="elegirModalidad('A Domicilio')">
@@ -194,317 +227,254 @@
             <div class="cajita-x" id="check-sucursal"></div>
           </div>
         </div>
-        <div class="titulo-seccion">2. Datos de Envío</div>
         <div class="fila-doble">
           <div class="campo" style="flex:1;"><input type="text" id="nombre" placeholder="Nombre *"></div>
           <div class="campo" style="flex:1;"><input type="text" id="apellido" placeholder="Apellido *"></div>
         </div>
         <div class="fila-doble">
-          <div class="campo" style="flex:1;"><input type="tel" id="celular" placeholder="Teléfono / Cel *"></div>
+          <div class="campo" style="flex:1;"><input type="tel" id="celular" placeholder="Celular *"></div>
           <div class="campo" style="flex:1;"><input type="text" id="dni" placeholder="DNI *"></div>
         </div>
-        <div class="campo"><input type="text" id="direccion" placeholder="Dirección (Calle y Altura) *"></div>
-        <div class="fila-doble">
-          <div class="campo" style="flex:1;"><input type="text" id="cp" placeholder="Código Postal *"></div>
-          <div class="campo" style="flex:1.5;">
-            <input type="text" id="provincia" list="lista-provincias" placeholder="Provincia *" oninput="actualizarLocalidadesPorProvincia()">
-            <datalist id="lista-provincias"></datalist>
-          </div>
-        </div>
-        <div class="campo">
-          <input type="text" id="localidad" list="lista-localidades" placeholder="Localidad *">
-          <datalist id="lista-localidades"></datalist>
-        </div>
+        <div class="campo"><input type="text" id="direccion" placeholder="Dirección *"></div>
+        <div class="campo"><select id="provincia" onchange="cargarLocalidades()"><option value="">-- Provincia * --</option></select></div>
+        <div class="campo"><select id="localidad" onchange="verOtraLocalidad()"><option value="">-- Localidad * --</option></select></div>
+        <div class="caja-otro" id="caja-otra-localidad"><input type="text" id="localidad-otra" placeholder="Escribí localidad *" style="width:100%; padding:7px; border:1px solid #E91E63; border-radius:6px;"></div>
+        <div class="campo"><input type="text" id="cp" placeholder="Código Postal *"></div>
       </div>
-      <button type="button" id="btn-pdf" class="btn-pdf-directo" onclick="procesarComprobante('pdf')" disabled>📄 Generar Comprobante PDF</button>
-      <button type="button" id="btn-wsp" class="btn-wsp" onclick="procesarComprobante('wsp')" disabled>Enviar también por WhatsApp</button>
+
+      <button type="button" id="btn-generar" class="btn-generar-ticket" onclick="generarTicket80mm()" disabled>Cargá prendas y elegí tipo</button>
     </aside>
   </div>
   <script>
-    const TELEFONO = "5491125748687";
     const EMBALAJE = 4000;
+    const FIREBASE_BASE = "https://firebaseio.com";
 
     const PROVINCIAS_ARG = {
-      "Buenos Aires": ["La Plata", "Mar del Plata", "Bahía Blanca", "Tandil", "Quilmes", "Lanús", "Lomas de Zamora", "Avellaneda", "Morón", "Merlo", "Moreno", "San Justo", "San Martín", "Tigre", "San Isidro", "Vicente López", "Pilar", "Escobar", "Zárate", "Campana", "Luján", "Mercedes", "Junín", "Pergamino", "San Nicolás", "Olavarría", "Azul", "Necochea", "Tres Arroyos", "Chivilcoy"],
-      "CABA": ["Flores", "Palermo", "Belgrano", "Caballito", "Recoleta", "Almagro", "Balvanera", "Once", "Villa Crespo", "Villa Urquiza", "Devoto", "Liniers", "Mataderos", "Boedo", "San Telmo", "Barracas", "La Boca"],
-      "Catamarca": ["San Fernando del Valle de Catamarca", "Valle Viejo", "Andalgalá", "Belén", "Tinogasta", "Santa María"],
-      "Chaco": ["Resistencia", "Presidencia Roque Sáenz Peña", "Villa Ángela", "Charata", "General José de San Martín", "Castelli"],
-      "Chubut": ["Rawson", "Comodoro Rivadavia", "Trelew", "Puerto Madryn", "Esquel", "Sarmiento"],
-      "Córdoba": ["Córdoba Capital", "Villa Carlos Paz", "Río Cuarto", "Villa María", "San Francisco", "Alta Gracia", "Río Tercero", "Bell Ville", "Jesús María", "La Falda", "Cosquín", "Mina Clavero"],
-      "Corrientes": ["Corrientes Capital", "Goya", "Paso de los Libres", "Curuzú Cuatiá", "Mercedes", "Bella Vista", "Esquina"],
-      "Entre Ríos": ["Paraná", "Concordia", "Gualeguaychú", "Concepción del Uruguay", "Gualeguay", "Villaguay", "Chajarí", "Victoria"],
-      "Formosa": ["Formosa Capital", "Clorinda", "Pirané", "El Colorado", "Las Lomitas"],
-      "Jujuy": ["San Salvador de Jujuy", "San Pedro de Jujuy", "Libertador General San Martín", "Palpalá", "Perico", "Humahuaca", "Tilcara"],
-      "La Pampa": ["Santa Rosa", "General Pico", "Toay", "General Acha", "Eduardo Castex"],
-      "La Rioja": ["La Rioja Capital", "Chilecito", "Aimogasta", "Chamical", "Chepes"],
-      "Mendoza": ["Mendoza Capital", "Godoy Cruz", "Guaymallén", "Las Heras", "Luján de Cuyo", "Maipú", "San Rafael", "General Alvear", "Malargüe", "Tunuyán", "San Martín"],
-      "Misiones": ["Posadas", "Oberá", "Eldorado", "Puerto Iguazú", "Apóstoles", "Leandro N. Alem", "San Vicente"],
-      "Neuquén": ["Neuquén Capital", "San Martín de los Andes", "Villa La Angostura", "Zapala", "Cutral Có", "Plottier", "Centenario", "Chos Malal"],
-      "Río Negro": ["Viedma", "San Carlos de Bariloche", "General Roca", "Cipolletti", "Villa Regina", "El Bolsón", "Las Grutas"],
-      "Salta": ["Salta Capital", "San Ramón de la Nueva Orán", "Tartagal", "General Güemes", "Metán", "Cafayate", "Rosario de la Frontera"],
-      "San Juan": ["San Juan Capital", "Rawson", "Rivadavia", "Chimbas", "Santa Lucía", "Pocito", "Caucete", "Jáchal"],
-      "San Luis": ["San Luis Capital", "Villa Mercedes", "Merlo", "La Punta", "Juana Koslay"],
-      "Santa Cruz": ["Río Gallegos", "Caleta Olivia", "El Calafate", "Pico Truncado", "Puerto Deseado", "Las Heras"],
-      "Santa Fe": ["Santa Fe Capital", "Rosario", "Rafaela", "Venado Tuerto", "Reconquista", "Villa Gobernador Gálvez", "San Lorenzo", "Santo Tomé", "Esperanza", "Casilda"],
-      "Santiago del Estero": ["Santiago del Estero Capital", "La Banda", "Termas de Río Hondo", "Añatuya", "Frías"],
+      "Ciudad Autónoma de Buenos Aires": ["Agronomía", "Almagro", "Balvanera", "Barracas", "Belgrano", "Boedo", "Caballito", "Chacarita", "Coghlan", "Colegiales", "Constitución", "Flores", "Floresta", "La Boca", "La Paternal", "Liniers", "Mataderos", "Monte Castro", "Monserrat", "Nueva Pompeya", "Núñez", "Palermo", "Parque Avellaneda", "Parque Chacabuco", "Parque Chas", "Parque Patricios", "Puerto Madero", "Recoleta", "Retiro", "Saavedra", "San Cristóbal", "San Nicolás", "San Telmo", "Vélez Sársfield", "Versalles", "Villa Crespo", "Villa del Parque", "Villa Devoto", "Villa General Mitre", "Villa Lugano", "Villa Luro", "Villa Ortúzar", "Villa Pueyrredón", "Villa Real", "Villa Riachuelo", "Villa Santa Rita", "Villa Soldati", "Villa Urquiza"],
+      "Buenos Aires": ["Avellaneda", "Bahía Blanca", "Berazategui", "Campana", "Castelar", "Ezeiza", "Florencio Varela", "General San Martín", "Hurlingham", "Ituzaingó", "José C. Paz", "Junín", "La Matanza", "La Plata", "Lanús", "Lomas de Zamora", "Luján", "Mar del Plata", "Merlo", "Moreno", "Morón", "Necochea", "Olavarría", "Pergamino", "Pilar", "Quilmes", "Ramos Mejía", "San Fernando", "San Isidro", "San Miguel", "San Nicolás", "Tandil", "Tigre", "Tres de Febrero", "Vicente López", "Zárate"],
+      "Catamarca": ["San Fernando del Valle de Catamarca", "Andalgalá", "Belén", "Fiambalá", "Santa María", "Tinogasta"],
+      "Chaco": ["Resistencia", "Barranqueras", "Charata", "Fontana", "General José de San Martín", "Presidencia Roque Sáenz Peña", "Villa Ángela"],
+      "Chubut": ["Rawson", "Comodoro Rivadavia", "Esquel", "Puerto Madryn", "Sarmiento", "Trelew"],
+      "Córdoba": ["Córdoba Capital", "Alta Gracia", "Bell Ville", "Carlos Paz", "Cosquín", "Jesús María", "La Falda", "Río Cuarto", "Río Tercero", "San Francisco", "Villa Dolores", "Villa María"],
+      "Corrientes": ["Corrientes Capital", "Bella Vista", "Curuzú Cuatiá", "Esquina", "Goya", "Mercedes", "Monte Caseros", "Paso de los Libres", "Santo Tomé"],
+      "Entre Ríos": ["Paraná", "Chajarí", "Colón", "Concepción del Uruguay", "Concordia", "Gualeguay", "Gualeguaychú", "La Paz", "Victoria", "Villaguay"],
+      "Formosa": ["Formosa Capital", "Clorinda", "El Colorado", "Ingeniero Juárez", "Las Lomitas", "Pirané"],
+      "Jujuy": ["San Salvador de Jujuy", "El Carmen", "Humahuaca", "La Quiaca", "Libertador General San Martín", "Palpalá", "Perico", "San Pedro de Jujuy", "Tilcara"],
+      "La Pampa": ["Santa Rosa", "Eduardo Castex", "General Acha", "General Pico", "Intendente Alvear", "Toay"],
+      "La Rioja": ["La Rioja Capital", "Aimogasta", "Chamical", "Chepes", "Chilecito", "Villa Unión"],
+      "Mendoza": ["Mendoza Capital", "General Alvear", "Godoy Cruz", "Guaymallén", "Las Heras", "Luján de Cuyo", "Maipú", "Malargüe", "Rivadavia", "San Martín", "San Rafael", "Tunuyán"],
+      "Misiones": ["Posadas", "Apóstoles", "Aristóbulo del Valle", "Eldorado", "Jardín América", "Leandro N. Alem", "Montecarlo", "Oberá", "Puerto Iguazú", "San Vicente"],
+      "Neuquén": ["Neuquén Capital", "Centenario", "Chos Malal", "Cutral Có", "Junín de los Andes", "Plaza Huincul", "Plottier", "San Martín de los Andes", "Villa La Angostura", "Zapala"],
+      "Río Negro": ["Viedma", "Allen", "Choele Choel", "Cipolletti", "El Bolsón", "General Roca", "Las Grutas", "San Antonio Oeste", "San Carlos de Bariloche", "Villa Regina"],
+      "Salta": ["Salta Capital", "Cafayate", "Embarcación", "General Güemes", "Joaquín V. González", "Metán", "Orán", "Rosario de la Frontera", "Tartagal"],
+      "San Juan": ["San Juan Capital", "Albardón", "Caucete", "Chimbas", "Jáchal", "Pocito", "Rawson", "Rivadavia", "Santa Lucía"],
+      "San Luis": ["San Luis Capital", "Justo Daract", "La Punta", "Merlo", "Quines", "Santa Rosa del Conlara", "Villa Mercedes"],
+      "Santa Cruz": ["Río Gallegos", "Caleta Olivia", "El Calafate", "El Chaltén", "Las Heras", "Pico Truncado", "Puerto Deseado", "Puerto San Julián"],
+      "Santa Fe": ["Santa Fe Capital", "Cañada de Gómez", "Casilda", "Esperanza", "Firmat", "Granadero Baigorria", "Rafaela", "Reconquista", "Rosario", "San Lorenzo", "Santo Tomé", "Venado Tuerto", "Villa Constitución"],
+      "Santiago del Estero": ["Santiago del Estero Capital", "Añatuya", "Frías", "La Banda", "Las Termas de Río Hondo", "Monte Quemado", "Quimilí"],
       "Tierra del Fuego": ["Ushuaia", "Río Grande", "Tolhuin"],
-      "Tucumán": ["San Miguel de Tucumán", "Yerba Buena", "Tafí Viejo", "Banda del Río Salí", "Concepción", "Aguilares", "Monteros"]
+      "Tucumán": ["San Miguel de Tucumán", "Aguilares", "Alderetes", "Banda del Río Salí", "Concepción", "Famaillá", "Monteros", "Tafí Viejo", "Yerba Buena"]
     };
+
     const PRODUCTOS = [
-      { id: 1, nombre: "Vestido Franchesca", precio: 15000, talles: ["Talle Único"], colores: ["Negro", "Choco", "Blanco", "Uva"] },
-      { id: 2, nombre: "Marilyn Lunares", precio: 6000, talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Bordó", "Choco"] },
-      { id: 3, nombre: "Pollera Lunares", precio: 5500, talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva"] },
-      { id: 4, nombre: "Vestido Isa", precio: 13500, talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco"] },
-      { id: 5, nombre: "Pollera Volado de Tul", subtitulo: "Con lentejuela y short interno", precio: 9000, talles: ["Talle Único"], colores: ["Negro", "Plateado", "Blanco"] },
-      { id: 6, nombre: "Pollera Glitter", precio: 5000, talles: ["Talle Único"], colores: ["Negro", "Rojo", "Plateado"] },
-      { id: 7, nombre: "Body Carla", precio: 8000, talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
-      { id: 8, nombre: "Pollera Mini Print", precio: 7000, talles: ["Talle 2", "Talle 4"], colores: ["Print Clarito", "Print Oscurito"] },
-      { id: 9, nombre: "Body Melisa Print", precio: 8000, talles: ["Talle Único"], colores: ["Print Amarillito", "Print Manchas Grandes", "Print Manchas Chicas"] },
-      { id: 11, nombre: "Short Camila", precio: 4500, coloresPorTalle: { "Talle 2": ["Negro", "Choco", "Uva", "Blanco"], "Talle 4": ["Negro", "Choco", "Uva"] } },
-      { id: 12, nombre: "Polleras Voladas con Diseño", precio: 4000, talles: ["Talle Único"], colores: ["Negro Floreado", "Bordó Floreado", "Vaquita"] },
-      { id: 13, nombre: "Vestido Anahi", subtitulo: "Satén elastizado premium", precio: 15000, talles: ["Talle Único"], colores: ["Negro", "Chocolate"] },
-      { id: 14, nombre: "Vestido Isa con Strass", precio: 16000, talles: ["Talle Único"], colores: ["Negro", "Choco"] },
-      { id: 15, nombre: "Vestido Straple", precio: 13500, talles: ["Talle Único"], colores: ["Negro", "Choco"] },
-      { id: 16, nombre: "Short con Strass", precio: 5000, talles: ["Talle Único"], colores: ["Negro", "Choco"] },
-      { id: 17, nombre: "Vestido Oriana con Strass", precio: 11500, talles: ["Talle Único"], colores: ["Negro", "Choco"] },
-      { id: 18, nombre: "Catsuit Brisa", precio: 8500, talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva"] },
-      { id: 19, nombre: "Top Buche Strass", precio: 6500, talles: ["Talle Único"], colores: ["Negro", "Uva"] },
-      { id: 20, nombre: "Top Corazón", precio: 5000, talles: ["Talle Único"], colores: ["Negro", "Choco", "Celeste", "Blanco", "Rosa", "Lila"] },
-      { id: 21, nombre: "Reme Tokio Print", precio: 8000, talles: ["Talle 2", "Talle 4"], colores: ["Print Manchas Grandes", "Print Amarillito"] },
-      { id: 22, nombre: "Palazzo Kheyla", precio: 9000, talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
-      { id: 23, nombre: "Reme Tokio", precio: 7000, talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Blanco", "Uva", "Celeste", "Rosa", "Lila"] }
+      { id: 1, categoria: "Vestidos", nombre: "Vestido Franchesca", precio: 15000, stockDefault: 20, fotos: ["franchesca.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Blanco", "Uva"] },
+      { id: 2, categoria: "Top", nombre: "Marilyn Lunares", precio: 6000, stockDefault: 10, stockEspecialVariante: { "Talle 4|Choco": 5 }, fotos: ["marilyn.jpg"], coloresPorTalle: { "Talle 2": ["Negro", "Choco"], "Talle 4": ["Choco"] } },
+      { id: 3, categoria: "Polleras", nombre: "Pollera Lunares", precio: 5500, stockDefault: 8, fotos: ["pollera.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva"] },
+      { id: 4, categoria: "Vestidos", nombre: "Vestido Isa", precio: 13500, stockDefault: 15, stockEspecialVariante: { "Talle 2|Negro": 5, "Talle 2|Choco": 5 }, fotos: ["isa.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco"] },
+      { id: 5, categoria: "Polleras", nombre: "Pollera Volado de Tul", subtitulo: "Con lentejuela y short interno", precio: 9000, stockDefault: 8, fotos: ["tul1.jpg.jpg", "tul2.jpg.jpg", "tul3.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Plateado", "Blanco"] },
+      { id: 6, categoria: "Polleras", nombre: "Pollera Glitter", precio: 5000, stockDefault: 6, fotos: ["glitter1.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Rojo", "Plateado"] },
+      { id: 7, categoria: "Body", nombre: "Body Carla", precio: 8000, stockDefault: 10, fotos: ["carla1.jpg.jpg", "carla2.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
+      { id: 8, categoria: "Polleras", nombre: "Pollera Mini Print", precio: 7000, stockDefault: 10, fotos: ["mini1.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Print Clarito", "Print Oscurito"] },
+      { id: 9, categoria: "Body", nombre: "Body Melisa Print", precio: 8000, stockDefault: 15, fotos: ["melisaprint.jpg.jpg"], talles: ["Talle Único"], colores: ["Print Amarillito", "Print Manchas Grandes", "Print Manchas Chicas"] },
+      { id: 11, categoria: "Polleras", nombre: "Short Camila", precio: 4500, stockDefault: 8, fotos: ["camila.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Uva"] },
+      { id: 12, categoria: "Polleras", nombre: "Polleras Voladas con Diseño", precio: 4000, stockDefault: 4, fotos: ["voladas.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro Floreado", "Bordó Floreado", "Vaquita"] },
+      { id: 13, categoria: "Vestidos", nombre: "Vestido Anahi", subtitulo: "Satén elastizado premium", precio: 15000, stockDefault: 10, fotos: ["anahi1.jpg.jpg", "anahi2.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Chocolate"] },
+      { id: 14, categoria: "Vestidos", nombre: "Vestido Isa con Strass", precio: 16000, stockDefault: 15, fotos: ["isastrass1.jpg", "isastrass2.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco"] },
+      { id: 15, categoria: "Vestidos", nombre: "Vestido Straple", precio: 13500, stockDefault: 15, fotos: ["straple.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
+      { id: 16, categoria: "Polleras", nombre: "Short con Strass", precio: 5000, stockDefault: 15, fotos: ["shortstrass.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
+      { id: 17, categoria: "Vestidos", nombre: "Vestido Oriana con Strass", precio: 11500, stockDefault: 10, fotos: ["oriana1.jpg", "oriana2.jpg", "oriana3.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
+      { id: 18, categoria: "Catsuit", nombre: "Catsuit Brisa", precio: 8500, stockDefault: 8, fotos: ["brisa.jpg"], talles: ["Talle Único"], colores: ["Choco", "Uva"] },
+      { id: 19, categoria: "Top", nombre: "Top Buche Strass", precio: 6500, stockDefault: 15, fotos: ["topbuche1.jpg", "topbuche2.jpg"], talles: ["Talle Único"], colores: ["Negro", "Uva"] },
+      { id: 20, categoria: "Top", nombre: "Top Corazón", precio: 5000, stockDefault: 15, fotos: ["topcorazon.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Celeste", "Rosa", "Lila"] },
+      { id: 21, categoria: "Remes", nombre: "Reme Tokio Print", precio: 8000, stockDefault: 10, fotos: ["tokioprint.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Print Manchas Grandes", "Print Amarillito"] },
+      { id: 22, categoria: "Pantalones", nombre: "Palazzo Kheyla", precio: 9000, stockDefault: 15, fotos: ["kheyla.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
+      { id: 23, categoria: "Remes", nombre: "Reme Tokio", precio: 7000, stockDefault: 10, stockEspecialColor: { "Uva": 5 }, fotos: ["tokio1.jpg", "tokio2.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Blanco", "Uva", "Celeste", "Rosa", "Lila"] },
+      { id: 24, categoria: "Vestidos", nombre: "Vestido Straple Lia", precio: 13500, stockDefault: 20, fotos: ["straplelia1.jpg", "straplelia2.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
+      { id: 25, categoria: "Vestidos", nombre: "Vestido Straple c/ Strass", precio: 15000, stockDefault: 20, fotos: ["straplestrass1.jpg", "straplestrass2.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
+      { id: 26, categoria: "Polleras", nombre: "Pollera Frida", precio: 8000, stockDefault: 12, fotos: ["frida1.jpg", "frida2.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Choco", "Uva"] },
+      { id: 27, categoria: "Polleras", nombre: "Pollera Frunce Corto", precio: 5500, stockDefault: 15, fotos: ["frunce1.jpg", "frunce2.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Choco", "Negro", "Uva"] }
     ];
 
+    let stockGlobal = {};
     let carrito = [];
-    let tipoEntrega = "";
+    let tipoVenta = "";
     let modalidadSeleccionada = "";
+    let categoriaActual = "Todos";
 
-    function cargarListasGeograficas() {
-      const dlProv = document.getElementById("lista-provincias");
-      if (dlProv) dlProv.innerHTML = Object.keys(PROVINCIAS_ARG).map(p => '<option value="' + p + '">').join('');
+    function cargarProvincias() {
+      const selProv = document.getElementById("provincia");
+      if (!selProv) return;
+      selProv.innerHTML = '<option value="">-- Seleccioná Provincia * --</option>' +
+        Object.keys(PROVINCIAS_ARG).map(p => '<option value="' + p + '">' + p + '</option>').join('');
     }
 
-    function actualizarLocalidadesPorProvincia() {
-      const provEscrita = document.getElementById("provincia").value.trim().toLowerCase();
-      const dlLoc = document.getElementById("lista-localidades");
-      const entrada = Object.entries(PROVINCIAS_ARG).find(par => par.at(0).toLowerCase() === provEscrita);
-      const locs = entrada ? entrada.at(1) : [];
-      dlLoc.innerHTML = locs.map(l => '<option value="' + l + '">').join('');
+    function cargarLocalidades() {
+      const prov = document.getElementById("provincia").value;
+      const selLoc = document.getElementById("localidad");
+      document.getElementById("caja-otra-localidad").style.display = "none";
+      if (!prov) { selLoc.innerHTML = '<option value="">-- Primero elegí Provincia * --</option>'; return; }
+      const lista = Object.entries(PROVINCIAS_ARG).find(x => x.at(0) === prov)?.at(1) || [];
+      selLoc.innerHTML = '<option value="">-- Seleccioná Localidad * --</option>' +
+        lista.map(l => '<option value="' + l + '">' + l + '</option>').join('') +
+        '<option value="Otra">Otra localidad (Escribir)</option>';
     }
 
-    function codificarDatos(obj) {
-      const jsonStr = JSON.stringify(obj);
-      const bytes = new TextEncoder().encode(jsonStr);
-      let bin = "";
-      bytes.forEach(b => bin += String.fromCharCode(b));
-      return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    function verOtraLocalidad() {
+      document.getElementById("caja-otra-localidad").style.display = (document.getElementById("localidad").value === "Otra") ? "block" : "none";
     }
 
-    function decodificarDatos(str) {
-      let b64 = str.replace(/-/g, '+').replace(/_/g, '/');
-      while (b64.length % 4) b64 += '=';
-      const bin = atob(b64);
-      const bytes = new Uint8Array(bin.length);
-      for (let i = 0; i < bin.length; i++) bytes.set([bin.charCodeAt(i)], i);
-      return JSON.parse(new TextDecoder().decode(bytes));
+    function obtenerStockInicialVariante(id, talle, color) {
+      const prod = PRODUCTOS.find(p => p.id === id);
+      if (!prod) return 0;
+      const claveVariante = talle + "|" + color;
+      if (prod.stockEspecialVariante && prod.stockEspecialVariante.hasOwnProperty(claveVariante)) {
+        const parVar = Object.entries(prod.stockEspecialVariante).find(x => x.at(0) === claveVariante);
+        if (parVar) return parVar.at(1);
+      }
+      if (prod.stockEspecialColor && prod.stockEspecialColor.hasOwnProperty(color)) {
+        const parCol = Object.entries(prod.stockEspecialColor).find(x => x.at(0) === color);
+        if (parCol) return parCol.at(1);
+      }
+      return prod.stockDefault || 10;
     }
 
-    function imprimirHojaIndividual(modo) {
-      document.body.classList.remove("solo-envio", "solo-orden");
-      if (modo === "envio") document.body.classList.add("solo-envio");
-      if (modo === "orden") document.body.classList.add("solo-orden");
-      window.print();
-      setTimeout(() => { document.body.classList.remove("solo-envio", "solo-orden"); }, 500);
+    function obtenerClaveStock(id, talle, color) {
+      return id + "_" + talle.replace(/\s+/g, '') + "_" + color.replace(/\s+/g, '');
     }
 
-    function descargarComoPDF() {
-      document.body.classList.remove("solo-envio", "solo-orden");
-      window.print();
+    async function sincronizarStockDesdeNube() {
+      try {
+        const resp = await fetch(FIREBASE_BASE + ".json?t=" + Date.now());
+        const datos = await resp.json();
+        stockGlobal = datos || {};
+        actualizarTodasLasTarjetas();
+      } catch (e) {}
     }
-    function mostrarComprobanteEnPantalla(d) {
-      document.getElementById("vista-tienda").style.display = "none";
-      const cont = document.getElementById("vista-comprobante");
-      cont.style.display = "block";
-      const esCompraLocal = (d.tipo === "Compra por el Local");
-      const esRetiroLocal = (d.tipo === "Retira por Local");
-      const filasHtml = d.items.length > 0
-        ? d.items.map(it => '<tr><td style="text-align:center;">' + it.c + '</td><td>' + it.n + ' (Color: ' + it.col + ' - ' + it.t + ')</td><td style="text-align:right;">$' + it.p + '</td><td style="text-align:right;">$' + it.s + '</td></tr>').join("")
-        : '<tr><td colspan="4" style="text-align:center; color:#666;">Sin prendas cargadas</td></tr>';
 
-      let hojaTalonHtml = "";
-      if (!esCompraLocal) {
-        if (esRetiroLocal) {
-          const retPorTexto = d.retpor ? ' &nbsp;/&nbsp; <b>Retirado por:</b> ' + d.retpor : '';
-          hojaTalonHtml =
-            '<div class="hoja-pdf hoja-envio">' +
-              '<table class="pdf-header"><tr>' +
-                '<td style="width: 38%;"><div class="pdf-logo">BELLA</div><div style="font-size:11px; font-weight:bold;">FABRICANTE DIRECTO</div><div style="font-size:10px;">Campana 378 - Local A6<br>Galería Smart Campana - Flores</div></td>' +
-                '<td style="width: 34%; text-align: center;"><div style="font-weight:bold; font-size:13px;">Venta por Mayor y Menor<br>Retiro por Local</div><div style="font-size:11px; margin-top:4px;">Fecha: ' + d.f + ' | Hora: ' + d.h + '</div></td>' +
-                '<td style="width: 28%; font-size: 10px;"><b>Dany: 11-2574-8687<br>Isa: 11-6735-3960</b><br>FB: BELLA Indumentaria<br>TK: bella.indumentaria<br>IG: bella.indumentariadama</td>' +
-              '</tr></table>' +
-              '<table class="pdf-envios"><tr>' +
-                '<td class="pdf-vertical-retiro">R<br>E<br>T<br>I<br>R<br>O<br><br>P<br>O<br>R<br><br>L<br>O<br>C<br>A<br>L</td>' +
-                '<td style="width: 10px;"></td>' +
-                '<td class="pdf-datos">' +
-                  '<div class="pdf-linea-gigante">' + d.nom + ' ' + d.ape + retPorTexto + '</div>' +
-                  '<div class="pdf-linea-gigante"><b>Celular:</b> ' + d.cel + '</div>' +
-                  '<div class="pie-envio" style="margin-top: 8px; font-size: 10px; color: #555;">Documento no válido como factura</div>' +
-                '</td>' +
-              '</tr></table>' +
-            '</div>';
-        } else {
-          const marcaDom = (d.mod === "A Domicilio") ? "X" : "&nbsp;";
-          const marcaSuc = (d.mod === "Retira en Sucursal") ? "X" : "&nbsp;";
-          hojaTalonHtml =
-            '<div class="hoja-pdf hoja-envio">' +
-              '<table class="pdf-header"><tr>' +
-                '<td style="width: 38%;"><div class="pdf-logo">BELLA</div><div style="font-size:11px; font-weight:bold;">FABRICANTE DIRECTO</div><div style="font-size:10px;">Campana 378 - Local A6<br>Galería Smart Campana - Flores</div></td>' +
-                '<td style="width: 34%; text-align: center;"><div style="font-weight:bold; font-size:13px;">Venta por Mayor y Menor<br>Envíos al Interior</div><div style="font-size:11px; margin-top:4px;">Fecha: ' + d.f + ' | Hora: ' + d.h + '</div></td>' +
-                '<td style="width: 28%; font-size: 10px;"><b>Dany: 11-2574-8687<br>Isa: 11-6735-3960</b><br>FB: BELLA Indumentaria<br>TK: bella.indumentaria<br>IG: bella.indumentariadama</td>' +
-              '</tr></table>' +
-              '<table class="pdf-envios"><tr>' +
-                '<td class="pdf-vertical">E<br>N<br>V<br>Í<br>O<br>S</td>' +
-                '<td style="width: 10px;"></td>' +
-                '<td class="pdf-datos">' +
-                  '<div class="pdf-linea"><b>Nombre:</b> ' + d.nom + ' &nbsp;&nbsp;&nbsp;&nbsp; <b>Apellido:</b> ' + d.ape + '</div>' +
-                  '<div class="pdf-linea"><b>DNI:</b> ' + d.dni + ' &nbsp;&nbsp;&nbsp;&nbsp; <b>Teléfono:</b> ' + d.cel + '</div>' +
-                  '<div class="pdf-linea"><b>Dirección:</b> ' + d.dir + '</div>' +
-                  '<div class="pdf-linea"><b>Localidad:</b> ' + d.loc + ' &nbsp;&nbsp;&nbsp;&nbsp; <b>Provincia:</b> ' + d.prov + '</div>' +
-                  '<div class="pdf-linea"><b>Código Postal:</b> ' + d.cp + ' &nbsp;&nbsp;&nbsp;&nbsp; <b>Transporte:</b> ' + d.tr + '</div>' +
-                  '<div class="fila-casillas-envio" style="margin-top: 12px; text-align: right; font-size: 13px; font-weight: bold;">' +
-                    'A Domicilio <span class="pdf-casilla">' + marcaDom + '</span> &nbsp;&nbsp;&nbsp;&nbsp; Retira en Sucursal <span class="pdf-casilla">' + marcaSuc + '</span>' +
-                  '</div>' +
-                  '<div class="pie-envio" style="margin-top: 8px; font-size: 10px; color: #555;">Documento no válido como factura</div>' +
-                '</td>' +
-              '</tr></table>' +
-            '</div>';
+    function obtenerStockDisponible(id, talle, color) {
+      const clave = obtenerClaveStock(id, talle, color);
+      const inicial = obtenerStockInicialVariante(id, talle, color);
+      const base = stockGlobal.hasOwnProperty(clave) ? Number(Object.entries(stockGlobal).find(x => x.at(0) === clave).at(1)) : inicial;
+      const enCarrito = carrito.find(i => i.id === id && i.talle === talle && i.color === color);
+      return Math.max(0, base - (enCarrito ? enCarrito.cant : 0));
+    }
+
+    async function descontarStockDefinitivo(itemsComprados) {
+      try {
+        const resp = await fetch(FIREBASE_BASE + ".json?t=" + Date.now());
+        const actualEnNube = (await resp.json()) || {};
+        for (const it of itemsComprados) {
+          const clave = obtenerClaveStock(it.id, it.talle, it.color);
+          const inicial = obtenerStockInicialVariante(it.id, it.talle, it.color);
+          const actual = actualEnNube.hasOwnProperty(clave) ? Number(Object.entries(actualEnNube).find(x => x.at(0) === clave).at(1)) : inicial;
+          const nuevoValor = Math.max(0, actual - it.cant);
+          stockGlobal[clave] = nuevoValor;
+          await fetch(FIREBASE_BASE + "/" + clave + ".json", {
+            method: "PUT",
+            keepalive: true,
+            body: JSON.stringify(nuevoValor)
+          });
         }
-      }
-      const filaEmbalajePdf = (d.tipo === "Envío") ? '<tr><td style="text-align:center;">1</td><td><b>Embalaje y Traslado</b></td><td style="text-align:right;">$4.000</td><td style="text-align:right;">$4.000</td></tr>' : '';
-      const nombreCompleto = (d.nom + " " + d.ape).trim() || "Cliente Mostrador";
-      const infoDni = d.dni ? ' &nbsp;|&nbsp; <b>DNI:</b> ' + d.dni : "";
-      const infoCel = d.cel ? ' &nbsp;|&nbsp; <b>Cel:</b> ' + d.cel : "";
-      let datosClienteOrdenPdf = "";
-      if (esCompraLocal) {
-        datosClienteOrdenPdf = '<b>Modalidad:</b> COMPRA POR EL LOCAL<br><b>Cliente:</b> ' + nombreCompleto + infoDni + infoCel;
-      } else if (esRetiroLocal) {
-        const extraRet = d.retpor ? ' &nbsp;|&nbsp; <b>Retirado por:</b> ' + d.retpor : '';
-        datosClienteOrdenPdf = '<b>Modalidad:</b> RETIRA POR LOCAL<br><b>Cliente:</b> ' + nombreCompleto + infoDni + infoCel + extraRet;
-      } else {
-        datosClienteOrdenPdf = '<b>Señor/es:</b> ' + d.nom + ' ' + d.ape + ' &nbsp;|&nbsp; <b>DNI:</b> ' + d.dni + '<br><b>Domicilio:</b> ' + d.dir + ' (' + d.loc + ', ' + d.prov + ')';
-      }
-
-      const botonesImprimirHtml = esCompraLocal
-        ? '<button type="button" class="btn-imprimir-orden" onclick="imprimirHojaIndividual(\'orden\')">🖨️ Imprimir Detalle de Compra</button>'
-        : (esRetiroLocal
-            ? '<button type="button" class="btn-imprimir-pdf" onclick="imprimirHojaIndividual(\'envio\')">🖨️ Imprimir Hoja 1 de Retiro</button><button type="button" class="btn-imprimir-orden" onclick="imprimirHojaIndividual(\'orden\')">🖨️ Imprimir Detalle de Compra</button>'
-            : '<button type="button" class="btn-imprimir-pdf" onclick="imprimirHojaIndividual(\'envio\')">🖨️ Imprimir Hoja 1 de Envío</button><button type="button" class="btn-imprimir-orden" onclick="imprimirHojaIndividual(\'orden\')">🖨️ Imprimir Detalle de Compra</button>');
-
-      cont.innerHTML =
-        '<div class="barra-imprimir no-imprimir">' +
-          botonesImprimirHtml +
-          '<button type="button" class="btn-descargar-pdf" onclick="descargarComoPDF()">⬇️ Descargar PDF</button>' +
-          '<button type="button" class="btn-volver-tienda" onclick="volverAlMostrador()">← Nuevo Pedido</button>' +
-        '</div>' +
-        hojaTalonHtml +
-        '<div class="hoja-pdf hoja-orden">' +
-          '<table class="pdf-header"><tr>' +
-            '<td style="width: 35%;"><div class="pdf-logo">BELLA</div><div style="font-family: Georgia, serif; font-style: italic; font-size: 17px;">Indumentaria</div></td>' +
-            '<td style="width: 37%; text-align: center;"><div style="font-size:11px; font-weight:bold;">FABRICANTE DIRECTO</div><div style="font-size:10px;">Venta por Mayor y Menor - Envíos al Interior<br><b>Campana 378 - Local A6<br>Galería Smart Campana - Flores</b></div></td>' +
-            '<td style="width: 28%; font-size: 10px;"><b>Dany: 11-2574-8687<br>Isa: 11-6735-3960</b><br>FB: BELLA Indumentaria<br>TK: bella.indumentaria<br>IG: bella.indumentariadama</td>' +
-          '</tr></table>' +
-          '<div class="caja-orden-cliente" style="border: 2px solid #1A1A1A; padding: 12px; margin-bottom: 12px; font-size: 12px; line-height: 1.5;">' +
-            '<b>ORDEN DE COMPRA</b> &nbsp;|&nbsp; <b>Fecha:</b> ' + d.f + ' &nbsp;|&nbsp; <b>Hora:</b> ' + d.h + '<br>' + datosClienteOrdenPdf +
-          '</div>' +
-          '<table class="pdf-tabla">' +
-            '<thead><tr><th style="width: 12%;">CANT.</th><th style="width: 52%;">DETALLE</th><th style="width: 18%;">P. UNIT.</th><th style="width: 18%;">IMPORTE</th></tr></thead>' +
-            '<tbody>' + filasHtml + filaEmbalajePdf + '</tbody>' +
-          '</table>' +
-          '<div class="pdf-total">TOTAL FINAL: $' + d.tot + '</div>' +
-          '<div class="pie-orden" style="clear: both; padding-top: 18px; font-size: 10px; color: #555;">Documento no válido como factura - BELLA Indumentaria</div>' +
-        '</div>';
-    }
-    function volverAlMostrador() {
-      carrito = [];
-      actualizarCarrito();
-      document.getElementById("vista-comprobante").style.display = "none";
-      document.getElementById("vista-tienda").style.display = "block";
-      if (window.location.search) window.history.replaceState({}, "", window.location.pathname);
+      } catch (e) {}
     }
 
-    function elegirTipoEntrega(tipo) {
-      tipoEntrega = tipo;
-      const boxLocal = document.getElementById("tipo-local");
-      const boxRetiro = document.getElementById("tipo-retiro");
-      const boxEnvio = document.getElementById("tipo-envio");
-      const chkLocal = document.getElementById("check-tipo-local");
-      const chkRetiro = document.getElementById("check-tipo-retiro");
-      const chkEnvio = document.getElementById("check-tipo-envio");
-      const formLocal = document.getElementById("bloque-form-local");
-      const formRetiro = document.getElementById("bloque-form-retiro");
-      const formEnvio = document.getElementById("bloque-form-envio");
-
-      boxLocal.classList.remove("seleccionado"); boxRetiro.classList.remove("seleccionado"); boxEnvio.classList.remove("seleccionado");
-      chkLocal.textContent = ""; chkRetiro.textContent = ""; chkEnvio.textContent = "";
-      formLocal.style.display = "none"; formRetiro.style.display = "none"; formEnvio.style.display = "none";
-
-      if (tipo === "Compra por el Local") {
-        boxLocal.classList.add("seleccionado"); chkLocal.textContent = "X"; formLocal.style.display = "block";
-      } else if (tipo === "Retira por Local") {
-        boxRetiro.classList.add("seleccionado"); chkRetiro.textContent = "X"; formRetiro.style.display = "block";
+    function actualizarEstadoStockTarjeta(id) {
+      const selTal = document.getElementById("tal-" + id);
+      const selCol = document.getElementById("col-" + id);
+      const inpCan = document.getElementById("can-" + id);
+      const badge = document.getElementById("stock-badge-" + id);
+      const cartel = document.getElementById("agotado-" + id);
+      const btn = document.getElementById("btn-add-" + id);
+      if (!selTal || !selCol) return;
+      const disp = obtenerStockDisponible(id, selTal.value, selCol.value);
+      if (disp <= 0) {
+        badge.textContent = "AGOTADO";
+        badge.classList.add("sin-stock");
+        cartel.classList.add("visible");
+        btn.disabled = true; btn.textContent = "Agotado";
+        inpCan.value = 0; inpCan.max = 0;
       } else {
-        boxEnvio.classList.add("seleccionado"); chkEnvio.textContent = "X"; formEnvio.style.display = "block";
+        badge.textContent = "Disponibles: " + disp + " unid.";
+        badge.classList.remove("sin-stock");
+        cartel.classList.remove("visible");
+        btn.disabled = false; btn.textContent = "Agregar a venta";
+        inpCan.max = disp;
+        if (parseInt(inpCan.value) > disp || parseInt(inpCan.value) <= 0) inpCan.value = 1;
       }
-      actualizarCarrito();
+    }
+
+    function actualizarTodasLasTarjetas() { PRODUCTOS.forEach(p => actualizarEstadoStockTarjeta(p.id)); }
+    function filtrarCategoria(cat, btn) {
+      categoriaActual = cat;
+      document.querySelectorAll(".btn-cat").forEach(b => b.classList.remove("activo"));
+      if (btn) btn.classList.add("activo");
+      cargarCatalogo();
     }
 
     function actualizarColoresPorTalle(id) {
       const prod = PRODUCTOS.find(p => p.id === id);
-      if (!prod || !prod.coloresPorTalle) return;
-      const talleElegido = document.getElementById("tal-" + id).value;
-      const coloresFinales = Object.entries(prod.coloresPorTalle).find(par => par.at(0) === talleElegido)?.at(1) || [];
-      document.getElementById("col-" + id).innerHTML = coloresFinales.map(c => '<option value="' + c + '">' + c + '</option>').join('');
+      if (!prod) return;
+      if (prod.coloresPorTalle) {
+        const talleElegido = document.getElementById("tal-" + id).value;
+        const coloresFinales = Object.entries(prod.coloresPorTalle).find(par => par.at(0) === talleElegido)?.at(1) || [];
+        document.getElementById("col-" + id).innerHTML = coloresFinales.map(c => '<option value="' + c + '">' + c + '</option>').join('');
+      }
+      actualizarEstadoStockTarjeta(id);
     }
 
-    function elegirModalidad(opcion) {
-      modalidadSeleccionada = (modalidadSeleccionada === opcion) ? "" : opcion;
-      const boxDom = document.getElementById("opt-domicilio");
-      const boxSuc = document.getElementById("opt-sucursal");
-      const chkDom = document.getElementById("check-domicilio");
-      const chkSuc = document.getElementById("check-sucursal");
-      boxDom.classList.toggle("seleccionado", modalidadSeleccionada === "A Domicilio");
-      boxSuc.classList.toggle("seleccionado", modalidadSeleccionada === "Retira en Sucursal");
-      chkDom.textContent = (modalidadSeleccionada === "A Domicilio") ? "X" : "";
-      chkSuc.textContent = (modalidadSeleccionada === "Retira en Sucursal") ? "X" : "";
-    }
-
-    function filtrarCatalogo() {
-      const texto = document.getElementById("buscador").value.toLowerCase().trim();
-      const filtrados = PRODUCTOS.filter(p => p.nombre.toLowerCase().includes(texto));
-      renderizarCatalogo(filtrados);
-    }
-
-    function renderizarCatalogo(lista) {
+    function cargarCatalogo() {
       const cont = document.getElementById("catalogo");
-      cont.innerHTML = lista.map(p => {
+      const textoBusq = (document.getElementById("buscador")?.value || "").toLowerCase().trim();
+      const filtrados = PRODUCTOS.filter(p => {
+        const okCat = (categoriaActual === "Todos") || (p.categoria === categoriaActual);
+        const okBusq = !textoBusq || p.nombre.toLowerCase().includes(textoBusq);
+        return okCat && okBusq;
+      });
+
+      if (filtrados.length === 0) {
+        cont.innerHTML = '<div style="grid-column: 1 / -1; text-align:center; padding: 30px; color:#C2185B; font-weight:bold;">No hay prendas en esta sección</div>';
+        return;
+      }
+
+      cont.innerHTML = filtrados.map(p => {
         const listaTalles = p.coloresPorTalle ? Object.keys(p.coloresPorTalle) : p.talles;
         const listaColoresInicial = p.coloresPorTalle ? Object.values(p.coloresPorTalle).at(0) : p.colores;
-        const subHtml = p.subtitulo ? '<p style="font-size:0.8rem; color:#666; font-weight:bold; margin-bottom:4px;">' + p.subtitulo + '</p>' : '';
         const optsTalle = listaTalles.map(t => '<option value="' + t + '">' + t + '</option>').join('');
         const optsColor = listaColoresInicial.map(c => '<option value="' + c + '">' + c + '</option>').join('');
+
         return '<div class="producto">' +
-          '<div><h3>' + p.nombre + '</h3>' + subHtml + '<p class="precio">$' + p.precio.toLocaleString('es-AR') + '</p></div>' +
+          '<div>' +
+            '<div class="galeria-box">' +
+              '<div class="cartel-agotado" id="agotado-' + p.id + '">AGOTADO</div>' +
+              '<img src="' + p.fotos.at(0) + '" alt="' + p.nombre + '" onerror="this.style.display=\'none\'">' +
+            '</div>' +
+            '<h3>' + p.nombre + '</h3>' +
+            '<p class="precio">$' + p.precio.toLocaleString('es-AR') + '</p>' +
+            '<div class="badge-stock" id="stock-badge-' + p.id + '">Disponibles: ' + p.stockDefault + ' unid.</div>' +
+          '</div>' +
           '<div>' +
             '<div class="fila-doble">' +
               '<div class="campo" style="flex:2;"><label>Talle:</label><select id="tal-' + p.id + '" onchange="actualizarColoresPorTalle(' + p.id + ')">' + optsTalle + '</select></div>' +
-              '<div class="campo" style="flex:1;"><label>Cant.:</label><input type="number" id="can-' + p.id + '" value="1" min="1"></div>' +
+              '<div class="campo" style="flex:1;"><label>Cant.:</label><input type="number" id="can-' + p.id + '" value="1" min="1" max="50"></div>' +
             '</div>' +
-            '<div class="campo"><label>Color:</label><select id="col-' + p.id + '">' + optsColor + '</select></div>' +
-            '<button type="button" class="btn-agregar" onclick="agregar(' + p.id + ')">+ Agregar</button>' +
+            '<div class="campo"><label>Color:</label><select id="col-' + p.id + '" onchange="actualizarEstadoStockTarjeta(' + p.id + ')">' + optsColor + '</select></div>' +
+            '<button type="button" id="btn-add-' + p.id + '" class="btn-agregar" onclick="agregar(' + p.id + ')">Agregar a venta</button>' +
           '</div>' +
         '</div>';
       }).join('');
+      actualizarTodasLasTarjetas();
     }
+
     function togglePanel() {
       const panel = document.getElementById("panel-lateral");
       const btnFlecha = document.getElementById("btn-flecha-carrito");
@@ -512,9 +482,32 @@
       btnFlecha.style.display = panel.classList.contains("abierto") ? "none" : "flex";
     }
 
+    function elegirTipoVenta(tipo) {
+      tipoVenta = tipo;
+      document.getElementById("tipo-mostrador").classList.toggle("seleccionado", tipo === "Mostrador");
+      document.getElementById("tipo-retiro").classList.toggle("seleccionado", tipo === "Retiro por Local");
+      document.getElementById("tipo-envio").classList.toggle("seleccionado", tipo === "Envío");
+
+      document.getElementById("check-tipo-mostrador").textContent = (tipo === "Mostrador") ? "X" : "";
+      document.getElementById("check-tipo-retiro").textContent = (tipo === "Retiro por Local") ? "X" : "";
+      document.getElementById("check-tipo-envio").textContent = (tipo === "Envío") ? "X" : "";
+
+      document.getElementById("bloque-mostrador").style.display = (tipo === "Mostrador") ? "block" : "none";
+      document.getElementById("bloque-retiro").style.display = (tipo === "Retiro por Local") ? "block" : "none";
+      document.getElementById("bloque-envio").style.display = (tipo === "Envío") ? "block" : "none";
+      actualizarCarrito();
+    }
+
+    function elegirModalidad(opcion) {
+      modalidadSeleccionada = opcion;
+      document.getElementById("opt-domicilio").classList.toggle("seleccionado", opcion === "A Domicilio");
+      document.getElementById("opt-sucursal").classList.toggle("seleccionado", opcion === "Retira en Sucursal");
+      document.getElementById("check-domicilio").textContent = (opcion === "A Domicilio") ? "X" : "";
+      document.getElementById("check-sucursal").textContent = (opcion === "Retira en Sucursal") ? "X" : "";
+    }
+
     function verOtroTransporte() {
-      const val = document.getElementById("transporte").value;
-      document.getElementById("caja-otro").style.display = (val === "Otro") ? "block" : "none";
+      document.getElementById("caja-otro").style.display = (document.getElementById("transporte").value === "Otro") ? "block" : "none";
     }
 
     function agregar(id) {
@@ -522,22 +515,26 @@
       const color = document.getElementById("col-" + id).value;
       const talle = document.getElementById("tal-" + id).value;
       const cant = parseInt(document.getElementById("can-" + id).value);
-      if (isNaN(cant) || cant <= 0) return;
+      const disponible = obtenerStockDisponible(id, talle, color);
+      if (disponible <= 0 || isNaN(cant) || cant <= 0) return;
+      if (cant > disponible) { alert("Solo quedan " + disponible + " unid. disponibles."); document.getElementById("can-" + id).value = disponible; return; }
       const igual = carrito.find(i => i.id === id && i.color === color && i.talle === talle);
       if (igual) igual.cant += cant;
       else carrito.push({ id: prod.id, nombre: prod.nombre, precio: prod.precio, color, talle, cant });
       actualizarCarrito();
+      actualizarEstadoStockTarjeta(id);
       const aviso = document.getElementById("aviso-flotante");
-      aviso.textContent = "✓ Agregaste " + cant + "x " + prod.nombre;
+      aviso.textContent = "✓ Agregado: " + cant + "x " + prod.nombre;
       aviso.style.display = "block";
       setTimeout(() => { aviso.style.display = "none"; }, 1200);
     }
 
     function quitar(idx) {
+      const itemQuitado = carrito.at(idx);
       carrito.splice(idx, 1);
       actualizarCarrito();
+      if (itemQuitado) actualizarEstadoStockTarjeta(itemQuitado.id);
     }
-
     function actualizarCarrito() {
       const lista = document.getElementById("lista-carrito");
       const subtotalTxt = document.getElementById("subtotal-texto");
@@ -545,11 +542,11 @@
       const filaEmbalaje = document.getElementById("fila-embalaje");
       const totalTxt = document.getElementById("total-texto");
       const badgeTotal = document.getElementById("badge-total");
-      const btnPdf = document.getElementById("btn-pdf");
-      const btnWsp = document.getElementById("btn-wsp");
+      const btnGenerar = document.getElementById("btn-generar");
       let subtotal = 0; let totalPrendas = 0;
+
       if (carrito.length === 0) {
-        lista.innerHTML = '<li style="color:#777; justify-content:center;">Agregá prendas del catálogo</li>';
+        lista.innerHTML = '<li style="color:#777; justify-content:center;">No hay prendas cargadas</li>';
       } else {
         lista.innerHTML = carrito.map((item, idx) => {
           const sub = item.precio * item.cant;
@@ -557,103 +554,182 @@
           return '<li><div><strong>' + item.cant + 'x ' + item.nombre + '</strong><br><span style="color:#666; font-size:0.78rem;">' + item.color + ' | ' + item.talle + '</span><br><span style="color:#C2185B; font-weight:bold;">$' + sub.toLocaleString('es-AR') + '</span></div><button type="button" class="btn-x" onclick="quitar(' + idx + ')">X</button></li>';
         }).join('');
       }
-      const cobraEmbalaje = (tipoEntrega === "Envío");
+
+      const cobraEmbalaje = (tipoVenta === "Envío");
       filaEmbalaje.style.display = cobraEmbalaje ? "flex" : "none";
       const totalFinal = subtotal + (cobraEmbalaje ? EMBALAJE : 0);
+
       cantPrendasTxt.textContent = totalPrendas;
       subtotalTxt.textContent = "$" + subtotal.toLocaleString('es-AR');
-      totalTxt.textContent = "$" + totalFinal.toLocaleString('es-AR');
-      badgeTotal.textContent = "$" + totalFinal.toLocaleString('es-AR');
+      totalTxt.textContent = "$" + (subtotal > 0 ? totalFinal.toLocaleString('es-AR') : "0");
+      badgeTotal.textContent = "$" + (subtotal > 0 ? totalFinal.toLocaleString('es-AR') : "0");
 
-      const listo = (tipoEntrega === "Compra por el Local") || (tipoEntrega !== "" && carrito.length > 0);
-      btnPdf.disabled = !listo;
-      btnWsp.disabled = !listo;
+      if (carrito.length === 0 || !tipoVenta) {
+        btnGenerar.disabled = true;
+        btnGenerar.textContent = "Cargá prendas y elegí tipo";
+      } else {
+        btnGenerar.disabled = false;
+        btnGenerar.textContent = "🖨️ Generar Ticket 80mm y Descontar Stock";
+      }
     }
 
-    function procesarComprobante(destino) {
-      if (!tipoEntrega) { alert("Marcá Compra por Local, Retira por Local o Envío."); return; }
-      if (tipoEntrega !== "Compra por el Local" && carrito.length === 0) { alert("Agregá al menos una prenda."); return; }
+    function imprimirTicket80(modo) {
+      document.body.classList.remove("solo-talon", "solo-orden");
+      if (modo === "talon") document.body.classList.add("solo-talon");
+      if (modo === "orden") document.body.classList.add("solo-orden");
+      window.print();
+      setTimeout(() => { document.body.classList.remove("solo-talon", "solo-orden"); }, 500);
+    }
 
+    async function generarTicket80mm() {
+      if (carrito.length === 0 || !tipoVenta) return;
       const ahora = new Date();
       const fechaStr = ahora.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
       const horaStr = ahora.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
-      let subtotal = 0; let itemsCortos = []; let detalleWsp = "";
-      carrito.forEach(item => {
-        const sub = item.precio * item.cant;
-        subtotal += sub;
-        itemsCortos.push({ c: item.cant, n: item.nombre, col: item.color, t: item.talle, p: item.precio.toLocaleString('es-AR'), s: sub.toLocaleString('es-AR') });
-        detalleWsp += "• " + item.cant + "x " + item.nombre + " | Color: " + item.color + " | " + item.talle + " - $" + sub.toLocaleString('es-AR') + "\n";
-      });
-      const urlBase = window.location.origin + window.location.pathname;
-      let paquete = null;
-      let msg = "*COMPROBANTE BELLA INDUMENTARIA (" + fechaStr + " " + horaStr + "):*\n" + detalleWsp;
+      const formaPago = document.getElementById("forma-pago").value;
 
-      if (tipoEntrega === "Envío") {
-        const transpSel = document.getElementById("transporte").value;
-        const transpOtro = document.getElementById("transporte-otro").value.trim();
-        if (!transpSel) { alert("Falta rellenar: Transporte"); document.getElementById("transporte").focus(); return; }
-        if (transpSel === "Otro" && !transpOtro) { alert("Falta rellenar: Escribí el transporte"); document.getElementById("transporte-otro").focus(); return; }
-        const campos = [
-          { id: "nombre", nombre: "Nombre" }, { id: "apellido", nombre: "Apellido" },
-          { id: "celular", nombre: "Teléfono / Celular" }, { id: "dni", nombre: "DNI" },
-          { id: "direccion", nombre: "Dirección" }, { id: "cp", nombre: "Código Postal" },
-          { id: "provincia", nombre: "Provincia" }, { id: "localidad", nombre: "Localidad" }
+      let subtotal = 0;
+      carrito.forEach(item => { subtotal += item.precio * item.cant; });
+
+      let talonHtml = "";
+      let infoClienteOrden = "";
+      let totalFinal = subtotal;
+      let filaEmbalaje80 = "";
+
+      if (tipoVenta === "Mostrador") {
+        const cli = document.getElementById("mostrador-cliente").value.trim() || "Consumidor Final";
+        infoClienteOrden = '<div class="t80-dato"><b>Venta:</b> MOSTRADOR (' + formaPago + ')</div>' +
+                           '<div class="t80-dato"><b>Cliente:</b> ' + cli + '</div>';
+      } else if (tipoVenta === "Retiro por Local") {
+        const camposRet = [
+          { id: "retiro-nombre", nom: "Nombre" }, { id: "retiro-apellido", nom: "Apellido" },
+          { id: "retiro-celular", nom: "Celular" }, { id: "retiro-por", nom: "Retirado por" }
         ];
-        for (let c of campos) {
+        for (let c of camposRet) {
           const el = document.getElementById(c.id);
-          if (!el.value.trim()) { alert("Falta rellenar: " + c.nombre); el.focus(); return; }
+          if (!el.value.trim()) { alert("Falta completar: " + c.nom); el.focus(); return; }
         }
-        const transpFinal = transpSel === "Otro" ? transpOtro : transpSel;
-        const nombre = document.getElementById("nombre").value.trim();
-        const apellido = document.getElementById("apellido").value.trim();
-        const celular = document.getElementById("celular").value.trim();
-        const dni = document.getElementById("dni").value.trim();
-        const direccion = document.getElementById("direccion").value.trim();
-        const cp = document.getElementById("cp").value.trim();
-        const provincia = document.getElementById("provincia").value.trim();
-        const localidad = document.getElementById("localidad").value.trim();
-        const totalFinal = subtotal + EMBALAJE;
-        paquete = { tipo: "Envío", f: fechaStr, h: horaStr, nom: nombre, ape: apellido, dni: dni, cel: celular, dir: direccion, loc: localidad, prov: provincia, cp: cp, tr: transpFinal, mod: modalidadSeleccionada, items: itemsCortos, tot: totalFinal.toLocaleString('es-AR') };
-        msg += "• Embalaje y traslado: $4.000\n*TOTAL FINAL: $" + totalFinal.toLocaleString('es-AR') + "*\n\n📄 *PDF:* " + urlBase + "?orden=" + codificarDatos(paquete);
-
-      } else if (tipoEntrega === "Retira por Local") {
         const rNom = document.getElementById("retiro-nombre").value.trim();
         const rApe = document.getElementById("retiro-apellido").value.trim();
         const rCel = document.getElementById("retiro-celular").value.trim();
-        const rDni = document.getElementById("retiro-dni").value.trim();
         const rPor = document.getElementById("retiro-por").value.trim();
-        if (!rNom) { alert("Falta rellenar: Nombre"); document.getElementById("retiro-nombre").focus(); return; }
-        if (!rApe) { alert("Falta rellenar: Apellido"); document.getElementById("retiro-apellido").focus(); return; }
-        if (!rCel) { alert("Falta rellenar: Celular"); document.getElementById("retiro-celular").focus(); return; }
-        paquete = { tipo: "Retira por Local", f: fechaStr, h: horaStr, nom: rNom, ape: rApe, cel: rCel, dni: rDni, retpor: rPor, items: itemsCortos, tot: subtotal.toLocaleString('es-AR') };
-        msg += "*TOTAL FINAL: $" + subtotal.toLocaleString('es-AR') + "*\n*MODALIDAD: RETIRA POR LOCAL*\n\n📄 *PDF:* " + urlBase + "?orden=" + codificarDatos(paquete);
 
+        talonHtml =
+          '<div class="ticket-80mm ticket-talon">' +
+            '<div class="t80-cabecera"><div class="t80-logo">BELLA</div><div class="t80-sub">FABRICANTE DIRECTO</div><div class="t80-info">Campana 378 - Local A6 • Flores<br>Dany: 11-2574-8687 | Isa: 11-6735-3960</div></div>' +
+            '<div class="t80-titulo-caja">RETIRO POR LOCAL</div>' +
+            '<div class="t80-dato"><b>Fecha:</b> ' + fechaStr + ' &nbsp; <b>Hora:</b> ' + horaStr + '</div>' +
+            '<div class="t80-dato"><b>Cliente:</b> ' + rNom + ' ' + rApe + '</div>' +
+            '<div class="t80-dato"><b>Celular:</b> ' + rCel + '</div>' +
+            '<div class="t80-dato"><b>Retirado por:</b> ' + rPor + '</div>' +
+            '<div class="t80-pie">Documento no válido como factura</div>' +
+          '</div>';
+
+        infoClienteOrden = '<div class="t80-dato"><b>Modalidad:</b> RETIRO LOCAL (' + formaPago + ')</div>' +
+                           '<div class="t80-dato"><b>Cliente:</b> ' + rNom + ' ' + rApe + ' (' + rCel + ')</div>' +
+                           '<div class="t80-dato"><b>Retirado por:</b> ' + rPor + '</div>';
       } else {
-        const lNombre = document.getElementById("local-nombre").value.trim();
-        const lApellido = document.getElementById("local-apellido").value.trim();
-        const lCelular = document.getElementById("local-celular").value.trim();
-        const lDni = document.getElementById("local-dni").value.trim();
-        paquete = { tipo: "Compra por el Local", f: fechaStr, h: horaStr, nom: lNombre, ape: lApellido, cel: lCelular, dni: lDni, items: itemsCortos, tot: subtotal.toLocaleString('es-AR') };
-        msg += "*TOTAL FINAL: $" + subtotal.toLocaleString('es-AR') + "*\n*MODALIDAD: COMPRA POR EL LOCAL*\n\n📄 *PDF:* " + urlBase + "?orden=" + codificarDatos(paquete);
+        const transpSel = document.getElementById("transporte").value;
+        const transpOtro = document.getElementById("transporte-otro").value.trim();
+        if (!transpSel) { alert("Seleccioná transporte"); return; }
+        if (transpSel === "Otro" && !transpOtro) { alert("Escribí el transporte"); return; }
+        if (!modalidadSeleccionada) { alert("Marcá A Domicilio o A Sucursal"); return; }
+        const camposEnv = [
+          { id: "nombre", nom: "Nombre" }, { id: "apellido", nom: "Apellido" },
+          { id: "celular", nom: "Celular" }, { id: "dni", nom: "DNI" },
+          { id: "direccion", nom: "Dirección" }, { id: "provincia", nom: "Provincia" },
+          { id: "localidad", nom: "Localidad" }, { id: "cp", nom: "Código Postal" }
+        ];
+        for (let c of camposEnv) {
+          const el = document.getElementById(c.id);
+          if (!el.value.trim()) { alert("Falta completar: " + c.nom); el.focus(); return; }
+        }
+        const locSel = document.getElementById("localidad").value;
+        const locOtra = document.getElementById("localidad-otra").value.trim();
+        if (locSel === "Otra" && !locOtra) { alert("Escribí la localidad"); return; }
+
+        const transpFinal = (transpSel === "Otro") ? transpOtro : transpSel;
+        const locFinal = (locSel === "Otra") ? locOtra : locSel;
+        const nom = document.getElementById("nombre").value.trim();
+        const ape = document.getElementById("apellido").value.trim();
+        const cel = document.getElementById("celular").value.trim();
+        const dni = document.getElementById("dni").value.trim();
+        const dir = document.getElementById("direccion").value.trim();
+        const prov = document.getElementById("provincia").value.trim();
+        const cp = document.getElementById("cp").value.trim();
+        totalFinal = subtotal + EMBALAJE;
+
+        talonHtml =
+          '<div class="ticket-80mm ticket-talon">' +
+            '<div class="t80-cabecera"><div class="t80-logo">BELLA</div><div class="t80-sub">FABRICANTE DIRECTO</div><div class="t80-info">Campana 378 - Local A6 • Flores<br>Dany: 11-2574-8687 | Isa: 11-6735-3960</div></div>' +
+            '<div class="t80-titulo-caja">ENVÍOS AL INTERIOR</div>' +
+            '<div class="t80-dato"><b>Fecha:</b> ' + fechaStr + ' &nbsp; <b>Hora:</b> ' + horaStr + '</div>' +
+            '<div class="t80-dato"><b>Destinatario:</b> ' + nom + ' ' + ape + '</div>' +
+            '<div class="t80-dato"><b>DNI:</b> ' + dni + ' &nbsp;|&nbsp; <b>Tel:</b> ' + cel + '</div>' +
+            '<div class="t80-dato"><b>Dirección:</b> ' + dir + '</div>' +
+            '<div class="t80-dato"><b>Localidad:</b> ' + locFinal + ' (CP ' + cp + ')</div>' +
+            '<div class="t80-dato"><b>Provincia:</b> ' + prov + '</div>' +
+            '<div class="t80-dato"><b>Transporte:</b> ' + transpFinal + '</div>' +
+            '<div class="t80-dato" style="font-size:12px; font-weight:900;"><b>Modalidad:</b> ' + modalidadSeleccionada.toUpperCase() + '</div>' +
+            '<div class="t80-pie">Documento no válido como factura</div>' +
+          '</div>';
+
+        infoClienteOrden = '<div class="t80-dato"><b>Envío:</b> ' + transpFinal + ' (' + formaPago + ')</div>' +
+                           '<div class="t80-dato"><b>Cliente:</b> ' + nom + ' ' + ape + ' (DNI ' + dni + ')</div>';
+        filaEmbalaje80 = '<tr><td>1</td><td>Embalaje y traslado</td><td style="text-align:right;">$4.000</td></tr>';
       }
 
-      if (destino === "pdf") {
-        mostrarComprobanteEnPantalla(paquete);
-      } else {
-        const urlWsp = ["https:/", "/api.", "whatsapp", ".com/send?phone="].join("") + TELEFONO + "&text=" + encodeURIComponent(msg);
-        window.location.href = urlWsp;
-      }
+      const filasProductos80 = carrito.map(it => {
+        const sub = it.precio * it.cant;
+        return '<tr><td><b>' + it.cant + '</b></td><td>' + it.nombre + '<br><span style="font-size:8.5px;">' + it.color + ' | ' + it.talle + '</span></td><td style="text-align:right;">$' + sub.toLocaleString('es-AR') + '</td></tr>';
+      }).join('');
+
+      const ordenHtml =
+        '<div class="ticket-80mm ticket-orden">' +
+          '<div class="t80-cabecera"><div class="t80-logo">BELLA</div><div class="t80-sub">Indumentaria • Fabricante Directo</div><div class="t80-info">Campana 378 - Local A6 • Galería Smart Campana<br>Dany: 11-2574-8687 | Isa: 11-6735-3960</div></div>' +
+          '<div class="t80-titulo-caja">ORDEN DE COMPRA</div>' +
+          '<div class="t80-dato"><b>Fecha:</b> ' + fechaStr + ' &nbsp; <b>Hora:</b> ' + horaStr + '</div>' +
+          infoClienteOrden +
+          '<table class="t80-tabla">' +
+            '<thead><tr><th style="width:12%;">CNT</th><th style="width:60%;">ARTÍCULO</th><th style="width:28%; text-align:right;">IMP.</th></tr></thead>' +
+            '<tbody>' + filasProductos80 + filaEmbalaje80 + '</tbody>' +
+          '</table>' +
+          '<div class="t80-total-box"><span>TOTAL:</span><span>$' + totalFinal.toLocaleString('es-AR') + '</span></div>' +
+          '<div class="t80-pie">IG: bella.indumentariadama • TK: bella.indumentaria<br>Documento no válido como factura</div>' +
+        '</div>';
+
+      const botonesImp = (tipoVenta === "Mostrador")
+        ? '<button type="button" class="btn-imp-80" onclick="imprimirTicket80(\'orden\')">🖨️ Imprimir Ticket Orden de Compra (80mm)</button>'
+        : '<button type="button" class="btn-imp-80" onclick="imprimirTicket80(\'talon\')">🖨️ Imprimir Talón ' + tipoVenta + ' (80mm)</button>' +
+          '<button type="button" class="btn-imp-80 sec" onclick="imprimirTicket80(\'orden\')">🖨️ Imprimir Orden de Compra (80mm)</button>';
+
+      const btnGen = document.getElementById("btn-generar");
+      btnGen.disabled = true; btnGen.textContent = "Descontando stock...";
+      await descontarStockDefinitivo(carrito);
+
+      document.getElementById("vista-mostrador").style.display = "none";
+      const vt = document.getElementById("vista-ticket");
+      vt.style.display = "block";
+      vt.innerHTML =
+        '<div class="barra-imprimir no-imprimir">' +
+          botonesImp +
+          '<button type="button" class="btn-imp-80 vol" onclick="nuevaVentaLocal()">✓ Nueva Venta en Mostrador</button>' +
+        '</div>' +
+        talonHtml + ordenHtml;
     }
 
-    (function iniciar() {
-      cargarListasGeograficas();
-      const params = new URLSearchParams(window.location.search);
-      const codigoOrden = params.get("orden");
-      if (codigoOrden) {
-        try { mostrarComprobanteEnPantalla(decodificarDatos(codigoOrden)); return; } catch (e) {}
-      }
-      renderizarCatalogo(PRODUCTOS);
-    })();
+    function nuevaVentaLocal() {
+      carrito = [];
+      actualizarCarrito();
+      document.getElementById("vista-ticket").style.display = "none";
+      document.getElementById("vista-mostrador").style.display = "block";
+      sincronizarStockDesdeNube();
+    }
+
+    cargarProvincias();
+    cargarCatalogo();
+    sincronizarStockDesdeNube();
+    setInterval(sincronizarStockDesdeNube, 4000);
   </script>
 </body>
 </html>
