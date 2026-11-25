@@ -4,63 +4,98 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="light only">
-  <title>BELLA Indumentaria - SISTEMA LOCAL</title>
+  <title>BELLA Indumentaria - MOSTRADOR RÁPIDO</title>
   <style>
     :root { color-scheme: light only; }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
-    body { background-color: #FFFFFF !important; color: #1A1A1A !important; overflow-x: hidden; overflow-y: auto; }
+    body { background-color: #F7F7F9 !important; color: #1A1A1A !important; overflow-x: hidden; overflow-y: auto; }
 
     header {
       background-color: #1A1A1A !important;
-      border-bottom: 5px solid #E91E63;
-      padding: 18px 15px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      border-bottom: 4px solid #E91E63;
+      padding: 14px;
+      text-align: center;
     }
-    .caja-titulo-header { background-color: #F8BBD0 !important; border: 3px solid #E91E63; border-radius: 14px; padding: 12px 26px; text-align: center; max-width: 760px; width: 100%; }
-    .caja-titulo-header h1 { font-size: 1.7rem; letter-spacing: 2px; color: #1A1A1A !important; text-transform: uppercase; font-weight: 900; }
-    .caja-titulo-header p { color: #C2185B !important; font-weight: bold; font-size: 0.85rem; margin-top: 4px; }
+    header h1 { font-size: 1.45rem; letter-spacing: 2px; color: #F8BBD0 !important; text-transform: uppercase; font-weight: 900; }
+    header p { color: #FFFFFF !important; font-size: 0.78rem; margin-top: 3px; }
 
-    .barra-categorias { display: flex; gap: 10px; overflow-x: auto; padding: 12px 16px; background-color: #FFF0F5 !important; border-bottom: 2px solid #F8BBD0; white-space: nowrap; -webkit-overflow-scrolling: touch; }
-    .btn-cat { background-color: #FFFFFF !important; color: #1A1A1A !important; border: 2px solid #F48FB1; border-radius: 20px; padding: 8px 16px; font-size: 0.86rem; font-weight: bold; cursor: pointer; flex-shrink: 0; }
+    .barra-categorias { display: flex; gap: 8px; overflow-x: auto; padding: 10px 14px; background-color: #FFF0F5 !important; border-bottom: 2px solid #F8BBD0; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+    .btn-cat { background-color: #FFFFFF !important; color: #1A1A1A !important; border: 2px solid #F48FB1; border-radius: 18px; padding: 7px 15px; font-size: 0.85rem; font-weight: bold; cursor: pointer; flex-shrink: 0; }
     .btn-cat.activo { background-color: #E91E63 !important; color: #FFFFFF !important; border-color: #1A1A1A; }
 
-    .buscador-box { max-width: 1280px; margin: 14px auto 0 auto; padding: 0 20px; }
-    .buscador-box input { width: 100%; padding: 11px 14px; border: 2px solid #E91E63; border-radius: 10px; font-size: 0.95rem; }
+    .buscador-box { max-width: 1280px; margin: 12px auto 0 auto; padding: 0 16px; }
+    .buscador-box input { width: 100%; padding: 10px 14px; border: 2px solid #E91E63; border-radius: 10px; font-size: 0.95rem; background: #FFF; }
 
-    .contenedor-catalogo { max-width: 1280px; margin: 18px auto; padding: 0 20px 60px 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-    .producto { background-color: #FFFFFF !important; border: 2px solid #F8BBD0; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; }
-    .galeria-box { position: relative; width: 100%; height: 220px; background-color: #FFF9FB; border-radius: 8px; margin-bottom: 8px; border: 1px solid #F8BBD0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-    .galeria-box img { width: 100%; height: 100%; object-fit: contain; }
-    .cartel-agotado { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-8deg); background-color: #D50000 !important; color: #FFFFFF !important; border: 2px solid #FFFFFF; padding: 6px 18px; font-size: 1.2rem; font-weight: 900; border-radius: 8px; z-index: 20; }
-    .cartel-agotado.visible { display: block; }
-    .badge-stock { font-size: 0.78rem; font-weight: bold; color: #2E7D32; background-color: #E8F5E9; border: 1px solid #A5D6A7; padding: 3px 8px; border-radius: 6px; display: inline-block; margin-bottom: 6px; }
-    .badge-stock.sin-stock { color: #D50000; background-color: #FFEBEE; border-color: #EF9A9A; }
-    .producto h3 { font-size: 1.08rem; color: #1A1A1A !important; margin-bottom: 3px; }
-    .producto .precio { font-size: 1.2rem; font-weight: bold; color: #E91E63 !important; margin-bottom: 6px; }
-    .campo { margin-bottom: 7px; }
-    .campo label { display: block; font-size: 0.78rem; font-weight: bold; color: #444 !important; margin-bottom: 2px; }
-    .campo select, .campo input { width: 100%; padding: 7px; border: 1px solid #CCC; border-radius: 7px; font-size: 0.88rem; background-color: #FFF !important; color: #1A1A1A !important; }
-    .fila-doble { display: flex; gap: 8px; }
-    .btn-agregar { background-color: #1A1A1A !important; color: #FFF !important; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 4px; font-size: 0.92rem; }
-    .btn-agregar:active { background-color: #E91E63 !important; }
-    .btn-agregar:disabled { background-color: #B0BEC5 !important; cursor: not-allowed; }
-    .btn-flecha-carrito { position: fixed; right: 0; top: 50%; transform: translateY(-50%); background-color: #E91E63 !important; color: #FFFFFF !important; border: 2px solid #1A1A1A; border-right: none; border-radius: 12px 0 0 12px; padding: 14px 10px; cursor: pointer; z-index: 2500; font-weight: bold; font-size: 0.9rem; box-shadow: -3px 3px 10px rgba(0,0,0,0.3); display: flex; flex-direction: column; align-items: center; gap: 4px; }
-    .panel-lateral { position: fixed; top: 0; right: 0; width: 32%; min-width: 350px; max-width: 450px; height: 100dvh; background-color: #FFFFFF !important; border-left: 3px solid #1A1A1A; box-shadow: -5px 0 20px rgba(0,0,0,0.25); z-index: 2600; padding: 16px 14px 120px 16px; overflow-y: scroll; scrollbar-width: auto; scrollbar-color: #E91E63 #FCE4EC; transform: translateX(100%); transition: transform 0.3s ease; }
+    .contenedor-catalogo { max-width: 1280px; margin: 14px auto; padding: 0 16px 80px 16px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .tarjeta-rapida { background-color: #FFFFFF !important; border: 2px solid #F8BBD0; border-radius: 12px; padding: 12px; box-shadow: 0 3px 8px rgba(0,0,0,0.06); display: flex; flex-direction: column; justify-content: space-between; }
+    .cabecera-tarjeta { border-bottom: 1.5px solid #FCE4EC; padding-bottom: 8px; margin-bottom: 8px; }
+    .cabecera-tarjeta h3 { font-size: 1.08rem; color: #1A1A1A !important; font-weight: 800; line-height: 1.2; }
+    .cabecera-tarjeta .sub { font-size: 0.78rem; color: #666; font-weight: bold; margin-top: 2px; }
+    .cabecera-tarjeta .precio { font-size: 1.22rem; font-weight: 900; color: #E91E63 !important; margin-top: 4px; }
+
+    .fila-talle { margin-bottom: 9px; }
+    .fila-talle label { font-size: 0.78rem; font-weight: bold; color: #444; display: block; margin-bottom: 3px; }
+    .fila-talle select { width: 100%; padding: 7px 9px; border: 1.5px solid #1A1A1A; border-radius: 8px; font-size: 0.9rem; font-weight: bold; background-color: #FFF9FB !important; color: #1A1A1A !important; }
+    .talle-fijo-badge { display: inline-block; background-color: #FCE4EC; color: #C2185B; border: 1px solid #F48FB1; padding: 4px 10px; border-radius: 6px; font-size: 0.82rem; font-weight: bold; }
+
+    .lista-colores-filas { display: flex; flex-direction: column; gap: 6px; }
+    .fila-color-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background-color: #FFF9FB;
+      border: 1.5px solid #F8BBD0;
+      border-radius: 8px;
+      padding: 6px 8px;
+    }
+    .nombre-color-fila { flex: 1; font-size: 0.9rem; font-weight: 700; color: #1A1A1A; }
+    .input-cant-fila {
+      width: 54px;
+      padding: 6px 4px;
+      text-align: center;
+      border: 1.5px solid #999;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: bold;
+      background: #FFF;
+      color: #1A1A1A;
+    }
+    .btn-mas-fila {
+      width: 36px;
+      height: 34px;
+      background-color: #1A1A1A !important;
+      color: #FFFFFF !important;
+      border: none;
+      border-radius: 7px;
+      font-size: 1.3rem;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .btn-mas-fila:active { background-color: #E91E63 !important; transform: scale(0.95); }
+    .btn-flecha-carrito { position: fixed; right: 0; top: 50%; transform: translateY(-50%); background-color: #E91E63 !important; color: #FFFFFF !important; border: 2px solid #1A1A1A; border-right: none; border-radius: 12px 0 0 12px; padding: 14px 11px; cursor: pointer; z-index: 2500; font-weight: bold; font-size: 0.92rem; box-shadow: -3px 3px 10px rgba(0,0,0,0.3); display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .panel-lateral { position: fixed; top: 0; right: 0; width: 32%; min-width: 345px; max-width: 450px; height: 100dvh; background-color: #FFFFFF !important; border-left: 3px solid #1A1A1A; box-shadow: -5px 0 20px rgba(0,0,0,0.25); z-index: 2600; padding: 16px 14px 120px 16px; overflow-y: scroll; scrollbar-width: auto; scrollbar-color: #E91E63 #FCE4EC; transform: translateX(100%); transition: transform 0.25s ease; }
     .panel-lateral::-webkit-scrollbar { width: 10px; }
     .panel-lateral::-webkit-scrollbar-track { background: #FCE4EC; }
     .panel-lateral::-webkit-scrollbar-thumb { background: #E91E63; border-radius: 6px; }
     .panel-lateral.abierto { transform: translateX(0); }
     .panel-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #F8BBD0; padding-bottom: 8px; margin-bottom: 10px; }
     .btn-cerrar-panel { background-color: #E91E63; color: #FFF; border: none; border-radius: 6px; padding: 6px 12px; font-weight: bold; cursor: pointer; }
-    #lista-carrito { list-style: none; max-height: 160px; overflow-y: auto; margin-bottom: 10px; border-bottom: 1px solid #E0E0E0; padding-bottom: 6px; }
-    #lista-carrito li { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #F2F2F2; font-size: 0.84rem; }
-    .btn-x { background-color: #FF4D4D; color: #FFF; border: none; border-radius: 4px; padding: 3px 7px; cursor: pointer; font-weight: bold; }
+    #lista-carrito { list-style: none; max-height: 180px; overflow-y: auto; margin-bottom: 10px; border-bottom: 1px solid #E0E0E0; padding-bottom: 6px; }
+    #lista-carrito li { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #F2F2F2; font-size: 0.85rem; }
+    .btn-x { background-color: #FF4D4D; color: #FFF; border: none; border-radius: 4px; padding: 4px 8px; cursor: pointer; font-weight: bold; }
     .resumen-costos { background-color: #FCE4EC !important; padding: 9px; border-radius: 8px; margin-bottom: 10px; font-size: 0.88rem; }
     .fila-costo { display: flex; justify-content: space-between; margin-bottom: 4px; }
     .fila-costo.total-final { font-size: 1.15rem; font-weight: bold; border-top: 1px solid #F48FB1; padding-top: 5px; margin-top: 4px; margin-bottom: 0; }
     .titulo-seccion { font-size: 0.86rem; font-weight: bold; margin: 8px 0 6px 0; border-top: 1px solid #EEE; padding-top: 8px; }
+    .campo { margin-bottom: 7px; }
+    .campo label { display: block; font-size: 0.78rem; font-weight: bold; color: #444; margin-bottom: 2px; }
+    .campo select, .campo input { width: 100%; padding: 8px; border: 1px solid #CCC; border-radius: 7px; font-size: 0.88rem; background-color: #FFF !important; color: #1A1A1A !important; }
+    .fila-doble { display: flex; gap: 8px; }
     .caja-otro { display: none; background-color: #FFF0F5; padding: 8px; border-radius: 8px; border: 1px solid #E91E63; margin-bottom: 8px; }
     .grupo-cuadraditos { display: flex; gap: 6px; margin-bottom: 10px; }
     .opcion-cuadradito { flex: 1; display: flex; align-items: center; justify-content: space-between; background-color: #FFF5F8; border: 2px solid #F8BBD0; border-radius: 8px; padding: 8px 7px; cursor: pointer; user-select: none; }
@@ -69,24 +104,16 @@
     .cajita-x { width: 20px; height: 20px; border: 2px solid #1A1A1A; background-color: #FFFFFF; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.9rem; color: #E91E63; flex-shrink: 0; }
     .btn-generar-ticket { background-color: #E91E63 !important; color: #FFF !important; border: none; padding: 14px; width: 100%; border-radius: 8px; font-size: 0.96rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
     .btn-generar-ticket:disabled { background-color: #9E9E9E !important; cursor: not-allowed; }
-    .aviso-flotante { position: fixed; top: 15px; left: 50%; transform: translateX(-50%); background-color: #1A1A1A; color: #FFF; border: 2px solid #E91E63; padding: 9px 18px; border-radius: 20px; font-size: 0.88rem; font-weight: bold; z-index: 3000; display: none; }
+    .aviso-flotante { position: fixed; top: 15px; left: 50%; transform: translateX(-50%); background-color: #1A1A1A; color: #FFF; border: 2px solid #E91E63; padding: 8px 18px; border-radius: 20px; font-size: 0.88rem; font-weight: bold; z-index: 3000; display: none; }
 
-    /* VISTA DE TICKETS TÉRMICOS 80MM CONTINUO */
+    /* TICKET TÉRMICO 80MM CONTINUO */
     #vista-ticket { max-width: 340px; margin: 15px auto; padding: 10px; background: #FFF; }
     .barra-imprimir { display: flex; flex-direction: column; gap: 8px; background: #FCE4EC; border: 2px solid #E91E63; padding: 12px; border-radius: 10px; margin-bottom: 16px; }
     .btn-imp-80 { background: #E91E63; color: #FFF; border: none; padding: 11px; border-radius: 8px; font-weight: bold; font-size: 0.92rem; cursor: pointer; width: 100%; }
     .btn-imp-80.sec { background: #1A1A1A; }
     .btn-imp-80.vol { background: #555; }
 
-    .ticket-80mm {
-      width: 74mm;
-      margin: 0 auto 18px auto;
-      padding: 6px;
-      border: 1.5px solid #000;
-      color: #000;
-      font-family: 'Arial', sans-serif;
-      background: #FFF;
-    }
+    .ticket-80mm { width: 74mm; margin: 0 auto 18px auto; padding: 6px; border: 1.5px solid #000; color: #000; font-family: 'Arial', sans-serif; background: #FFF; }
     .t80-cabecera { text-align: center; border-bottom: 1.5px dashed #000; padding-bottom: 6px; margin-bottom: 6px; }
     .t80-logo { font-family: Georgia, serif; font-size: 22px; font-weight: 900; letter-spacing: 1px; }
     .t80-sub { font-size: 9.5px; font-weight: bold; }
@@ -99,13 +126,10 @@
     .t80-total-box { border-top: 2px solid #000; border-bottom: 2px solid #000; margin-top: 8px; padding: 6px 2px; font-size: 14px; font-weight: 900; display: flex; justify-content: space-between; }
     .t80-pie { text-align: center; font-size: 8.5px; margin-top: 8px; padding-top: 4px; border-top: 1px dashed #000; }
 
-    @page {
-      size: 80mm auto;
-      margin: 2mm;
-    }
+    @page { size: 80mm auto; margin: 2mm; }
     @media print {
       .no-imprimir { display: none !important; }
-      body { margin: 0 !important; padding: 0 !important; width: 76mm !important; }
+      body { margin: 0 !important; padding: 0 !important; width: 76mm !important; background: #FFF !important; }
       #vista-ticket { margin: 0 !important; padding: 0 !important; max-width: 76mm !important; width: 76mm !important; }
       .ticket-80mm { width: 74mm !important; border: none !important; margin: 0 !important; padding: 2mm 1mm !important; }
       body.solo-talon .ticket-orden { display: none !important; }
@@ -121,13 +145,11 @@
   <div id="vista-ticket" style="display:none;"></div>
 
   <div id="vista-mostrador">
-    <div id="aviso-flotante" class="aviso-flotante">✓ Agregado a la venta</div>
+    <div id="aviso-flotante" class="aviso-flotante">✓ Agregado</div>
 
     <header>
-      <div class="caja-titulo-header">
-        <h1>BELLA INDUMENTARIA • LOCAL</h1>
-        <p>SISTEMA DE MOSTRADOR • TICKET CONTINUO 80MM • STOCK EN VIVO</p>
-      </div>
+      <h1>BELLA INDUMENTARIA • MOSTRADOR</h1>
+      <p>CARGA RÁPIDA POR COLOR • TICKET CONTINUO 80MM</p>
     </header>
 
     <nav class="barra-categorias" id="barra-categorias">
@@ -148,14 +170,14 @@
 
     <button type="button" class="btn-flecha-carrito" id="btn-flecha-carrito" onclick="togglePanel()">
       <span>◀ Venta</span>
-      <span id="badge-total" style="font-size:0.82rem;">$0</span>
+      <span id="badge-total" style="font-size:0.85rem;">$0</span>
     </button>
 
     <main class="contenedor-catalogo" id="catalogo"></main>
 
     <aside class="panel-lateral" id="panel-lateral">
       <div class="panel-header">
-        <h2>Venta Mostrador 🧾</h2>
+        <h2>Detalle de Venta 🧾</h2>
         <button type="button" class="btn-cerrar-panel" onclick="togglePanel()">Cerrar ▶</button>
       </div>
 
@@ -247,7 +269,6 @@
   </div>
   <script>
     const EMBALAJE = 4000;
-    const FIREBASE_BASE = "https://firebaseio.com";
 
     const PROVINCIAS_ARG = {
       "Ciudad Autónoma de Buenos Aires": ["Agronomía", "Almagro", "Balvanera", "Barracas", "Belgrano", "Boedo", "Caballito", "Chacarita", "Coghlan", "Colegiales", "Constitución", "Flores", "Floresta", "La Boca", "La Paternal", "Liniers", "Mataderos", "Monte Castro", "Monserrat", "Nueva Pompeya", "Núñez", "Palermo", "Parque Avellaneda", "Parque Chacabuco", "Parque Chas", "Parque Patricios", "Puerto Madero", "Recoleta", "Retiro", "Saavedra", "San Cristóbal", "San Nicolás", "San Telmo", "Vélez Sársfield", "Versalles", "Villa Crespo", "Villa del Parque", "Villa Devoto", "Villa General Mitre", "Villa Lugano", "Villa Luro", "Villa Ortúzar", "Villa Pueyrredón", "Villa Real", "Villa Riachuelo", "Villa Santa Rita", "Villa Soldati", "Villa Urquiza"],
@@ -277,35 +298,33 @@
     };
 
     const PRODUCTOS = [
-      { id: 1, categoria: "Vestidos", nombre: "Vestido Franchesca", precio: 15000, stockDefault: 20, fotos: ["franchesca.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Blanco", "Uva"] },
-      { id: 2, categoria: "Top", nombre: "Marilyn Lunares", precio: 6000, stockDefault: 10, stockEspecialVariante: { "Talle 4|Choco": 5 }, fotos: ["marilyn.jpg"], coloresPorTalle: { "Talle 2": ["Negro", "Choco"], "Talle 4": ["Choco"] } },
-      { id: 3, categoria: "Polleras", nombre: "Pollera Lunares", precio: 5500, stockDefault: 8, fotos: ["pollera.png"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva"] },
-      { id: 4, categoria: "Vestidos", nombre: "Vestido Isa", precio: 13500, stockDefault: 15, stockEspecialVariante: { "Talle 2|Negro": 5, "Talle 2|Choco": 5 }, fotos: ["isa.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco"] },
-      { id: 5, categoria: "Polleras", nombre: "Pollera Volado de Tul", subtitulo: "Con lentejuela y short interno", precio: 9000, stockDefault: 8, fotos: ["tul1.jpg.jpg", "tul2.jpg.jpg", "tul3.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Plateado", "Blanco"] },
-      { id: 6, categoria: "Polleras", nombre: "Pollera Glitter", precio: 5000, stockDefault: 6, fotos: ["glitter1.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Rojo", "Plateado"] },
-      { id: 7, categoria: "Body", nombre: "Body Carla", precio: 8000, stockDefault: 10, fotos: ["carla1.jpg.jpg", "carla2.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
-      { id: 8, categoria: "Polleras", nombre: "Pollera Mini Print", precio: 7000, stockDefault: 10, fotos: ["mini1.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Print Clarito", "Print Oscurito"] },
-      { id: 9, categoria: "Body", nombre: "Body Melisa Print", precio: 8000, stockDefault: 15, fotos: ["melisaprint.jpg.jpg"], talles: ["Talle Único"], colores: ["Print Amarillito", "Print Manchas Grandes", "Print Manchas Chicas"] },
-      { id: 11, categoria: "Polleras", nombre: "Short Camila", precio: 4500, stockDefault: 8, fotos: ["camila.jpg.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Uva"] },
-      { id: 12, categoria: "Polleras", nombre: "Polleras Voladas con Diseño", precio: 4000, stockDefault: 4, fotos: ["voladas.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro Floreado", "Bordó Floreado", "Vaquita"] },
-      { id: 13, categoria: "Vestidos", nombre: "Vestido Anahi", subtitulo: "Satén elastizado premium", precio: 15000, stockDefault: 10, fotos: ["anahi1.jpg.jpg", "anahi2.jpg.jpg"], talles: ["Talle Único"], colores: ["Negro", "Chocolate"] },
-      { id: 14, categoria: "Vestidos", nombre: "Vestido Isa con Strass", precio: 16000, stockDefault: 15, fotos: ["isastrass1.jpg", "isastrass2.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco"] },
-      { id: 15, categoria: "Vestidos", nombre: "Vestido Straple", precio: 13500, stockDefault: 15, fotos: ["straple.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
-      { id: 16, categoria: "Polleras", nombre: "Short con Strass", precio: 5000, stockDefault: 15, fotos: ["shortstrass.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
-      { id: 17, categoria: "Vestidos", nombre: "Vestido Oriana con Strass", precio: 11500, stockDefault: 10, fotos: ["oriana1.jpg", "oriana2.jpg", "oriana3.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
-      { id: 18, categoria: "Catsuit", nombre: "Catsuit Brisa", precio: 8500, stockDefault: 8, fotos: ["brisa.jpg"], talles: ["Talle Único"], colores: ["Choco", "Uva"] },
-      { id: 19, categoria: "Top", nombre: "Top Buche Strass", precio: 6500, stockDefault: 15, fotos: ["topbuche1.jpg", "topbuche2.jpg"], talles: ["Talle Único"], colores: ["Negro", "Uva"] },
-      { id: 20, categoria: "Top", nombre: "Top Corazón", precio: 5000, stockDefault: 15, fotos: ["topcorazon.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Celeste", "Rosa", "Lila"] },
-      { id: 21, categoria: "Remes", nombre: "Reme Tokio Print", precio: 8000, stockDefault: 10, fotos: ["tokioprint.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Print Manchas Grandes", "Print Amarillito"] },
-      { id: 22, categoria: "Pantalones", nombre: "Palazzo Kheyla", precio: 9000, stockDefault: 15, fotos: ["kheyla.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
-      { id: 23, categoria: "Remes", nombre: "Reme Tokio", precio: 7000, stockDefault: 10, stockEspecialColor: { "Uva": 5 }, fotos: ["tokio1.jpg", "tokio2.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Blanco", "Uva", "Celeste", "Rosa", "Lila"] },
-      { id: 24, categoria: "Vestidos", nombre: "Vestido Straple Lia", precio: 13500, stockDefault: 20, fotos: ["straplelia1.jpg", "straplelia2.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
-      { id: 25, categoria: "Vestidos", nombre: "Vestido Straple c/ Strass", precio: 15000, stockDefault: 20, fotos: ["straplestrass1.jpg", "straplestrass2.jpg"], talles: ["Talle Único"], colores: ["Negro", "Choco"] },
-      { id: 26, categoria: "Polleras", nombre: "Pollera Frida", precio: 8000, stockDefault: 12, fotos: ["frida1.jpg", "frida2.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Choco", "Uva"] },
-      { id: 27, categoria: "Polleras", nombre: "Pollera Frunce Corto", precio: 5500, stockDefault: 15, fotos: ["frunce1.jpg", "frunce2.jpg"], talles: ["Talle 2", "Talle 4"], colores: ["Choco", "Negro", "Uva"] }
+      { id: 1, categoria: "Vestidos", nombre: "Vestido Franchesca", precio: 15000, talles: ["Talle Único"], colores: ["Negro", "Choco", "Blanco", "Uva"] },
+      { id: 2, categoria: "Top", nombre: "Marilyn Lunares", precio: 6000, coloresPorTalle: { "Talle 2": ["Negro", "Choco"], "Talle 4": ["Choco"] } },
+      { id: 3, categoria: "Polleras", nombre: "Pollera Lunares", precio: 5500, talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva"] },
+      { id: 4, categoria: "Vestidos", nombre: "Vestido Isa", precio: 13500, talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco"] },
+      { id: 5, categoria: "Polleras", nombre: "Pollera Volado de Tul", subtitulo: "Con lentejuela y short interno", precio: 9000, talles: ["Talle Único"], colores: ["Negro", "Plateado", "Blanco"] },
+      { id: 6, categoria: "Polleras", nombre: "Pollera Glitter", precio: 5000, talles: ["Talle Único"], colores: ["Negro", "Rojo", "Plateado"] },
+      { id: 7, categoria: "Body", nombre: "Body Carla", precio: 8000, talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
+      { id: 8, categoria: "Polleras", nombre: "Pollera Mini Print", precio: 7000, talles: ["Talle 2", "Talle 4"], colores: ["Print Clarito", "Print Oscurito"] },
+      { id: 9, categoria: "Body", nombre: "Body Melisa Print", precio: 8000, talles: ["Talle Único"], colores: ["Print Amarillito", "Print Manchas Grandes", "Print Manchas Chicas"] },
+      { id: 11, categoria: "Polleras", nombre: "Short Camila", precio: 4500, talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Uva"] },
+      { id: 12, categoria: "Polleras", nombre: "Polleras Voladas con Diseño", precio: 4000, talles: ["Talle Único"], colores: ["Negro Floreado", "Bordó Floreado", "Vaquita"] },
+      { id: 13, categoria: "Vestidos", nombre: "Vestido Anahi", subtitulo: "Satén elastizado premium", precio: 15000, talles: ["Talle Único"], colores: ["Negro", "Chocolate"] },
+      { id: 14, categoria: "Vestidos", nombre: "Vestido Isa con Strass", precio: 16000, talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco"] },
+      { id: 15, categoria: "Vestidos", nombre: "Vestido Straple", precio: 13500, talles: ["Talle Único"], colores: ["Negro", "Choco"] },
+      { id: 16, categoria: "Polleras", nombre: "Short con Strass", precio: 5000, talles: ["Talle Único"], colores: ["Negro", "Choco"] },
+      { id: 17, categoria: "Vestidos", nombre: "Vestido Oriana con Strass", precio: 11500, talles: ["Talle Único"], colores: ["Negro", "Choco"] },
+      { id: 18, categoria: "Catsuit", nombre: "Catsuit Brisa", precio: 8500, talles: ["Talle Único"], colores: ["Choco", "Uva"] },
+      { id: 19, categoria: "Top", nombre: "Top Buche Strass", precio: 6500, talles: ["Talle Único"], colores: ["Negro", "Uva"] },
+      { id: 20, categoria: "Top", nombre: "Top Corazón", precio: 5000, talles: ["Talle Único"], colores: ["Negro", "Choco", "Celeste", "Rosa", "Lila"] },
+      { id: 21, categoria: "Remes", nombre: "Reme Tokio Print", precio: 8000, talles: ["Talle 2", "Talle 4"], colores: ["Print Manchas Grandes", "Print Amarillito"] },
+      { id: 22, categoria: "Pantalones", nombre: "Palazzo Kheyla", precio: 9000, talles: ["Talle Único"], colores: ["Negro", "Choco", "Uva", "Blanco"] },
+      { id: 23, categoria: "Remes", nombre: "Reme Tokio", precio: 7000, talles: ["Talle 2", "Talle 4"], colores: ["Negro", "Choco", "Blanco", "Uva", "Celeste", "Rosa", "Lila"] },
+      { id: 24, categoria: "Vestidos", nombre: "Vestido Straple Lia", precio: 13500, talles: ["Talle Único"], colores: ["Negro", "Choco"] },
+      { id: 25, categoria: "Vestidos", nombre: "Vestido Straple c/ Strass", precio: 15000, talles: ["Talle Único"], colores: ["Negro", "Choco"] },
+      { id: 26, categoria: "Polleras", nombre: "Pollera Frida", precio: 8000, talles: ["Talle 2", "Talle 4"], colores: ["Choco", "Uva"] },
+      { id: 27, categoria: "Polleras", nombre: "Pollera Frunce Corto", precio: 5500, talles: ["Talle 2", "Talle 4"], colores: ["Choco", "Negro", "Uva"] }
     ];
-
-    let stockGlobal = {};
     let carrito = [];
     let tipoVenta = "";
     let modalidadSeleccionada = "";
@@ -333,87 +352,6 @@
       document.getElementById("caja-otra-localidad").style.display = (document.getElementById("localidad").value === "Otra") ? "block" : "none";
     }
 
-    function obtenerStockInicialVariante(id, talle, color) {
-      const prod = PRODUCTOS.find(p => p.id === id);
-      if (!prod) return 0;
-      const claveVariante = talle + "|" + color;
-      if (prod.stockEspecialVariante && prod.stockEspecialVariante.hasOwnProperty(claveVariante)) {
-        const parVar = Object.entries(prod.stockEspecialVariante).find(x => x.at(0) === claveVariante);
-        if (parVar) return parVar.at(1);
-      }
-      if (prod.stockEspecialColor && prod.stockEspecialColor.hasOwnProperty(color)) {
-        const parCol = Object.entries(prod.stockEspecialColor).find(x => x.at(0) === color);
-        if (parCol) return parCol.at(1);
-      }
-      return prod.stockDefault || 10;
-    }
-
-    function obtenerClaveStock(id, talle, color) {
-      return id + "_" + talle.replace(/\s+/g, '') + "_" + color.replace(/\s+/g, '');
-    }
-
-    async function sincronizarStockDesdeNube() {
-      try {
-        const resp = await fetch(FIREBASE_BASE + ".json?t=" + Date.now());
-        const datos = await resp.json();
-        stockGlobal = datos || {};
-        actualizarTodasLasTarjetas();
-      } catch (e) {}
-    }
-
-    function obtenerStockDisponible(id, talle, color) {
-      const clave = obtenerClaveStock(id, talle, color);
-      const inicial = obtenerStockInicialVariante(id, talle, color);
-      const base = stockGlobal.hasOwnProperty(clave) ? Number(Object.entries(stockGlobal).find(x => x.at(0) === clave).at(1)) : inicial;
-      const enCarrito = carrito.find(i => i.id === id && i.talle === talle && i.color === color);
-      return Math.max(0, base - (enCarrito ? enCarrito.cant : 0));
-    }
-
-    async function descontarStockDefinitivo(itemsComprados) {
-      try {
-        const resp = await fetch(FIREBASE_BASE + ".json?t=" + Date.now());
-        const actualEnNube = (await resp.json()) || {};
-        for (const it of itemsComprados) {
-          const clave = obtenerClaveStock(it.id, it.talle, it.color);
-          const inicial = obtenerStockInicialVariante(it.id, it.talle, it.color);
-          const actual = actualEnNube.hasOwnProperty(clave) ? Number(Object.entries(actualEnNube).find(x => x.at(0) === clave).at(1)) : inicial;
-          const nuevoValor = Math.max(0, actual - it.cant);
-          stockGlobal[clave] = nuevoValor;
-          await fetch(FIREBASE_BASE + "/" + clave + ".json", {
-            method: "PUT",
-            keepalive: true,
-            body: JSON.stringify(nuevoValor)
-          });
-        }
-      } catch (e) {}
-    }
-
-    function actualizarEstadoStockTarjeta(id) {
-      const selTal = document.getElementById("tal-" + id);
-      const selCol = document.getElementById("col-" + id);
-      const inpCan = document.getElementById("can-" + id);
-      const badge = document.getElementById("stock-badge-" + id);
-      const cartel = document.getElementById("agotado-" + id);
-      const btn = document.getElementById("btn-add-" + id);
-      if (!selTal || !selCol) return;
-      const disp = obtenerStockDisponible(id, selTal.value, selCol.value);
-      if (disp <= 0) {
-        badge.textContent = "AGOTADO";
-        badge.classList.add("sin-stock");
-        cartel.classList.add("visible");
-        btn.disabled = true; btn.textContent = "Agotado";
-        inpCan.value = 0; inpCan.max = 0;
-      } else {
-        badge.textContent = "Disponibles: " + disp + " unid.";
-        badge.classList.remove("sin-stock");
-        cartel.classList.remove("visible");
-        btn.disabled = false; btn.textContent = "Agregar a venta";
-        inpCan.max = disp;
-        if (parseInt(inpCan.value) > disp || parseInt(inpCan.value) <= 0) inpCan.value = 1;
-      }
-    }
-
-    function actualizarTodasLasTarjetas() { PRODUCTOS.forEach(p => actualizarEstadoStockTarjeta(p.id)); }
     function filtrarCategoria(cat, btn) {
       categoriaActual = cat;
       document.querySelectorAll(".btn-cat").forEach(b => b.classList.remove("activo"));
@@ -421,15 +359,30 @@
       cargarCatalogo();
     }
 
-    function actualizarColoresPorTalle(id) {
+    function obtenerColoresParaTalle(prod, talle) {
+      if (prod.coloresPorTalle) {
+        return Object.entries(prod.coloresPorTalle).find(par => par.at(0) === talle)?.at(1) || [];
+      }
+      return prod.colores || [];
+    }
+
+    function renderizarFilasColores(id) {
       const prod = PRODUCTOS.find(p => p.id === id);
       if (!prod) return;
-      if (prod.coloresPorTalle) {
-        const talleElegido = document.getElementById("tal-" + id).value;
-        const coloresFinales = Object.entries(prod.coloresPorTalle).find(par => par.at(0) === talleElegido)?.at(1) || [];
-        document.getElementById("col-" + id).innerHTML = coloresFinales.map(c => '<option value="' + c + '">' + c + '</option>').join('');
-      }
-      actualizarEstadoStockTarjeta(id);
+      const selTal = document.getElementById("tal-" + id);
+      const talleActual = selTal ? selTal.value : (prod.coloresPorTalle ? Object.keys(prod.coloresPorTalle).at(0) : prod.talles.at(0));
+      const colores = obtenerColoresParaTalle(prod, talleActual);
+      const contenedorFilas = document.getElementById("filas-colores-" + id);
+      if (!contenedorFilas) return;
+
+      contenedorFilas.innerHTML = colores.map((c, idxColor) => {
+        const inputId = "cant-" + id + "-" + idxColor;
+        return '<div class="fila-color-item">' +
+          '<span class="nombre-color-fila">' + c + '</span>' +
+          '<input type="number" id="' + inputId + '" class="input-cant-fila" value="1" min="1" max="999">' +
+          '<button type="button" class="btn-mas-fila" onclick="agregarFilaColor(' + id + ', \'' + c.replace(/'/g, "\\'") + '\', \'' + inputId + '\')">+</button>' +
+        '</div>';
+      }).join('');
     }
 
     function cargarCatalogo() {
@@ -448,31 +401,44 @@
 
       cont.innerHTML = filtrados.map(p => {
         const listaTalles = p.coloresPorTalle ? Object.keys(p.coloresPorTalle) : p.talles;
-        const listaColoresInicial = p.coloresPorTalle ? Object.values(p.coloresPorTalle).at(0) : p.colores;
-        const optsTalle = listaTalles.map(t => '<option value="' + t + '">' + t + '</option>').join('');
-        const optsColor = listaColoresInicial.map(c => '<option value="' + c + '">' + c + '</option>').join('');
+        const tieneVariosTalles = listaTalles.length > 1;
+        const bloqueTalleHtml = tieneVariosTalles
+          ? '<div class="fila-talle"><label>Seleccionar Talle:</label><select id="tal-' + p.id + '" onchange="renderizarFilasColores(' + p.id + ')">' + listaTalles.map(t => '<option value="' + t + '">' + t + '</option>').join('') + '</select></div>'
+          : '<div class="fila-talle"><input type="hidden" id="tal-' + p.id + '" value="' + listaTalles.at(0) + '"><span class="talle-fijo-badge">' + listaTalles.at(0) + '</span></div>';
 
-        return '<div class="producto">' +
+        return '<div class="tarjeta-rapida">' +
           '<div>' +
-            '<div class="galeria-box">' +
-              '<div class="cartel-agotado" id="agotado-' + p.id + '">AGOTADO</div>' +
-              '<img src="' + p.fotos.at(0) + '" alt="' + p.nombre + '" onerror="this.style.display=\'none\'">' +
+            '<div class="cabecera-tarjeta">' +
+              '<h3>' + p.nombre + '</h3>' +
+              (p.subtitulo ? '<div class="sub">' + p.subtitulo + '</div>' : '') +
+              '<div class="precio">$' + p.precio.toLocaleString('es-AR') + '</div>' +
             '</div>' +
-            '<h3>' + p.nombre + '</h3>' +
-            '<p class="precio">$' + p.precio.toLocaleString('es-AR') + '</p>' +
-            '<div class="badge-stock" id="stock-badge-' + p.id + '">Disponibles: ' + p.stockDefault + ' unid.</div>' +
+            bloqueTalleHtml +
           '</div>' +
-          '<div>' +
-            '<div class="fila-doble">' +
-              '<div class="campo" style="flex:2;"><label>Talle:</label><select id="tal-' + p.id + '" onchange="actualizarColoresPorTalle(' + p.id + ')">' + optsTalle + '</select></div>' +
-              '<div class="campo" style="flex:1;"><label>Cant.:</label><input type="number" id="can-' + p.id + '" value="1" min="1" max="50"></div>' +
-            '</div>' +
-            '<div class="campo"><label>Color:</label><select id="col-' + p.id + '" onchange="actualizarEstadoStockTarjeta(' + p.id + ')">' + optsColor + '</select></div>' +
-            '<button type="button" id="btn-add-' + p.id + '" class="btn-agregar" onclick="agregar(' + p.id + ')">Agregar a venta</button>' +
-          '</div>' +
+          '<div class="lista-colores-filas" id="filas-colores-' + p.id + '"></div>' +
         '</div>';
       }).join('');
-      actualizarTodasLasTarjetas();
+
+      filtrados.forEach(p => renderizarFilasColores(p.id));
+    }
+
+    function agregarFilaColor(id, color, inputId) {
+      const prod = PRODUCTOS.find(p => p.id === id);
+      const talle = document.getElementById("tal-" + id).value;
+      const inp = document.getElementById(inputId);
+      const cant = parseInt(inp.value);
+      if (isNaN(cant) || cant <= 0) return;
+
+      const igual = carrito.find(i => i.id === id && i.color === color && i.talle === talle);
+      if (igual) igual.cant += cant;
+      else carrito.push({ id: prod.id, nombre: prod.nombre, precio: prod.precio, color, talle, cant });
+
+      inp.value = 1;
+      actualizarCarrito();
+      const aviso = document.getElementById("aviso-flotante");
+      aviso.textContent = "✓ +" + cant + " " + prod.nombre + " (" + color + " - " + talle + ")";
+      aviso.style.display = "block";
+      setTimeout(() => { aviso.style.display = "none"; }, 1200);
     }
 
     function togglePanel() {
@@ -510,31 +476,11 @@
       document.getElementById("caja-otro").style.display = (document.getElementById("transporte").value === "Otro") ? "block" : "none";
     }
 
-    function agregar(id) {
-      const prod = PRODUCTOS.find(p => p.id === id);
-      const color = document.getElementById("col-" + id).value;
-      const talle = document.getElementById("tal-" + id).value;
-      const cant = parseInt(document.getElementById("can-" + id).value);
-      const disponible = obtenerStockDisponible(id, talle, color);
-      if (disponible <= 0 || isNaN(cant) || cant <= 0) return;
-      if (cant > disponible) { alert("Solo quedan " + disponible + " unid. disponibles."); document.getElementById("can-" + id).value = disponible; return; }
-      const igual = carrito.find(i => i.id === id && i.color === color && i.talle === talle);
-      if (igual) igual.cant += cant;
-      else carrito.push({ id: prod.id, nombre: prod.nombre, precio: prod.precio, color, talle, cant });
-      actualizarCarrito();
-      actualizarEstadoStockTarjeta(id);
-      const aviso = document.getElementById("aviso-flotante");
-      aviso.textContent = "✓ Agregado: " + cant + "x " + prod.nombre;
-      aviso.style.display = "block";
-      setTimeout(() => { aviso.style.display = "none"; }, 1200);
-    }
-
     function quitar(idx) {
-      const itemQuitado = carrito.at(idx);
       carrito.splice(idx, 1);
       actualizarCarrito();
-      if (itemQuitado) actualizarEstadoStockTarjeta(itemQuitado.id);
     }
+
     function actualizarCarrito() {
       const lista = document.getElementById("lista-carrito");
       const subtotalTxt = document.getElementById("subtotal-texto");
@@ -569,7 +515,7 @@
         btnGenerar.textContent = "Cargá prendas y elegí tipo";
       } else {
         btnGenerar.disabled = false;
-        btnGenerar.textContent = "🖨️ Generar Ticket 80mm y Descontar Stock";
+        btnGenerar.textContent = "🖨️ Generar Ticket 80mm";
       }
     }
 
@@ -581,7 +527,7 @@
       setTimeout(() => { document.body.classList.remove("solo-talon", "solo-orden"); }, 500);
     }
 
-    async function generarTicket80mm() {
+    function generarTicket80mm() {
       if (carrito.length === 0 || !tipoVenta) return;
       const ahora = new Date();
       const fechaStr = ahora.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
@@ -703,10 +649,6 @@
         : '<button type="button" class="btn-imp-80" onclick="imprimirTicket80(\'talon\')">🖨️ Imprimir Talón ' + tipoVenta + ' (80mm)</button>' +
           '<button type="button" class="btn-imp-80 sec" onclick="imprimirTicket80(\'orden\')">🖨️ Imprimir Orden de Compra (80mm)</button>';
 
-      const btnGen = document.getElementById("btn-generar");
-      btnGen.disabled = true; btnGen.textContent = "Descontando stock...";
-      await descontarStockDefinitivo(carrito);
-
       document.getElementById("vista-mostrador").style.display = "none";
       const vt = document.getElementById("vista-ticket");
       vt.style.display = "block";
@@ -723,13 +665,10 @@
       actualizarCarrito();
       document.getElementById("vista-ticket").style.display = "none";
       document.getElementById("vista-mostrador").style.display = "block";
-      sincronizarStockDesdeNube();
     }
 
     cargarProvincias();
     cargarCatalogo();
-    sincronizarStockDesdeNube();
-    setInterval(sincronizarStockDesdeNube, 4000);
   </script>
 </body>
 </html>
